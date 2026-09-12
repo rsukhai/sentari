@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
@@ -7,6 +8,13 @@ export default defineConfig({
     jsx: {
       runtime: 'automatic',
       importSource: 'react',
+    },
+  },
+  resolve: {
+    // Той самий аліас, що й у tsconfig.json ("@/*": ["./*"]) — без нього
+    // Vitest (на відміну від Next і tsc) не вміє резолвити імпорти `@/...`.
+    alias: {
+      '@': fileURLToPath(new URL('.', import.meta.url)),
     },
   },
   test: {
