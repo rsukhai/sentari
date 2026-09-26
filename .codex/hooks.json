@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node scripts/agent-env-guard.mjs",
+            "command": "node scripts/agent-env-guard.mjs codex",
             "timeout": 10
           }
         ]
