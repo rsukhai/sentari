@@ -38,10 +38,15 @@ const hit = Object.values(fields).some((v) => v !== '' && ENV_FILE.test(v));
 if (!hit) process.exit(0);
 
 // Журнал — у форматі курсу: лише шлях, шаблон чи команда, до 200 символів.
+// Для apply_patch у command лежить увесь патч разом із вмістом — беремо лише назви файлів.
 const input = {};
 if (fields.path) input.file_path = fields.path.slice(0, 200);
 if (fields.pattern) input.pattern = fields.pattern.slice(0, 200);
-if (fields.command) input.command = fields.command.slice(0, 200);
+if (tool === 'apply_patch') {
+  input.files = [...fields.command.matchAll(/^\*\*\* (?:Add File|Update File|Delete File|Move to): (.+)$/gm)].map((m) => m[1].trim());
+} else if (fields.command) {
+  input.command = fields.command.slice(0, 200);
+}
 const dir = join(process.env.CLAUDE_PROJECT_DIR ?? process.cwd(), '.agent-log');
 mkdirSync(dir, { recursive: true });
 const row = {
