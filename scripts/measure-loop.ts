@@ -50,7 +50,9 @@ function pick(kind: string): { model: Model; spec: ModelSpec; form: string } {
   }
   const spec = MODELS.local;
   if (kind === 'ollama-messages') {
-    return { spec, form: 'messages', model: messagesModel({ url: `${spec.baseUrl}/v1/messages`, model: spec.id }) };
+    // qwen3:4b спершу «думає» (блок thinking) — з типовими 2048 токенами роздуми з'їдали весь ліміт,
+    // JSON обрізався й не проходив схему (перші прогони — max-steps). Тому ліміт виходу більший.
+    return { spec, form: 'messages', model: messagesModel({ url: `${spec.baseUrl}/v1/messages`, model: spec.id, maxTokens: 8192 }) };
   }
   if (kind === 'ollama-chat') {
     return { spec, form: 'chat-completions', model: chatCompletionsModel({ url: `${spec.baseUrl}/v1/chat/completions`, model: spec.id }) };
