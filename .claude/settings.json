@@ -6,7 +6,19 @@
         "hooks": [
           {
             "type": "command",
-            "command": "mkdir -p .agent-log && jq -c '{ts:(now|todate), tool:.tool_name, input:.tool_input, result:\"ok\", session:.session_id, source:\"claude-code\"}' >> .agent-log/session.jsonl",
+            "command": "mkdir -p \"$CLAUDE_PROJECT_DIR/.agent-log\" && jq -c '{ts:(now|todate), tool:.tool_name, input:(.tool_input | {file_path, command, pattern, url} | with_entries(select(.value != null)) | map_values(tostring | .[0:200])), result:\"ok\", session:.session_id, source:\"claude-code\"}' >> \"$CLAUDE_PROJECT_DIR/.agent-log/claude-code.jsonl\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mkdir -p \"$CLAUDE_PROJECT_DIR/.agent-log\" && jq -c '{ts:(now|todate), tool:.tool_name, input:(.tool_input | {file_path, command, pattern, url} | with_entries(select(.value != null)) | map_values(tostring | .[0:200])), result:\"error\", session:.session_id, source:\"claude-code\"}' >> \"$CLAUDE_PROJECT_DIR/.agent-log/claude-code.jsonl\"",
             "timeout": 10
           }
         ]
