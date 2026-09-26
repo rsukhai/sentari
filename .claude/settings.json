@@ -37,6 +37,7 @@
       }
     ]
   },
+  "enabledMcpjsonServers": ["context7"],
   "permissions": {
     "deny": [
       "Read(./.env)",
