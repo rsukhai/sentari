@@ -16,16 +16,14 @@
 - TypeScript (`strict`), Next.js (App Router), Vitest.
 - Node >=22.12.0
 - npm (not yarn/pnpm)
-- Без БД
-- Стилі - css('app/globals.css')
-- Моделі - 'src/models.ts'
+
 
 ## Команди
 
 - `npm test` — тести (Vitest), без мережі.
 - `npm run typecheck` — перевірка типів, без емісії.
 - `npm run lint` — лінтер.
-- Перед "готово": npm run typecheck && npm run lint && npm test
+
 
 ## Межі
 
