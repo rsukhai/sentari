@@ -12,10 +12,14 @@ Google (gemini-3.8-flash $0.75/$3.75 до 2026-12-31, далі $1.50/$7.50; gemi
 
 | прогін | провайдер | модель | вхідні | кешовані | вихідні | оцінка входу до виклику | похибка % | $ фактично | $ за прайсом models.ts | затримка, мс | дата |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| gemini-1 | google | gemini-3.8-flash | … | … | … | … | … | 0.000000 | … | … | … |
+| gemini-1 | google | gemini-3.8-flash | 14208 | 0 | 312 | 14208 | 0.0 | 0.000000 | 0.011826 | 4039 | 2026-09-26 |
+| gemini-2 | google | gemini-3.8-flash | 14208 | 0 | 868 | 14208 | 0.0 | 0.000000 | 0.013911 | 5901 | 2026-09-26 |
 
-Команда: npx tsx --env-file=.env.local scripts/measure-cost.ts gemini
+Команда: npx tsx --env-file=.env.local scripts/measure-cost.ts gemini (запускав власник репозиторію — ключ у `.env.local`)
 Чим оцінено до виклику: Gemini countTokens (REST, generateContentRequest) · факт: usageMetadata.promptTokenCount
+
+Вердикт: **у межах 10%** — похибка 0.0% в обох викликах. Вихід 312 = 83 (`candidatesTokenCount`) + 229 (`thoughtsTokenCount`): роздуми моделі тарифікуються як вихід, і без `fromGeminiUsage` вихід був би занижений майже вчетверо.
+Сирий usageMetadata першого виклику: `{"promptTokenCount":14208,"candidatesTokenCount":83,"totalTokenCount":14520,"promptTokensDetails":[{"modality":"TEXT","tokenCount":14208}],"thoughtsTokenCount":229,"serviceTier":"standard"}`
 
 ## 2. Кешування
 
@@ -29,13 +33,15 @@ Google (gemini-3.8-flash $0.75/$3.75 до 2026-12-31, далі $1.50/$7.50; gemi
 Назва поля кешу: `cache_read_input_tokens` (Ollama `/v1/messages`) · сирий usage другого виклику: `{"input_tokens":1,"cache_read_input_tokens":2011,"output_tokens":64}`
 Для Ollama: це повторне використання префікса моделі, а не знижка в рахунку. Затримка другого виклику впала з 5,6 с до 1,0 с.
 
+Gemini (free tier): у двох однакових викликах `cachedContentTokenCount` відсутній (0) при префіксі 14 208 токенів (≥ 4096), третій виклик завершився `HTTP 503 — model is currently experiencing high demand`. Неявний кеш Gemini не гарантований; доказ кешу — Ollama вище.
+
 Команда: `OLLAMA_MODEL=qwen3:4b npx tsx scripts/measure-cost.ts ollama` (модель передано змінною середовища, бо агент не читає `.env.local`).
 
 ## 3. Множник «українська / англійська»
 
 | Провайдер | Модель | Текст (про що, скільки слів) | Токени en | Токени ua | ua / en |
 |---|---|---|---|---|---|
-| google | gemini-3.8-flash | … | … | … | … |
+| google | gemini-3.8-flash | правила проєкту з AGENTS.md, 3 абзаци (ua 171 / en 203 слова) | 244 | 331 | 1.36 |
 | ollama | qwen3:4b | правила проєкту з AGENTS.md, 3 абзаци (ua 171 / en 203 слова) | 238 | 509 | 2.14 |
 
 Команда: npx tsx --env-file=.env.local scripts/measure-cost.ts lang docs/lab1/cost.md
@@ -56,5 +62,7 @@ The agent does not read or edit files with secrets: keys are managed by a human.
 
 Pushing changes to the remote repository, changing dependencies and deleting files or data are allowed only with the owner's permission. If spending exceeds the limit, the agent stops and asks whether it may continue. The model is chosen by its role from the model registry, not by a name string, and prices and model retirement dates are checked against the vendor's page, not from memory. Log-parsing logic is kept separate from UI components, and commits are written in the Conventional Commits format.
 ```
+
+Висновок: той самий зміст українською дорожчий в 1.36 раза в Gemini і в 2.14 раза в локальній qwen3:4b — множник залежить від токенізатора. Для правил, навичок і промптів, які йдуть у контекст **кожного** запиту, це прямі гроші й місце у вікні контексту.
 
 ## 4. Три прогони (крок 11)
