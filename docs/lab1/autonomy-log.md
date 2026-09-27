@@ -35,6 +35,8 @@
 
 | 2026-09-27 | Власний цикл, Chat Completions · Ollama qwen3:4b; Gemini gemini-3.8-flash (free tier) | лише читання | L1 | Крок 08: друга форма API | Chat Completions на Ollama: валідна пропозиція за 3 кроки, але `route.ts` без `timestamp` і **переписаний контракт-тест**. Gemini — `503`/`429`, повного прогону немає; до скрипта додано паузу 13 с і повтор `503` | Прогони Gemini запускав сам (ключ); один помилково пішов на `main`, бо `git switch` заблокував незакомічений журнал агента. Пропозицію не застосував. Вирішив закрити другу форму через `ollama-chat` | контракт 1/3; `list_files .` — єдиний виклик інструмента | коміт `0bcfa71b` на `lab1/health-loop` |
 
+| 2026-09-27 | Агент на AI SDK 7 (`src/agent/agent-aisdk.ts`); код з методички вставив Claude Code (claude-opus-5-5); жива траса — OpenAI gpt-5.6-luna | `write_file` — `toolApproval: 'user-approval'` | L1 для запису (кожен запис — лише після «так»), L0 для читання | Крок 09: цикл на SDK з підтвердженням деструктивної дії | Агент встановив 4 пакети **з мого дозволу** (`AGENTS.md`: зміна `package.json` — лише з дозволу), помітив, що локальний `npm install` знову прибрав `@emnapi/*`, і згенерував lock-файл у контейнері `node:24`; додав провайдер `openai` у `pickModel()` | Дозволив зміну `package.json`; запустив Docker; вписав `GOOGLE_GENERATIVE_AI_API_KEY` у `.env.local`; сам відповідав `n`/`y` на запит дозволу; видалив тестовий `notes.txt` | `npm ci` у Linux-контейнері — exit 0; тести 91/91; мутація без `toolApproval` — 2 червоні; жива траса `n` → файлу немає, `y` → файл `hi` | коміт `c1a5fb80`, [CI](https://github.com/rsukhai/sentari/actions/runs/36309592250) |
+
 ## Висновок щодо рівня довіри
 
 У двох сесіях Claude Code працював у режимі `auto` — вище L2, хоча методичка
