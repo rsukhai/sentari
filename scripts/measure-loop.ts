@@ -5,13 +5,15 @@
  *   npx tsx --env-file=.env.local scripts/measure-loop.ts ollama-messages 10
  *   npx tsx --env-file=.env.local scripts/measure-loop.ts ollama-chat 1
  *   npx tsx --env-file=.env.local scripts/measure-loop.ts gemini 1
+ *   npx tsx --env-file=.env.local scripts/measure-loop.ts openai 1       хмара, крок 11 (платно, центи)
+ *   npx tsx --env-file=.env.local scripts/measure-loop.ts openrouter 1   шлюз, крок 11 (:free-модель)
  *
  * Кожен виклик інструмента дописується в .agent-log/agent-loop.jsonl.
  * Числа кожного прогону переносьте в таблицю docs/lab1/comparison.md.
  */
 import { z } from 'zod';
 
-import { chatCompletionsModel, messagesModel } from '../src/agent/adapters';
+import { chatCompletionsModel, messagesModel, type Fetch } from '../src/agent/adapters';
 import { runAgentLoop, type Model } from '../src/agent/agent-loop';
 import { createTools, jsonlLogger } from '../src/agent/tools';
 import { priceUsd } from '../src/cost';
@@ -63,6 +65,43 @@ function pick(kind: string): { model: Model; spec: ModelSpec; form: string } {
     };
     return { spec, form: 'chat-completions', model: throttled };
   }
+  if (kind === 'openai') {
+    // Хмарний прогін кроку 11 замість Gemini (денна квота free tier вичерпана). Платно: центи.
+    const key = process.env.OPENAI_API_KEY;
+    if (!key) throw new Error('OPENAI_API_KEY порожній: заповніть .env.local');
+    const spec = CATALOG['gpt-5.6-luna'];
+    // gpt-5.6 у /v1/chat/completions не приймає інструменти разом із «роздумами» (HTTP 400) —
+    // додаємо reasoning_effort: 'none', не змінюючи адаптер.
+    const noReasoning: Fetch = (url, init) =>
+      fetch(url, { ...init, body: JSON.stringify({ ...JSON.parse(String(init.body)), reasoning_effort: 'none' }) });
+    return {
+      spec,
+      form: 'chat-completions',
+      model: chatCompletionsModel({
+        url: 'https://api.openai.com/v1/chat/completions',
+        model: spec.id,
+        headers: { authorization: `Bearer ${key}` },
+        fetch: noReasoning,
+      }),
+    };
+  }
+  if (kind === 'openrouter') {
+    const key = process.env.OPENROUTER_API_KEY;
+    const id = process.env.OPENROUTER_MODEL;
+    if (!key || !id) throw new Error('OPENROUTER_API_KEY або OPENROUTER_MODEL порожні: заповніть .env.local');
+    // Шлюзу немає в models.ts: для :free-моделі ціни 0; для платної впишіть ціни за 1 млн токенів зі сторінки моделі на OpenRouter.
+    // provider: 'openai' — бо форма API OpenAI-сумісна; окремого значення для шлюзу в типі Provider немає.
+    const spec: ModelSpec = { id, provider: 'openai', inputPerMTok: 0, outputPerMTok: 0, pricingUrl: 'https://openrouter.ai/models' };
+    return {
+      spec,
+      form: 'chat-completions',
+      model: chatCompletionsModel({
+        url: 'https://openrouter.ai/api/v1/chat/completions',
+        model: id,
+        headers: { authorization: `Bearer ${key}` },
+      }),
+    };
+  }
   const spec = MODELS.local;
   if (kind === 'ollama-messages') {
     // qwen3:4b спершу «думає» (блок thinking) — з типовими 2048 токенами роздуми з'їдали весь ліміт,
@@ -72,7 +111,7 @@ function pick(kind: string): { model: Model; spec: ModelSpec; form: string } {
   if (kind === 'ollama-chat') {
     return { spec, form: 'chat-completions', model: chatCompletionsModel({ url: `${spec.baseUrl}/v1/chat/completions`, model: spec.id }) };
   }
-  throw new Error(`Невідомий провайдер «${kind}». Є: ollama-messages, ollama-chat, gemini`);
+  throw new Error(`Невідомий провайдер «${kind}». Є: ollama-messages, ollama-chat, gemini, openai, openrouter`);
 }
 
 const [kind = 'ollama-messages', runsArg = '1'] = process.argv.slice(2);

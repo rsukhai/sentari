@@ -12,3 +12,14 @@
 | Заборона | Працює, три рубежі: (1) `AGENTS.md` — у звичайних запитах агент відмовлявся ще до спроби; (2) `permissions.deny` (`Read`/`Edit` для `.env`, `.env.local`) — блокує `Write` **раніше** за hook, але рядка `denied` у журнал не пише; (3) hook `PreToolUse` → `scripts/agent-env-guard.mjs claude-code` — ловить шлях і текст `Bash`-команд (`echo >> .env`, `node -e`), пише `"result":"denied"`. Тест: 3 спроби, `.env` не створено, 2 рядки `denied` від hook + 2 від власних команд агента. | Потрібна адаптація: той самий скрипт через `.codex/hooks.json` (`node scripts/agent-env-guard.mjs codex`), додатково розбирає `apply_patch` (у журнал — лише назви файлів). **Змінений hook Codex мовчки не виконує, поки йому не підтвердити довіру в `/hooks`**: до цього всі 3 спроби пройшли й створили `.env`; після — 3 з 3 `denied`. Баг openai/codex#27833 (`deny` не блокує `apply_patch`) у 0.157.1 не відтворився. | 
 | MCP | Працює без змін: `.mcp.json` + `enabledMcpjsonServers`, `claude mcp list` → Connected; +~322 токени на запит (`context-cost.md`). | Потрібна адаптація: `.codex/config.toml`, `[mcp_servers.context7]`; `codex mcp list` → enabled; +780 токенів на запит. |
 | Скріншот-тест | Працює без змін: `tests/health-link.spec.ts` не залежить від агента. План → виконання в `-p` сесії (`--resume`), агент сам прогнав `npm run e2e` — зелений. | Працює без змін (тест той самий за змістом). Але в пісочниці `workspace-write` Codex не може запустити `npm run e2e`: серверу заборонено слухати порт 3100 (`EPERM`) — e2e проганяє людина або CI. Зміна в `app/page.tsx` байт-у-байт збіглась із Claude Code. |
+
+Інструмент A: Claude Code 2.1.269 (`claude --version`) · Інструмент B: Codex CLI 0.157.1 (`codex --version`, модель gpt-6-sol).
+
+## Що довелося писати двічі
+
+- **Hook журналу**: для Claude Code — однорядковий `jq` у `.claude/settings.json` (`PostToolUse` + `PostToolUseFailure`), для Codex — `.codex/hooks.json` + `scripts/agent-log-hook.mjs` (у Codex для `apply_patch` у журнал беруться лише назви файлів з тексту патча).
+- **Заборона `.env*`**: спільний скрипт `scripts/agent-env-guard.mjs`, але підключений двічі з різним `source` (`claude-code` / `codex`); для Claude Code додатково `permissions.deny`. Для Codex після кожної зміни команди hook треба заново підтвердити довіру в `/hooks` — інакше hook мовчки не виконується (помилка №5 у `confident-errors.md`).
+- **MCP Context7**: `.mcp.json` + `enabledMcpjsonServers` для Claude Code, `.codex/config.toml` (`[mcp_servers.context7]`) для Codex.
+- **Навичка**: одне джерело `.claude/skills/add-api-route/`, копія для Codex у `.agents/skills/` через `npm run sync-skills`; сам `SKILL.md` не довелося переписувати.
+- **AGENTS.md** — один файл для обох; для Claude Code лише рядок `@AGENTS.md` у `CLAUDE.md`.
+- **Неінтерактивний запуск** (тести навички й заборони): `claude -p --permission-mode …` проти `codex exec --sandbox … < /dev/null` — без `< /dev/null` Codex чекає stdin і зависає.

@@ -104,7 +104,9 @@ function envOr(name: string, fallback: string): string {
 // Ollama сортується за завантаженнями за весь час, тому вгорі списку
 // опиняються старі покоління моделей.
 const LOCAL_BASE_URL: string = envOr('OLLAMA_BASE_URL', 'http://localhost:11434');
-const LOCAL_CHAT_ID: string = envOr('OLLAMA_MODEL', 'qwen3.5:4b');
+// Було 'qwen3.5:4b': на циклі кроку 08 лише 3 з 5 виходів пройшли схему (2 — max-steps),
+// у qwen3:4b — 10 з 10, ціною повільнішої відповіді. Обґрунтування: docs/lab1/model-decision.md.
+const LOCAL_CHAT_ID: string = envOr('OLLAMA_MODEL', 'qwen3:4b');
 const LOCAL_EMBED_ID: string = envOr('OLLAMA_EMBED_MODEL', 'nomic-embed-text');
 
 const LOCAL_LIMITS = [
