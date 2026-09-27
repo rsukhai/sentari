@@ -38,15 +38,30 @@ function pick(kind: string): { model: Model; spec: ModelSpec; form: string } {
     const key = process.env.GEMINI_API_KEY;
     if (!key) throw new Error('GEMINI_API_KEY порожній: заповніть .env.local');
     const spec = CATALOG['gemini-3.8-flash'];
-    return {
-      spec,
-      form: 'chat-completions',
-      model: chatCompletionsModel({
-        url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
-        model: spec.id,
-        headers: { authorization: `Bearer ${key}` },
-      }),
+    const raw = chatCompletionsModel({
+      url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
+      model: spec.id,
+      headers: { authorization: `Bearer ${key}` },
+    });
+    // Безкоштовний рівень: 5 запитів на хвилину, а кожен крок циклу — окремий запит.
+    // Без паузи цикл на 6-му кроці отримував HTTP 429, тож між викликами — 13 с.
+    let calls = 0;
+    const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+    const throttled: Model = async (system, messages, tools) => {
+      if (calls++ > 0) await sleep(13_000);
+      // HTTP 503 «high demand» — тимчасове перевантаження: до 3 спроб з паузою 20 с.
+      // HTTP 429 (квота) не повторюємо — прогони мають зупинитися, щоб не спалити квоту.
+      for (let attempt = 1; ; attempt++) {
+        try {
+          return await raw(system, messages, tools);
+        } catch (error) {
+          if (attempt >= 3 || !(error instanceof Error && error.message.includes('HTTP 503'))) throw error;
+          console.warn(`  503, повтор ${attempt}/2 через 20 с`);
+          await sleep(20_000);
+        }
+      }
     };
+    return { spec, form: 'chat-completions', model: throttled };
   }
   const spec = MODELS.local;
   if (kind === 'ollama-messages') {
