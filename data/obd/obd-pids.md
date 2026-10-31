@@ -19,7 +19,7 @@ In 1996, light-duty vehicles (less than 8,500 lb or 3,900 kg) were the first t
 
 Heavy-duty vehicles (greater than 14,000 lb or 6,400 kg) made after 2010, for sale in the US are allowed to support OBD-II diagnostics through SAE standard J1939-13 (a round diagnostic connector) according to CARB in title 13 CCR 1971.1. Some heavy-duty trucks in North America use the SAE J1962 OBD-II diagnostic connector that is common with passenger cars, notably Mack and Volvo Trucks, however they use 29 bit CAN identifiers (unlike 11 bit headers used by passenger cars).
 
-== Services / Modes ==
+## Services / Modes
 
 There are 10 diagnostic services described in the latest OBD-II standard SAE J1979. Before 2002, J1979 referred to these services as "modes". They are as follows:
 
@@ -39,7 +39,7 @@ Vehicle manufacturers are not required to support all services. Each manufacture
 
 The nonOBD UDS services start at 0x10 to avoid overlap of ID-range.
 
-== Standard PIDs ==
+## Standard PIDs
 
 The table below shows the standard OBD-II PIDs as defined by SAE J1979. The expected response for each PID is given, along with information on how to translate the response into meaningful data. Again, not all vehicles will support all PIDs and there can be manufacturer-defined custom PIDs that are not defined in the OBD-II standard.
 
@@ -50,7 +50,7 @@ When using Bit-Encoded-Notation, quantities like C4 means bit 4 from data byte C
 A | B | C | D
 A7 | A6 | A5 | A4 | A3 | A2 | A1 | A0 | B7 | B6 | B5 | B4 | B3 | B2 | B1 | B0 | C7 | C6 | C5 | C4 | C3 | C2 | C1 | C0 | D7 | D6 | D5 | D4 | D3 | D2 | D1 | D0
 
-=== Service 01 - Show current data ===
+### Service 01 - Show current data
 
 PIDs; (hex) | PID; (Dec) | Data bytes returned | Description | Min value | Max value | Units | Formula
 00 | 0 | 4 | PIDs supported [$01 - $20] | | | | Bit encoded [A7..D0] == [PID $01..PID $20] See below
@@ -91,23 +91,23 @@ PIDs; (hex) | PID; (Dec) | Data bytes returned | Description | Min value | Max v
 23 | 35 | 2 | Fuel Rail Gauge Pressure (diesel, or gasoline direct injection) | 0 | 655,350 | kPa | {\displaystyle 10(256A+B)}
 24 | 36 | 4 | Oxygen Sensor 1; AB: Air-Fuel Equivalence Ratio (lambda,λ); CD: Voltage | 0; 0
 
-=== Service 02 - Show freeze frame data ===
+### Service 02 - Show freeze frame data
 
 Service 02 accepts the same PIDs as service 01, with the same meaning, but information given is from when the freeze frame was created. Note that PID $02 is used to obtain the DTC that triggered the freeze frame.
 
 A person has to send the frame number in the data section of the message.
 
-=== Service 03 - Show stored Diagnostic Trouble Codes (DTCs) ===
+### Service 03 - Show stored Diagnostic Trouble Codes (DTCs)
 
 PID; (hex) | Data bytes returned | Description | Min value | Max value | Units | Formula
 N/A | n*6 | Request trouble codes | | | | 3 codes per message frame. See below
 
-=== Service 04 - Clear Diagnostic Trouble Codes and stored values ===
+### Service 04 - Clear Diagnostic Trouble Codes and stored values
 
 PID; (hex) | Data bytes returned | Description | Min value | Max value | Units | Formula
 N/A | 0 | Clear trouble codes / Malfunction indicator lamp (MIL) / Check engine light | | | | Clears all stored trouble codes and turns the MIL off.
 
-=== Service 05 - Test results, oxygen sensor monitoring (non CAN only) ===
+### Service 05 - Test results, oxygen sensor monitoring (non CAN only)
 
 PID; (hex) | Data bytes returned | Description | Min value | Max value | Units | Formula
 0100 | 4 | OBD Monitor IDs supported ($01 – $20) | 0x0 | 0xffffffff |
@@ -145,7 +145,7 @@ PID; (hex) | Data bytes returned | Description | Min value | Max value | Units |
 0210 | | O2 Sensor Monitor Bank 4 Sensor 4 | 0.00 | 1.275 | V | 0.005 Lean to Rich sensor threshold voltage
 PID; (hex) | Data bytes returned | Description | Min value | Max value | Units | Formula
 
-=== Service 09 - Request vehicle information ===
+### Service 09 - Request vehicle information
 
 PID; (hex) | Data bytes returned | Description | Min value | Max value | Units | Formula
 00 | 4 | Service 9 supported PIDs ($01 to $20) | | | | Bit encoded. [A7..D0] = [PID $01..PID $20] See below
@@ -162,11 +162,11 @@ PID; (hex) | Data bytes returned | Description | Min value | Max value | Units |
 0B | 4 | In-use performance tracking for compression ignition vehicles | | | | 5 messages, each one containing 4 bytes (two values). See below
 PID; (hex) | Data bytes returned | Description | Min value | Max value | Units | Formula
 
-=== Bitwise encoded PIDs ===
+### Bitwise encoded PIDs
 
 Some of the PIDs in the above table cannot be explained with a simple formula. A more elaborate explanation of these data is provided here:
 
-==== Service 01 PID 00 - Show PIDs supported ====
+#### Service 01 PID 00 - Show PIDs supported
 
 A request for this PID returns 4 bytes of data (Big-endian). Each bit, from MSB to LSB, represents one of the next 32 PIDs and specifies whether that PID is supported.
 
@@ -179,7 +179,7 @@ PID number | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 0A | 0B | 0C | 0D | 0E
 
 So, supported PIDs are: 01, 03, 04, 05, 06, 07, 0C, 0D, 0E, 0F, 10, 11, 13, 15, 1C, 1F and 20
 
-==== Service 01 PID 01 - Monitor status since DTCs cleared ====
+#### Service 01 PID 01 - Monitor status since DTCs cleared
 
 A request for this PID returns 4 bytes of data, labeled A, B, C and D.
 
@@ -228,11 +228,11 @@ Boost Pressure | C3 | D3
 NOx/SCR Monitor | C1 | D1
 NMHC Catalyst | C0 | D0
 
-==== Service 01 PID 41 - Monitor status this drive cycle ====
+#### Service 01 PID 41 - Monitor status this drive cycle
 
 A request for this PID returns 4 bytes of data. The data returned is of an identical form to that returned for PID 01, with one exception - the first byte is always zero.
 
-==== Service 01 PID 78 and 79 - Exhaust Gas temperature (EGT) Bank 1 and Bank 2 ====
+#### Service 01 PID 78 and 79 - Exhaust Gas temperature (EGT) Bank 1 and Bank 2
 
 A request for one of these two PIDs will return 9 bytes of data. PID 78 returns data relating to EGT sensors for bank 1, whilst PID 79 similarly returns data for bank 2. The first byte is a bit encoded field indicating which EGT sensors are supported for the respective bank.
 
@@ -254,7 +254,7 @@ A0 | EGT sensor 1 supported?
 
 Bytes B through I provide 16-bit integers indicating the temperatures of the sensors. The temperature values are interpreted in degrees Celsius in the range -40 to 6513.5 (scale 0.1), using the usual {\displaystyle (A\times 256+B)/10-40} formula (MSB is A, LSB is B). Only values for which the corresponding sensor is supported are meaningful.
 
-==== Service 03 (no PID required) - Show stored Diagnostic Trouble Codes ====
+#### Service 03 (no PID required) - Show stored Diagnostic Trouble Codes
 
 A request for this service returns a list of the DTCs that have been set. The list is encapsulated using the ISO 15765-2 protocol.
 
@@ -277,7 +277,7 @@ The resulting five-character code, e.g. "U0158", can be looked up in a table of 
 
 It is also worth noting that DTCs may sometimes be encountered in a four-character form, e.g. "C158", which is simply the plain hexadecimal representation of the two bytes, with proper decoding with respect to the category not having been performed.
 
-==== Service 09 PID 08 - In-use performance tracking for spark ignition engines ====
+#### Service 09 PID 08 - In-use performance tracking for spark ignition engines
 
 It provides information about track in-use performance for catalyst banks, oxygen sensor banks, evaporative leak detection systems, EGR systems and secondary air system.
 
@@ -310,7 +310,7 @@ SO2SCOND1 | Secondary O2 Sensor Monitor Conditions Encountered Counts Bank 1
 SO2SCOMP2 | Secondary O2 Sensor Monitor Completion Counts Bank 2
 SO2SCOND2 | Secondary O2 Sensor Monitor Conditions Encountered Counts Bank 2
 
-==== Service 09 PID 0B - In-use performance tracking for compression ignition engines ====
+#### Service 09 PID 0B - In-use performance tracking for compression ignition engines
 
 It provides information about track in-use performance for NMHC catalyst, NOx catalyst monitor, NOx adsorber monitor, PM filter monitor, exhaust gas sensor monitor, EGR/ VVT monitor, boost pressure monitor and fuel system monitor.
 
@@ -336,12 +336,12 @@ BPCOND | Boost Pressure Monitor Conditions Encountered Counts
 FUELCOMP | Fuel Monitor Completion Condition Counts
 FUELCOND | Fuel Monitor Conditions Encountered Counts
 
-=== Enumerated PIDs ===
+### Enumerated PIDs
 
 Some PIDs are to be interpreted specially, and aren't necessarily exactly bitwise encoded, or in any scale.
 The values for these PIDs are enumerated.
 
-==== Service 01 PID 03 - Fuel system status ====
+#### Service 01 PID 03 - Fuel system status
 
 A request for this PID returns 2 bytes of data. The first byte describes fuel system #1. The second byte describes fuel system #2 (if it exists) and is encoded identically to the first byte. The meaning assigned to the value of each byte is as follows:
 
@@ -355,7 +355,7 @@ Value | Description
 
 Any other value is an invalid response.
 
-==== Service 01 PID 12 - Commanded secondary air status ====
+#### Service 01 PID 12 - Commanded secondary air status
 
 A request for this PID returns a single byte of data which describes the secondary air status.
 
@@ -367,7 +367,7 @@ Value | Description
 
 Any other value is an invalid response.
 
-==== Service 01 PID 1C - OBD standards this vehicle conforms to ====
+#### Service 01 PID 1C - OBD standards this vehicle conforms to
 
 A request for this PID returns a single byte of data which describes which OBD standards this ECU was designed to comply with. The different values the data byte can hold are shown below, next to what they mean:
 
@@ -410,7 +410,7 @@ Value (dec) | Description
 53-250 | Reserved
 251-255 | Not available for assignment (SAE J1939 special meaning)
 
-==== Service 01 PID 51 - Fuel Type Coding ====
+#### Service 01 PID 51 - Fuel Type Coding
 
 This PID returns a value from an enumerated list giving the fuel type of the vehicle. The fuel type is returned as a single byte, and the value is given by the following table:
 
@@ -442,7 +442,7 @@ Value | Description
 
 Any other value is reserved by ISO/SAE. There are currently no definitions for flexible-fuel vehicle.
 
-== Non-standard PIDs ==
+## Non-standard PIDs
 
 The majority of all OBD-II PIDs in use are non-standard. For most modern vehicles, there are many more functions supported on the OBD-II interface than are covered by the standard PIDs, and there is relatively minor overlap between vehicle manufacturers for these non-standard PIDs.
 
@@ -462,7 +462,7 @@ Honda | $5,000
 Suzuki | $1,000
 BMW | $25,500 plus $2,000 per update. Updates occur annually.
 
-== CAN (11-bit) bus format ==
+## CAN (11-bit) bus format
 
 As defined in ISO 15765-4, emissions protocols (including OBD-II, EOBD, UDS, etc.) use the ISO-TP transport layer (ISO 15765-2). All CAN frames sent using ISO-TP use a data length of 8 bytes (and DLC of 8). It is recommended to pad the unused data bytes with 0xCC.
 
@@ -472,7 +472,7 @@ This approach allows up to eight ECUs, each independently responding to OBD quer
 
 CAN bus may also be used for communication beyond the standard OBD messages. Physical addressing uses particular CAN IDs for specific modules (e.g., 720h for the instrument cluster in Fords) with proprietary frame payloads.
 
-=== Query ===
+### Query
 
 The functional PID query is sent to the vehicle on the CAN bus at ID 7DFh, using 8 data bytes. The bytes are:
 
@@ -481,7 +481,7 @@ PID Type | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
 SAE Standard | Number of; additional; data bytes:; 2 | Service; 01 = show current data;; 02 = freeze frame;; etc. | PID code; (e.g.: 05 = Engine coolant temperature) | not used; (ISO 15765-2 suggests CCh)
 Vehicle specific | Number of; additional; data bytes:; 3 | Custom service: (e.g.: 22 = enhanced data) | PID code; (e.g.: 4980h) | not used; (ISO 15765-2 suggests CCh)
 
-=== Response ===
+### Response
 
 The vehicle responds to the PID query on the CAN bus with message IDs that depend on which module responded. Typically the engine or main ECU responds at ID 7E8h. Other modules, like the hybrid controller or battery controller in a Prius, respond at 07E9h, 07EAh, 07EBh, etc. These are 8h higher than the physical address the module responds to. Even though the number of bytes in the returned value is variable, the message uses 8 data bytes regardless (CAN bus protocol form Frameformat with 8 data bytes).
 The bytes are:

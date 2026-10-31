@@ -25,7 +25,7 @@ The light generally has two stages: steady (indicating a minor repairable fault,
 
 In the United States, specific functions are required of the check engine light by EPA regulations.
 
-== History ==
+## History
 
 Some older vehicles had a single indicator labeled "trouble" or "engine"; this was not a check engine light, but a tell-tale meant to indicate serious trouble with the engine (low oil pressure, overheating, or charging system problems) and an imminent breakdown. This usage of the "engine" light was discontinued in the mid-1980s, to prevent confusion with the check engine light.[citation needed]
 

@@ -20,7 +20,7 @@ On-board diagnostics (OBD) is a term referring to a vehicle's self-diagnostic an
 
 OBD systems give the vehicle owner or repair technician access to the status of the various vehicle sub-systems. The amount of diagnostic information available via OBD has varied widely since its introduction in the early 1980s versions of onboard vehicle computers. Early versions of OBD would simply illuminate a tell-tale light if a problem was detected, but would not provide any information as to the nature of the problem. Modern OBD implementations use a standardized digital communications port to provide real-time data and diagnostic trouble codes which allow malfunctions within the vehicle to be rapidly identified.
 
-== History ==
+## History
 
 - 1968: Volkswagen introduces the first on-board computer system, in their fuel-injected Type 3 models. This system is entirely analog with no diagnostic capabilities.
 
@@ -56,15 +56,15 @@ OBD systems give the vehicle owner or repair technician access to the status of 
 
 - 2010: Required phase-in of the OBD-II specification to all vehicles with a gross vehicle weight rating of 14,000 lb (6,400 kg) and above was initiated in the United States. This was completed by the 2013 model year. Vehicles that did not have OBD-II during this time period were required to have EMD/EMD+.
 
-== Standard interfaces ==
+## Standard interfaces
 
-=== ALDL ===
+### ALDL
 
 Main article: ALDL
 
 GM's ALDL (Assembly Line Diagnostic Link) is sometimes referred to as a predecessor to, or a manufacturer's proprietary version of, an OBD-I diagnostic starting in 1981. This interface was made in different varieties and changed with power train control modules (aka PCM, ECM, ECU). Different versions had slight differences in pin-outs and baud rates. Earlier versions used a 160 baud rate, while later versions went up to 8192 baud and used bi-directional communications to the PCM.
 
-=== OBD-I ===
+### OBD-I
 
 The regulatory intent of OBD-I was to encourage auto manufacturers to design reliable emission control systems that remain effective for the vehicle's "useful life". The hope was that by forcing annual emissions testing for California starting in 1988, and denying registration to vehicles that did not pass, drivers would tend to purchase vehicles that would more reliably pass the test. OBD-I was largely unsuccessful, as the means of reporting emissions-specific diagnostic information was not standardized. Technical difficulties with obtaining standardized and reliable emissions information from all vehicles led to an inability to implement the annual testing program effectively.
 
@@ -72,7 +72,7 @@ The Diagnostic Trouble Codes (DTCs) of OBD-I vehicles can usually be found witho
 
 Holding down 'Off' and 'Warmer' for several seconds activates the diagnostic mode without the need for an external scan tool. Some Honda engine computers are equipped with LEDs that light up in a specific pattern to indicate the DTC. General Motors, some 1989–1995 Ford vehicles (DCL), and some 1989–1995 Toyota/Lexus vehicles have a live sensor data stream available; however, many other OBD-I equipped vehicles do not. OBD-I vehicles have fewer DTCs available than OBD-II equipped vehicles.[original research?]
 
-=== OBD-1.5 ===
+### OBD-1.5
 
 OBD 1.5 refers to a partial implementation of OBD-II which General Motors used on some vehicles in 1994, 1995 & 1996 (GM did not use the term OBD 1.5 in the documentation for these vehicles — they simply had an OBD and an OBD-II section in the service manual).
 
@@ -93,11 +93,11 @@ Additional vehicle-specific diagnostic and control circuits are also available o
 
 An OBD 1.5 has also been used in the Ford Scorpio since 95.
 
-=== OBD-II ===
+### OBD-II
 
 OBD-II is an improvement over OBD-I in both capability and standardization. The OBD-II standard specifies the type of diagnostic connector and its pinout, the electrical signalling protocols available, and the messaging format. It also provides a candidate list of vehicle parameters to monitor along with how to encode the data for each. There is a pin in the connector that provides power for the scan tool from the vehicle battery, which eliminates the need to connect a scan tool to a power source separately. However, some technicians might still connect the scan tool to an auxiliary power source to protect data in the unusual event that a vehicle experiences a loss of electrical power due to a malfunction. Finally, the OBD-II standard provides an extensible list of DTCs. As a result of this standardization, a single device can query the on-board computer(s) in any vehicle. This OBD-II came in two models OBD-IIA and OBD-IIB. OBD-II standardization was prompted by emissions requirements, and though only emission-related codes and data are required to be transmitted through it, most manufacturers have made the OBD-II Data Link Connector the only one in the vehicle through which all systems are diagnosed and programmed. OBD-II Diagnostic Trouble Codes are 4-digit, preceded by a letter: P for powertrain (engine and transmission), B for body, C for chassis, and U for network.
 
-==== OBD-II diagnostic connector ====
+#### OBD-II diagnostic connector
 
 Female OBD-II connector on a car
 
@@ -120,7 +120,7 @@ SAE J1962 defines the pinout of the connector as:
 
 The assignment of unspecified pins is left to the vehicle manufacturer's discretion.
 
-=== EOBD ===
+### EOBD
 
 The European on-board diagnostics (EOBD) regulations are the European equivalent of OBD-II, and apply to all passenger cars of category M1 (with no more than 8 passenger seats and a Gross Vehicle Weight rating of 2,500 kg, 5,500 lb or less) first registered within EU member states since January 1, 2001 for petrol-engined cars and since January 1, 2004 for diesel engined cars.
 
@@ -132,7 +132,7 @@ The technical implementation of EOBD is essentially the same as OBD-II, with the
 
 With Euro V and Euro VI emission standards, EOBD emission thresholds are lower than previous Euro III and IV.
 
-==== EOBD fault codes ====
+#### EOBD fault codes
 
 Each of the EOBD fault codes consists of five characters: a letter, followed by four numbers. The letter refers to the system being interrogated e.g. Pxxxx would refer to the powertrain system. The next character would be a 0 if complies to the EOBD standard. So it should look like P0xxx.
 
@@ -158,15 +158,15 @@ The next character would refer to the sub system.
 
 The following two characters would refer to the individual fault within each subsystem.
 
-=== EOBD2 ===
+### EOBD2
 
 The term "EOBD2" is marketing speak used by some vehicle manufacturers to refer to manufacturer-specific features that are not actually part of the OBD or EOBD standard. In this case "E" stands for Enhanced.
 
-=== JOBD ===
+### JOBD
 
 JOBD is a version of OBD-II for vehicles sold in Japan.
 
-=== ADR 79/01 & 79/02 (Australian OBD standard) ===
+### ADR 79/01 & 79/02 (Australian OBD standard)
 
 The ADR 79/01 Vehicle Standard (Australian Design Rule 79/01 – Emission Control for Light Vehicles, 2005) is the Australian equivalent of OBD-II. It applies to all vehicles of category M1 and N1 with a Gross Vehicle Weight rating of 3,500 kg (7,700 lb) or less, registered from new within Australia and produced since January 1, 2006 for petrol-engined cars and since January 1, 2007 for diesel-engined cars.
 
@@ -174,11 +174,11 @@ For newly introduced models, the regulation dates applied a year earlier – Jan
 
 The technical implementation of this standard is essentially the same as OBD-II, with the same SAE J1962 diagnostic link connector and signal protocols being used.
 
-=== EMD/EMD+ ===
+### EMD/EMD+
 
 In North America, EMD and EMD+ are on-board diagnostic systems that were used on vehicles with a gross vehicle weight rating of 14,000 lb (6,400 kg) or more between the 2007 and 2012 model years if those vehicles did not already implement OBD-II. EMD was used on California emissions vehicles between model years 2007 and 2009 that did not already have OBD-II. EMD was required to monitor fuel delivery, exhaust gas recirculation, the diesel particulate filter (on diesel engines), and emissions-related powertrain control module inputs and outputs for circuit continuity, data rationality, and output functionality. EMD+ was used on model year 2010-2012 California and Federal petrol-engined vehicles with a gross vehicle weight rating of over 14,000 lb (6,400 kg), it added the ability to monitor nitrogen oxide catalyst performance. EMD and EMD+ are similar to OBD-I in logic but use the same SAE J1962 data connector and CAN bus as OBD-II systems.
 
-== OBD-II signal protocols ==
+## OBD-II signal protocols
 
 Five signaling protocols are permitted with the OBD-II interface. Most vehicles implement only one of the protocols. It is often possible to deduce the protocol used based on which pins are present on the J1962 connector:
 
@@ -242,11 +242,11 @@ Five signaling protocols are permitted with the OBD-II interface. Most vehicles 
 
 All OBD-II pinouts use the same connector, but different pins are used with the exception of pin 4 (battery ground) and pin 16 (battery positive).
 
-=== OBD-II diagnostic data available ===
+### OBD-II diagnostic data available
 
 OBD-II provides access to data from the engine control unit (ECU) and offers a valuable source of information when troubleshooting problems inside a vehicle. The SAE J1979 standard defines a method for requesting various diagnostic data and a list of standard parameters that might be available from the ECU. The various available parameters are addressed by "parameter identification numbers" or PIDs which are defined in J1979. For a list of basic PIDs, their definitions, and the formula to convert raw OBD-II output to meaningful diagnostic units, see OBD-II PIDs. Manufacturers are not required to implement all PIDs listed in J1979 and they are allowed to include proprietary PIDs that are not listed. The PID request and data retrieval system gives access to real time performance data as well as flagged DTCs. For a list of generic OBD-II DTCs suggested by the SAE, see #OBD-II diagnostic trouble codes. Individual manufacturers often enhance the OBD-II code set with additional proprietary DTCs.
 
-=== Mode of operation/OBD services ===
+### Mode of operation/OBD services
 
 Here is a basic introduction to the OBD communication protocol according to ISO 15031. In SAE J1979 these "modes" were renamed to "services", starting in 2003.
 
@@ -304,11 +304,11 @@ Here is a basic introduction to the OBD communication protocol according to ISO 
 
 - Service / Mode $0A lists emission-related "permanent" diagnostic trouble codes stored. As per CARB, any diagnostic trouble codes that is commanding MIL on and stored into non-volatile memory shall be logged as a permanent fault code. See #OBD-II_diagnostic_trouble_codes.
 
-== Applications ==
+## Applications
 
 Various tools are available that plug into the OBD connector to access OBD functions. These range from simple generic consumer-level tools to sophisticated OEM dealership tools and vehicle telematic devices.
 
-=== Hand-held scan tools ===
+### Hand-held scan tools
 
 Multi-brand vehicle diagnostics system handheld Autoboss V-30 with adapters for connectors of several vehicle manufacturers.
 
@@ -326,17 +326,17 @@ A range of hand-held scan tools is available.
 
 - Real-time monitoring or graphing of engine parameters to facilitate diagnosis or tuning
 
-=== Mobile device-based tools and analysis ===
+### Mobile device-based tools and analysis
 
 Mobile device applications allow mobile devices such as cell phones and tablets to display and manipulate OBD-II data accessed via USB adaptor cables or Bluetooth adapters plugged into the car's OBD II connector. Newer devices on the market are equipped with GPS sensors and the ability to transmit vehicle location and diagnostics data over a cellular network. Modern OBD-II devices can be used for locating vehicles and monitoring driving behavior in addition to reading Diagnostic Trouble Codes (DTC). More advanced devices allow users to reset engine DTCs, effectively turning off engine lights in the dashboard; however, resetting the codes does not address the underlying issues and can lead to engine damage if a serious issue is left unattended.
 
-=== OBD-II software ===
+### OBD-II software
 
 An OBD-II software package, when installed on a computer (Windows, Mac, or Linux), can help diagnose the onboard system, read and erase DTCs, turn off the MIL, show real-time data, and measure vehicle fuel economy.
 
 Using OBD-II software requires an OBD-II adapter (commonly using Bluetooth, Wi-Fi or USB) plugged into the OBD-II port to enable the vehicle to connect with the computer where the software is installed.
 
-=== PC-based scan tools and analysis platforms ===
+### PC-based scan tools and analysis platforms
 
 Typical simple USB KKL diagnostic interface without protocol logic for signal level adjustment.
 
@@ -356,7 +356,7 @@ In addition to the functions of a hand-held scan tool, PC-based tools generally 
 
 The extent that a PC tool may access manufacturer- or vehicle-specific ECU diagnostics varies between software products as it does between hand-held scanners.
 
-=== Data loggers ===
+### Data loggers
 
 TEXA OBD log. Small data logger with the possibility to read out the data later on PC via USB.
 
@@ -372,13 +372,13 @@ Data logging uses include:
 
 Analysis of vehicle black box data may be performed periodically, automatically transmitted wirelessly to a third party, or retrieved for forensic analysis after an event such as an accident, traffic infringement, or mechanical fault.
 
-=== Emission testing ===
+### Emission testing
 
 In the United States, many states now use OBD-II testing instead of tailpipe testing in OBD-II-compliant vehicles (1996 and newer). Since OBD-II stores trouble codes for emissions equipment, the testing computer can query the vehicle's onboard computer and verify there are no emission-related trouble codes and that the vehicle is in compliance with emission standards for the model year it was manufactured.
 
 In the Netherlands, 2006 and later vehicles get a yearly EOBD emission check.
 
-=== Driver's supplementary vehicle instrumentation ===
+### Driver's supplementary vehicle instrumentation
 
 Driver's supplementary vehicle instrumentation is instrumentation installed in a vehicle in addition to that provided by the vehicle manufacturer and intended for display to the driver during normal operation. This is opposed to scanners used primarily for active fault diagnosis, tuning, or hidden data logging.
 
@@ -390,7 +390,7 @@ As a carputer is essentially a PC, the same software could be loaded as for PC-b
 
 These enthusiast systems may also include some functionality similar to the other scan tools.
 
-=== Vehicle telematics ===
+### Vehicle telematics
 
 OBD II information is a data source for fleet telematics systems. Devices that perform fleet management functions such as fleet tracking, monitoring fuel efficiency, and preventing unsafe driving often connect to the OBD-II port. The port is also used for remote diagnostics and by pay-as-you-drive insurance.
 
@@ -398,7 +398,7 @@ Hundreds of different hardware manufacturers produce OBD-II telematics devices. 
 
 Commonly supported OBD II data such as vehicle speed, RPM, and fuel level allow these devices to monitor vehicle idling times, speeding, and over-revving. Monitoring OBD II DTCs can alert a company to a vehicle's engine problems by providing the relevant diagnostic code. Other sensor data from the port can be used to detect unsafe driving in real time. This detection is done by adding a complex events processor (CEP) to the backend and on the client's interface. OBD II is also monitored to block mobile phones when driving and to record trip data for insurance purposes.
 
-== OBD-II diagnostic trouble codes ==
+## OBD-II diagnostic trouble codes
 
 OBD-II diagnostic trouble codes (DTCs) are five characters long, with the first letter indicating a category, and the remaining four being a hexadecimal number.
 
@@ -454,9 +454,9 @@ The third character may denote a particular vehicle system that the fault relate
 
 Finally the fourth and fifth characters define the exact problem detected.
 
-== Standards documents ==
+## Standards documents
 
-=== SAE standards documents on OBD-II ===
+### SAE standards documents on OBD-II
 
 - J1962 – Defines the physical connector used for the OBD-II interface.
 
@@ -480,11 +480,11 @@ Finally the fourth and fifth characters define the exact problem detected.
 
 - J2411 – Describes the GMLAN (Single-Wire CAN) protocol, used in newer GM vehicles. Often accessible on the OBD connector as PIN 1 on newer GM vehicles
 
-=== SAE standards documents on HD (Heavy Duty) OBD ===
+### SAE standards documents on HD (Heavy Duty) OBD
 
 - J1939 – Defines a data protocol for heavy duty commercial vehicles
 
-=== ISO standards ===
+### ISO standards
 
 - ISO 9141: Road vehicles – Diagnostic systems. International Organization for Standardization, 1989.
 
@@ -540,7 +540,7 @@ Finally the fourth and fifth characters define the exact problem detected.
 
 - Part 4: Requirements for emissions-related systems
 
-== Security issues ==
+## Security issues
 
 In 2012, researchers at the University of Washington and University of California examined the security around OBD and found that they were able to gain control over many vehicle components via the interface. Furthermore, they were able to upload new firmware into the engine control units. Their conclusion is that vehicle embedded systems are not designed with security in mind.
 

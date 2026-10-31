@@ -17,7 +17,7 @@ The term "unified" refers to the fact that UDS is an international standard rath
 
 Modern vehicles have a diagnostic interface for on-board diagnostics, which makes it possible to connect a computer (client) or diagnostics tool, which is referred to as tester, to the communication system of the vehicle. Thus, UDS requests can be sent to the controllers which provide responses (this may be positive or negative). This makes it possible to interrogate the fault memory of the individual control units, to update them with new firmware, have low-level interaction with their hardware (e.g. to turn a specific output on or off), or to make use of special functions (referred to as routines) to attempt to understand the environment and operating conditions of an ECU to be able to diagnose faulty or otherwise undesirable behavior.
 
-== Services ==
+## Services
 
 SID (Service Identifier)
 
@@ -50,7 +50,7 @@ Request Service Identifier (SID) | Response Service Identifier (RSID) | Service 
 0x86 | 0xC6 | ResponseOnEvent | ResponseOnEvent service allows the client to define events and request messages that the server is supposed to respond to when the event occurs. This can be used to diagnose complicated issues. For example the client can request from the server to respond to ReadMemoryByAddress request (to provide detailed information about the reason for DTC reporting) when testFailed bit of a certain DTC is set.
 0x87 | 0xC7 | LinkControl | LinkControl service allows the client to change physical connection parameters. As an example, for CAN bus, the client could change baudrate and version of CAN protocol (e.g. from CAN-FD to Classical CAN).
 
-== Diagnostic Message ==
+## Diagnostic Message
 
 There are two types of diagnostic messages transmitted using UDS protocol:
 
@@ -58,23 +58,23 @@ There are two types of diagnostic messages transmitted using UDS protocol:
 
 - Response
 
-=== Request Message ===
+### Request Message
 
 Request messages are transmitted by a Client towards one or more Servers.
 
 Service Identifier (SID) is the first byte in each request message.
 
-=== Response Message ===
+### Response Message
 
 Response messages are transmitted by Servers to a Client.
 
 The first byte in the response message is usually Response Service Identifier (RSID) value (with the exception of following responses to ReadDataByPeriodicIdentifier service).
 
-==== Positive Response Message ====
+#### Positive Response Message
 
 Format of each positive response message is specific for the diagnostic service it relates to.
 
-==== Negative Response Message ====
+#### Negative Response Message
 
 Negative Response Message format
 

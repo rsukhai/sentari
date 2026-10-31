@@ -21,7 +21,7 @@ A spark plug (sometimes, in British English, a sparking plug, and, colloquially,
 
 Spark plugs may also be used for other purposes; in Saab Direct Ignition when they are not firing, spark plugs are used to measure ionization in the cylinders – this ionic current measurement is used to replace the ordinary cam phase sensor, knock sensor and misfire measurement function. Spark plugs may also be used in other applications such as furnaces wherein a combustible fuel/air mixture must be ignited. In this case, they are sometimes referred to as flame igniters.[citation needed]
 
-== History ==
+## History
 
 In 1860 Étienne Lenoir used an electric spark plug in his gas engine, the first internal combustion piston engine. Lenoir is generally credited with the invention of the spark plug.
 
@@ -30,7 +30,7 @@ Early patents for spark plugs included those by Nikola Tesla (in U.S. patent 609
 In 1902, Robert Bosch's engineer Gottlob Honold invented the first commercially viable high-voltage spark plug as part of a magneto-based ignition system. This finally made possible the development of the spark-ignition engine. Subsequent manufacturing improvements can be credited to Albert Champion, to the Lodge brothers, sons of Sir Oliver Lodge, who developed and manufactured their father's idea and also to Kenelm Lee Guinness, of the Guinness brewing family, who developed the KLG brand.
 Helen Blair Bartlett played a vital role in making the insulator in 1930.
 
-== Operation ==
+## Operation
 
 Components of a typical, four stroke cycle, DOHC piston engine.
 - (E) Exhaust camshaft
@@ -55,19 +55,19 @@ As the current of electrons surges across the gap, it raises the temperature of 
 
 The heat and pressure force the gases to react with each other, and at the end of the spark event there should be a small ball of fire in the spark gap as the gases burn on their own. The size of this fireball, or kernel, depends on the exact composition of the mixture between the electrodes and the level of combustion chamber turbulence at the time of the spark. A small kernel will make the engine run as though the ignition timing was delayed, and a large one as though the timing was advanced.[citation needed]
 
-== Spark plug construction ==
+## Spark plug construction
 
 A spark plug is composed of a shell, insulator and the central conductor. It passes through the wall of the combustion chamber and therefore must also seal the combustion chamber against high pressures and temperatures without deteriorating over long periods of time and extended use.
 
 Spark plugs are specified by size, either thread or nut (often referred to as Euro), sealing type (taper or crush washer), and spark gap. Common thread (nut) sizes in Europe are 10 mm (16 mm), 14 mm (21 mm; sometimes, 16 mm), and 18 mm (24 mm, sometimes, 21 mm). In the United States, common thread (nut) sizes are 10mm (16mm), 12mm (14mm, 16mm or 17.5mm), 14mm (16mm, 20.63mm) and 18mm (20.63mm).
 
-=== Parts of the plug ===
+### Parts of the plug
 
-==== Terminal ====
+#### Terminal
 
 The top of the spark plug contains a terminal to connect to the ignition system. Over the years, variations in the terminal configuration have been introduced by manufacturers. The exact terminal construction varies depending on the use of the spark plug. Most passenger car spark plug wires snap onto the terminal of the plug, but some wires have eyelet connectors which are fastened onto the plug under a nut. The standard solid non-removable nut SAE configuration is common for many cars and trucks. Plugs which are used for these applications often have the end of the terminal serve a double purpose as the nut on a thin threaded shaft so that they can be used for either type of connection. This type of spark plug has a removable nut or knurl, which enables its users to attach them to two different kinds of spark plug boots. Some spark plugs have a bare thread, which is a common type for motorcycles and ATVs. Finally, in very recent years, a cup-style terminal has been introduced, which allows for a longer ceramic insulator in the same confined space.
 
-==== Insulator ====
+#### Insulator
 
 The main part of the insulator is typically made from sintered alumina (Al2O3), a very hard ceramic material with high dielectric strength, printed with the manufacturer's name and identifying marks, then glazed to improve resistance to surface spark tracking. Its major functions are to provide mechanical support and electrical insulation for the central electrode, while also providing an extended spark path for flashover protection. This extended portion, particularly in engines with deeply recessed plugs, helps extend the terminal above the cylinder head so as to make it more readily accessible.
 
@@ -75,11 +75,11 @@ Dissected modern spark plug showing the one-piece sintered alumina insulator. Th
 
 A further feature of sintered alumina is its good heat conduction, reducing the tendency for the insulator to glow with heat and so light the mixture prematurely.
 
-==== Ribs ====
+#### Ribs
 
 By lengthening the surface between the high voltage terminal and the grounded metal case of the spark plug, the physical shape of the ribs functions to improve the electrical insulation and prevent electrical energy from leaking along the insulator surface from the terminal to the metal case. The disrupted and longer path makes the electricity encounter more resistance along the surface of the spark plug even in the presence of dirt and moisture. Some spark plugs are manufactured without ribs; improvements in the dielectric strength of the insulator make them less important.[citation needed]
 
-==== Insulator tip ====
+#### Insulator tip
 
 Two spark plugs in comparison views in multiple angles, one of which is consumed regularly, while the other has the insulating ceramic broken and the central electrode shortened, due to manufacturing defects and / or temperature swing
 
@@ -89,15 +89,15 @@ Older spark plugs, particularly in aircraft, used an insulator made of stacked l
 
 With the development of leaded petrol in the 1930s, lead deposits on the mica became a problem and reduced the interval between needing to clean the spark plug. Sintered alumina was developed by Siemens in Germany to counteract this. Sintered alumina is a superior material to mica or porcelain because it is a relatively good thermal conductor for a ceramic, it maintains good mechanical strength and (thermal) shock resistance at higher temperatures, and this ability to run hot allows it to be run at "self cleaning" temperatures without rapid degradation. It also allows a simple single piece construction at low cost but high mechanical reliability. The dimensions of the insulator and the metal conductor core determine the heat range of the plug. Short insulators are usually "cooler" plugs, while "hotter" plugs are made with a lengthened path to the metal body, though this also depends on the thermally conductive metal core.
 
-==== Seals ====
+#### Seals
 
 Because the spark plug also seals the combustion chamber of the engine when installed, seals are required to ensure there is no leakage from the combustion chamber. The internal seals of modern plugs are made of compressed glass/metal powder, but old style seals were typically made by the use of a multi-layer braze. The external seal is usually a crush washer, but some manufacturers use the cheaper method of a taper interface and simple compression to attempt sealing.
 
-==== Metal case/shell ====
+#### Metal case/shell
 
 The metal case/shell (or the jacket, as many people call it) of the spark plug withstands the torque of tightening the plug, serves to remove heat from the insulator and pass it on to the cylinder head, and acts as the ground for the sparks passing through the central electrode to the side electrode. Spark plug threads are cold rolled to prevent thermal cycle fatigue. It's important to install spark plugs with the correct "reach," or thread length. Spark plugs can vary in reach from 0.095 to 2.649 cm (0.0375 to 1.043 in), such for automotive and small engine applications. Also, a marine spark plug's shell is double-dipped, zinc-chromate coated metal.
 
-==== Central electrode ====
+#### Central electrode
 
 Central and lateral electrodes
 
@@ -121,11 +121,11 @@ The development of noble metal high temperature electrodes (using metals such as
 
 Polonium spark plugs were marketed by Firestone from 1940 to 1953. While the amount of radiation from the plugs was minuscule and not a threat to the consumer, the benefits of such plugs quickly diminished after approximately a month because of polonium's short half-life, and because buildup on the conductors would block the radiation that improved engine performance. The premise behind the polonium spark plug, as well as Alfred Matthew Hubbard's prototype radium plug that preceded it, was that the radiation would improve ionization of the fuel in the cylinder and thus allow the plug to fire more quickly and efficiently.
 
-==== Side (ground, earth) electrode ====
+#### Side (ground, earth) electrode
 
 The side electrode (also known as the "ground strap") is made from high nickel steel and is welded or hot forged to the side of the metal shell. The side electrode also runs very hot, especially on projected nose plugs. Some designs have provided a copper core to this electrode, so as to increase heat conduction. Multiple side electrodes may also be used, so that they don't overlap the central electrode. The ground electrode can also have small pads of platinum or even iridium added to them in order to increase service life.
 
-=== Spark plug gap ===
+### Spark plug gap
 
 Gap gauge: A disk with a tapered edge; the edge is thicker going counter-clockwise, and a spark plug will be hooked along the edge to check the gap.
 
@@ -135,23 +135,23 @@ A spark plug gap gauge is a disc with a sloping edge, or with round wires of pre
 
 The gap adjustment (also called "spark plug gapping") can be crucial to proper engine operation. A narrow gap may give too small and weak a spark to effectively ignite the fuel-air mixture, but the plug will almost always fire on each cycle. A gap that is too wide might prevent a spark from firing at all or may misfire at high speeds, but will usually have a spark that is strong for a clean burn. A spark which intermittently fails to ignite the fuel-air mixture may not be noticeable directly, but will show up as a reduction in the engine's power and fuel efficiency. Gap adjustment is not recommended for iridium and platinum spark plugs, because there is a risk of damaging a metal disk welded to the electrode.
 
-=== Variations on the basic design ===
+### Variations on the basic design
 
 Spark plug with two side (ground) electrodes
 
 Over the years variations on the basic spark plug design have attempted to provide either better ignition, longer life, or both. Such variations include the use of two, three, or four equally spaced ground electrodes surrounding the central electrode. Other variations include using a recessed central electrode surrounded by the spark plug thread, which effectively becomes the ground electrode (see "surface-discharge spark plug", below). Also there is the use of a V-shaped notch in the tip of the ground electrode. Multiple ground electrodes generally provide longer life, as when the spark gap widens due to electric discharge wear, the spark moves to another closer ground electrode. The disadvantage of multiple ground electrodes is that a shielding effect can occur in the engine combustion chamber inhibiting the flame face as the fuel air mixture burns. This can result in a less efficient burn and increased fuel consumption. They also are difficult or nearly impossible to adjust to another uniform gap size.
 
-=== Surface-discharge spark plug ===
+### Surface-discharge spark plug
 
 A piston engine has a part of the combustion chamber that is always out of reach of the piston; and this zone is where the conventional spark plug is located. A Wankel engine has a permanently varying combustion area; and the spark plug is inevitably swept by the rotor's apex seals. If a spark plug were to protrude into the Wankel's combustion chamber it would be hit by the passing apex seal, but if the plug were recessed to avoid this, mixture access to the spark would be reduced, leading to misfire or incomplete combustion. So a new type of "surface discharge" plug was developed, presenting an almost flat face to the combustion chamber. A stubby centre electrode projects only very slightly, and the entire earthed body of the plug acts as the side electrode. The electrodes thus sit just beyond the reach of the passing apex seal, while the spark is accessible to the fuel/air mixture. The arc gap remains constant throughout the entire service life of a surface-gap spark plug, and the spark path will continually vary (instead of darting from the centre to the side electrode as in a conventional plug).[citation needed] A further advantage of the surface-gap design is that the side electrode cannot break off and potentially cause engine damage, though this also doesn't often happen with conventional spark plugs.[citation needed]
 
-=== Sealing to the cylinder head ===
+### Sealing to the cylinder head
 
 Old spark plug removed from a car, new one ready to install.
 
 Most spark plugs seal to the cylinder head with a single-use hollow or folded metal washer which is crushed slightly between the flat surface of the head and that of the plug, just above the threads. Some spark plugs have a tapered seat that uses no washer. The torque for installing these plugs is supposed to be lower than a washer-sealed plug. Spark plugs with tapered seats should never be installed in vehicles with heads requiring washers, and vice versa. Otherwise, a poor seal or incorrect reach would result because of the threads not properly seating in the heads.
 
-=== Tip protrusion ===
+### Tip protrusion
 
 Different spark plug sizes. The left and centre plugs are identical in threading, electrodes, tip protrusion, and heat range. The centre plug is a compact variant, with smaller hex and porcelain portions outside the head, to be used where space is limited. The rightmost plug has a longer threaded portion, to be used in a thicker cylinder head.
 
@@ -159,7 +159,7 @@ The length of the threaded portion of the plug should be closely matched to the 
 
 The protrusion of the tip into the chamber also affects plug performance, however; the more centrally located the spark gap is, generally the better the ignition of the air-fuel mixture will be, although experts believe the process is more complex and dependent on combustion chamber shape. On the other hand, if an engine is "burning oil", the excess oil leaking into the combustion chamber tends to foul the plug tip and inhibit the spark; in such cases, a plug with less protrusion than the engine would normally call for often collects less fouling and performs better, for a longer period. Special "anti-fouling" adapters are sold which fit between the plug and the head to reduce the protrusion of the plug for just this reason, on older engines with severe oil burning problems; this will cause the ignition of the fuel-air mixture to be less effective, but in such cases, this is of lesser significance.
 
-== Heat range ==
+## Heat range
 
 Construction of hot and cold spark plugs – a longer insulator tip makes the plug hotter
 
@@ -175,7 +175,7 @@ It was common before the modern era of computerized fuel injection to specify at
 
 Spark plug manufacturers use different numbers to denote heat range of their spark plugs. Some manufacturers, such as Denso and NGK, have numbers that become higher as they get colder. By contrast, Champion, Bosch, BRISK, Beru, and ACDelco use a heat range system in which the numbers become bigger as the plugs get hotter. As a result, heat range numbers need to be translated between the different manufacturers and cannot be casually interchanged as equals.
 
-== Reading spark plugs ==
+## Reading spark plugs
 
 The spark plug's firing end will be affected by the internal environment of the combustion chamber. As the spark plug can be removed for inspection, the effects of combustion on the plug can be examined. An examination, or "reading" of the characteristic markings on the firing end of the spark plug can indicate conditions within the running engine. Engine and spark plug manufacturers will publish information about the characteristic markings in spark plug reading charts.
 
@@ -187,6 +187,6 @@ Spark plug reading viewers, which are simply combined flashlight/magnifiers, are
 
 Two spark plug viewers
 
-== Indexing spark plugs ==
+## Indexing spark plugs
 
 "Indexing" of plugs upon installation involves installing the spark plug so that the open area of its gap, not shrouded by the ground electrode, faces the center of the combustion chamber rather than one of its walls. The theory holds that this will maximize the exposure of the fuel-air mixture to the spark, also ensuring that every combustion chamber is even in layout and therefore resulting in better ignition. Indexing is accomplished by marking the location of the gap on the outside of the plug, installing it, and noting the direction in which the mark faces. Then the plug is removed and washers are added to change the orientation of the tightened plug. This must be done individually for each plug, as the orientation of the gap with respect to the threads of the shell is random. Some plugs are made with a non-random orientation of the gap and are usually marked as such by a suffix to the model number; typically these are specified by manufacturers of very small engines where the spark plug tip and electrodes form a significantly large part of the shape of the combustion chamber.

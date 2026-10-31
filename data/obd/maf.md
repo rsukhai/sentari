@@ -23,7 +23,7 @@ There are two common types of mass airflow sensors in use on automotive engines:
 
 When a MAF sensor is used in conjunction with an oxygen sensor, the engine's air/fuel ratio can be controlled very accurately. The MAF sensor provides the open-loop controller predicted air flow information (the measured air flow) to the ECU, and the oxygen sensor provides closed-loop feedback in order to make minor corrections to the predicted air mass. Also see manifold absolute pressure sensor (MAP sensor). Since around 2012, some MAF sensors include a humidity sensor.
 
-== Moving vane meter ==
+## Moving vane meter
 
 Intake-air flap type flowmeter
 
@@ -45,7 +45,7 @@ The vane meter approach has some drawbacks:
 
 - in some manufacturers fuel pump control was also part on the VAF internal wiring.
 
-== Hot wire sensor (MAF) ==
+## Hot wire sensor (MAF)
 
 A hot thick film-grid MAF sensor. The intake air temperature sensor is visible outside, the film-grid is inside.
 
@@ -59,7 +59,7 @@ The hot film MAF sensor works somewhat similar to the hot wire MAF sensor, but i
 
 A micro-bridge uses the same principles but arranged on a silicon chip.
 
-== Coldwire sensor ==
+## Coldwire sensor
 
 A Holden Commodore's MAF sensor
 
@@ -67,7 +67,7 @@ The GM LS engine series (as well as others) use a coldwire MAF system (produced 
 
 The mesh on the MAF is used to smooth out airflow to ensure the sensors have the best chance of a steady reading. It is not used for measuring the air flow per se. In situations where owners use oiled-gauze air filters, it is possible for excess oil to coat the MAF sensor and skew its readings. Indeed, General Motors has issued a Technical Service Bulletin, indicating problems from rough idle all the way to possible transmission damage resulting from the contaminated sensors. To clean the delicate MAF sensor components, a specific MAF sensor cleaner or electronics cleaner should be used, not carburetor or brake cleaners, which can be too aggressive chemically. Instead, the liquid phase of MAF sensor cleaners and electronics cleaners is typically based on hexanes or heptanes with little to no alcohol content and use either carbon dioxide or HFC-152a as aerosol propellants. The sensors should be gently sprayed from a careful distance to avoid physically damaging them and then allowed to thoroughly dry before reinstalling. Manufacturers claim that a simple but extremely reliable test to ensure correct functionality is to tap the unit with the back of a screwdriver while the car is running, and if this causes any changes in the output frequency then the unit should be discarded and an OEM replacement installed.
 
-== Kármán vortex sensor ==
+## Kármán vortex sensor
 
 A von Kármán vortex street
 
@@ -75,10 +75,10 @@ A Kármán vortex sensor works by disrupting the air stream with a perpendicular
 
 These vortices can either be read directly as a pressure pulse against a sensor, or they can be made to collide with a mirror which will then interrupt or transmit a reflected light beam to generate the pulses in response to the vortices. The first type can only be used in pull-thru air (prior to a turbo- or supercharger), while the second type could theoretically be used push- or pull-thru air (before or after a forced induction application like the previously mentioned super- or turbocharger). Instead of outputting a constant voltage modified by a resistance factor, this type of MAF outputs a frequency which must then be interpreted by the ECU. This type of MAF can be found on all DSMs (Mitsubishi Eclipse, Eagle Talon, Plymouth Laser), many Mitsubishis, some Toyotas and Lexus, and some BMWs, among others.
 
-== Membrane sensor ==
+## Membrane sensor
 
 An emerging technology utilizes a very thin electronic membrane placed in the air stream. The membrane has a thin film temperature sensor printed on the upstream side, and one on the downstream side. A heater is integrated in the center of the membrane which maintains a constant temperature similar to the hot-wire approach. Without any airflow, the temperature profile across the membrane is uniform. When air flows across the membrane, the upstream side cools differently from the downstream side. The difference between the upstream and downstream temperature indicates the mass airflow. The thermal membrane sensor is also capable of measuring flow in both directions, which sometimes occur in pulsating situations. Technological progress allows this kind of sensor to be manufactured on the microscopic scale as microsensors using microelectromechanical systems technology. Such a microsensor reaches a significantly higher speed and sensitivity compared with macroscopic approaches. See also MEMS sensor generations.
 
-== Laminar flow elements ==
+## Laminar flow elements
 
 Laminar flow elements measure the volumetric flow of gases directly. They operate on the principle that, given laminar flow, the pressure difference across a pipe is linearly proportional to the flow rate. Laminar flow conditions are present in a gas when the Reynolds number of the gas is below the critical figure. The viscosity of the fluid must be compensated for in the result. Laminar flow elements are usually constructed from a large number of parallel pipes to achieve the required flow rating.

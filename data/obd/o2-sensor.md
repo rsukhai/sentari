@@ -25,7 +25,7 @@ Oxygen sensors are also used in hypoxic air fire prevention systems to continuou
 
 There are many different ways of measuring oxygen. These include technologies such as zirconia, electrochemical (also known as galvanic), infrared, ultrasonic, paramagnetic, and very recently, laser methods.
 
-== Automotive applications ==
+## Automotive applications
 
 A three-wire oxygen sensor suitable for use in a Volvo 240 or similar vehicle
 
@@ -39,11 +39,11 @@ Tampering with or modifying the signal that the oxygen sensor sends to the engin
 
 When an internal combustion engine is under high load (e.g. wide open throttle), the output of the oxygen sensor is ignored, and the ECU automatically enriches the mixture to protect the engine, as misfires under load are much more likely to cause damage. This is referred to as an engine running in "open-loop mode". Any changes in the sensor output will be ignored in this state. In many cars (except for some turbocharged models), inputs from the air flow meter are also ignored, as they might otherwise lower engine performance due to the mixture being too rich or too lean, and increase the risk of engine damage due to detonation if the mixture is too lean.
 
-=== Function of an O2 sensor ===
+### Function of an O2 sensor
 
 O2 sensors provide feedback to an engine control unit (ECU). Where applicable, gasoline, propane, and natural gas engines are fitted with three-way catalysts to comply with on-road vehicle emissions legislation. Using the O2 sensor signal, the ECU can operate the engine with an air–fuel ratio very close to 14.7:1, which is the ideal operating mixture for a three-way catalyst to be effective. Robert Bosch GmbH introduced the first automotive lambda sensor in 1976, and it was first used by Volvo and Saab in that year. The sensors were introduced in the US from approximately 1979 and were required on all car models in many European countries by 1993.[citation needed]
 
-=== The probe ===
+### The probe
 
 The sensor element is a ceramic cylinder, plated on the inside and outside with porous platinum electrodes; a metal gauze protects the whole assembly. It operates by measuring the difference in oxygen between the exhaust gas and the external air, generating a voltage or changing its resistance accordingly.
 
@@ -51,9 +51,9 @@ The sensors only begin to work effectively when heated to approximately 316 °C
 
 The probe typically has four wires attached: two for the lambda output and two for the heater power. However, some automakers use the metal case as ground for the sensor element signal, resulting in three wires. Earlier non-electrically-heated sensors had one or two wires.
 
-=== Operation of the probe ===
+### Operation of the probe
 
-==== Zirconia sensor ====
+#### Zirconia sensor
 
 A planar zirconia sensor (schematic picture)
 
@@ -69,7 +69,7 @@ The sensor has a rugged stainless-steel construction internally and externally. 
 
 The zirconia sensor is of the "narrow-band" type, referring to the narrow range of fuel/air ratios to which it responds.
 
-==== Wideband zirconia sensor ====
+#### Wideband zirconia sensor
 
 A planar wideband zirconia sensor (schematic picture)
 
@@ -97,7 +97,7 @@ The wiring diagram for the wideband sensor typically has six wires:
 
 - common
 
-==== Titania sensor ====
+#### Titania sensor
 
 A less common type of narrow-band lambda sensor has a ceramic element made of titania (titanium dioxide). This type does not generate its own voltage, but changes its electrical resistance in response to the oxygen concentration. The resistance of the titania is a function of the oxygen partial pressure and the temperature. Therefore, some sensors are used with a gas-temperature sensor to compensate for the resistance change due to temperature. The resistance value at any temperature is about 1/1000 the change in oxygen concentration. Luckily, at λ = 1, there is a large change of oxygen, so the resistance change is typically 1000 times between rich and lean, depending on the temperature.
 
@@ -105,19 +105,19 @@ As titania is an N-type semiconductor with a structure TiO2−x, the x defects i
 
 In automotive applications the titania sensor, unlike the zirconia sensor, does not require a reference sample of atmospheric air to operate properly. This makes the sensor assembly easier to design against water contamination. While most automotive sensors are submersible, zirconia-based sensors require a very small supply of reference air from the atmosphere. In theory, the sensor wire harness and connector are sealed. Air that leaches through the wire harness to the sensor is assumed to come from an open point in the harness – usually the ECU, which is housed in an enclosed space like the trunk or vehicle interior.
 
-=== Location of the probe in a system ===
+### Location of the probe in a system
 
 Diagram of the lambda control system and location of the lambda sensor
 
 The probe is typically screwed into a threaded hole in the exhaust system, located after the branch manifold of the exhaust system combines and before the catalytic converter. New vehicles are required to have a sensor before and after the exhaust catalyst to meet U.S. regulations requiring that all emissions components be monitored for failure. Pre- and post-catalyst signals are monitored to determine catalyst efficiency, and if the converter is not performing as expected, an alert gets reported to the user through on-board diagnostics systems by, for example, lighting up an indicator in the vehicle's dashboard. Additionally, some catalyst systems require brief cycles of lean (oxygen-containing) gas to load the catalyst and promote additional oxidation reduction of undesirable exhaust components.
 
-=== Sensor surveillance ===
+### Sensor surveillance
 
 Oxygen sensor voltage while driving
 
 The air–fuel ratio and naturally, the status of the sensor, can be monitored by means of using an air–fuel ratio meter that displays the output voltage of the sensor.
 
-=== Sensor failures ===
+### Sensor failures
 
 Normally, the lifetime of an unheated sensor is about 30,000 to 50,000 miles (50,000 to 80,000 km). Heated sensor lifetime is typically 100,000 miles (160,000 km). Failure of an unheated sensor is usually caused by the buildup of soot on the ceramic element, which lengthens its response time and may cause total loss of ability to sense oxygen. For heated sensors, normal deposits are burned off during operation, and failure occurs due to catalyst depletion. The probe then tends to report lean mixture, the ECU enriches the mixture, the exhaust gets rich with carbon monoxide and hydrocarbons, and the fuel economy worsens.
 
@@ -147,7 +147,7 @@ Symptoms of a failing oxygen sensor includes:
 
 - rough idling.
 
-== Diving applications ==
+## Diving applications
 
 Main article: Electro-galvanic oxygen sensor
 
@@ -155,27 +155,27 @@ An oxygen analyser for breathing gas mixtures for diving
 
 The type of oxygen sensor used in most underwater diving applications is the electro-galvanic oxygen sensor, a type of fuel cell, which is sometimes called an oxygen analyser or ppO2 meter. They are used to measure the oxygen concentration of breathing gas mixes such as nitrox and trimix. They are also used within the oxygen control mechanisms of closed-circuit rebreathers to keep the partial pressure of oxygen within safe limits. and to monitor the oxygen content of the breathing gas in saturation diving systems and of surface supplied mixed gas. This type of sensor operates by measuring the voltage generated by a small electro-galvanic fuel cell.
 
-== Scientific and production applications ==
+## Scientific and production applications
 
-=== Soil respiration ===
+### Soil respiration
 
 In soil respiration studies oxygen sensors can be used in conjunction with carbon dioxide sensors to help improve the characterization of soil respiration. Typically, soil oxygen sensors use a galvanic cell to produce a current flow that is proportional to the oxygen concentration being measured. These sensors are buried at various depths to monitor oxygen depletion over time, which is then used to predict soil respiration rates. Generally, these soil sensors are equipped with a built-in heater to prevent condensation from forming on the permeable membrane, as relative humidity can reach 100% in soil.
 
-=== Marine biology ===
+### Marine biology
 
 In marine biology or limnology, oxygen measurements are usually done in order to measure respiration of a community or an organism, but have also been used to measure primary production of algae. The traditional way of measuring oxygen concentration in a water sample has been to use wet chemistry techniques e.g. the Winkler titration method. There are however commercially available oxygen sensors that measure the oxygen concentration in liquids with great accuracy. There are two types of oxygen sensors available: electrodes (electrochemical sensors) and optodes (optical sensors).
 
-=== Brewing ===
+### Brewing
 
 In breweries, dissolved oxygen is measured at multiple places within a beer production operation, from DO (dissolved oxygen) control at wort aeration, to measurement with a trace oxygen sensor (low-PPB; low-parts per billion) at the filling line. These measurements are either taken with an in-line dissolved oxygen sensor or a portable dissolved oxygen meter.
 
-=== Pharmaceutical production ===
+### Pharmaceutical production
 
 Oxygen sensors play a critical role in the production of active pharmaceutical ingredients made in a bioreactor by cell culture or fermentation. Because oxygen is important in cellular respiration, the oxygen sensor provides a critical measurement to ensure that cells in the bioreactor are getting the oxygen needed to maximize production. The accuracy of the oxygen sensor is critical, as a lack of oxygen negatively impacts productivity and excess oxygen can lead to changes in cell metabolism. In bioreactors, oxygen sensors can be installed vertically or at an angle. For vertical installations, angled-tip oxygen sensors help to provide accurate readings.
 
-== Oxygen sensor technologies ==
+## Oxygen sensor technologies
 
-=== Electrodes ===
+### Electrodes
 
 The Clark-type electrode is the most used oxygen sensor for measuring oxygen dissolved in a liquid. The basic principle is that there is a cathode and an anode submersed in an electrolyte. Oxygen enters the sensor through a permeable membrane by diffusion and is reduced at the cathode, creating a measurable electric current.
 
@@ -184,7 +184,7 @@ There is a linear relationship between the oxygen concentration and the electric
 One drawback to this approach is that oxygen is consumed during the measurement with a rate equal to the diffusion in the sensor. This means that the sensor must be stirred in order to get the correct measurement and avoid stagnant water. With an increasing sensor size, the oxygen consumption increases and so does the stirring sensitivity. In large sensors there tend to also be a drift in the signal over time due to consumption of the electrolyte.
 However, Clark-type sensors can be made very small with a tip size of 10 μm. The oxygen consumption of such a microsensor is so small that it is practically insensitive to stirring and can be used in stagnant media such as sediments or inside plant tissue.
 
-=== Optodes ===
+### Optodes
 
 An oxygen optode is a sensor based on optical measurement of the oxygen concentration. A chemical film is glued to the tip of an optical cable, and the fluorescence properties of this film depend on the oxygen concentration. Fluorescence is at a maximum when there is no oxygen present. The higher the concentration of oxygen, the shorter the lifetime of the fluorescence. When an O2 molecule comes along, it collides with the film, and this quenches the photoluminescence. In a given oxygen concentration, there will be a specific number of O2 molecules colliding with the film at any given time, and the fluorescence properties will be stable.
 

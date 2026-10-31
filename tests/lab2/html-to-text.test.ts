@@ -25,7 +25,7 @@ describe('wikiHtmlToText', () => {
     const html =
       '<div class="mw-heading mw-heading2"><h2 id="History">History</h2></div>' +
       '<p>Introduced in 1996.<sup id="cite_ref-1" class="reference"><a href="#cite_note-1">[1]</a></sup></p>';
-    expect(wikiHtmlToText(html)).toBe('== History ==\n\nIntroduced in 1996.');
+    expect(wikiHtmlToText(html)).toBe('## History\n\nIntroduced in 1996.');
   });
 
   it('відрізає службові розділи з кінця', () => {

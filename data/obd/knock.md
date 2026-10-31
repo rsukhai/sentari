@@ -21,13 +21,13 @@ Knocking should not be confused with pre-ignition—they are two separate events
 
 The phenomenon of detonation was described in November 1914 in a letter from Lodge Brothers (spark plug manufacturers, and sons of Sir Oliver Lodge) settling a discussion regarding the cause of "knocking" or "pinging" in motorcycles. In the letter they stated that an early ignition can give rise to the gas detonating instead of the usual expansion, and the sound that is produced by the detonation is the same as if the metal parts had been tapped with a hammer. It was further investigated and described by Harry Ricardo during experiments carried out between 1916 and 1919 to discover the reason for failures in aircraft engines.
 
-== Normal combustion ==
+## Normal combustion
 
 Under regular operating conditions, an internal combustion engine burns the air/fuel mixture in the cylinder in an orderly and controlled fashion. The combustion is started by the spark plug some 10 to 40 crankshaft degrees prior to top dead center (TDC), depending on many factors including engine speed and load. This ignition advance allows time for the combustion process to develop peak pressure at the ideal time for maximum recovery of work from the expanding gases.
 
 The spark across the spark plug's electrodes forms a small kernel of flame approximately the size of the spark plug gap. As it grows in size, its heat output increases, which allows it to grow at an accelerating rate, expanding rapidly through the combustion chamber. This growth is due to the travel of the flame front through the combustible fuel–air mix itself, and due to Rayleigh–Taylor instability (resulting from the hot, low-density combustion gasses expanding into the relatively cold and dense unburnt fuel–air mix) which rapidly stretches the burning zone into a complex of fingers of burning gas that have a much greater surface area than a simple spherical ball of flame would have (this latter process is enhanced and accelerated by any pre-existing turbulence in the fuel–air mixture). In normal combustion, this flame front moves throughout the air/fuel mixture at a rate characteristic for the particular mixture. Pressure rises smoothly to a peak, as nearly all the available fuel is consumed, then pressure falls as the piston descends. Maximum cylinder pressure is achieved a few crankshaft degrees after the piston passes TDC, so that the force applied on the piston (from the increasing pressure applied to the top surface of the piston) can give its hardest push precisely when the piston's speed and mechanical advantage on the crank shaft gives the best recovery of force from the expanding gases, thus maximizing torque transferred to the crankshaft.
 
-== Abnormal combustion ==
+## Abnormal combustion
 
 Main article: Cool flame
 
@@ -63,18 +63,18 @@ Knocking is more or less unavoidable in diesel engines, where fuel is injected i
 
 Careful design of the injector pump, fuel injector, combustion chamber, piston crown and cylinder head can reduce knocking greatly, and modern engines using electronic common rail injection have very low levels of knock. Engines using indirect injection generally have lower levels of knock than direct injection engines, due to the greater dispersal of oxygen in the combustion chamber and lower injection pressures providing a more complete mixing of fuel and air. Diesels actually do not suffer exactly the same "knock" as gasoline engines since the cause is known to be only the very fast rate of pressure rise, not unstable combustion. Diesel fuels are actually very prone to knock (in comparison to gasoline) but in the diesel engine there is no time for knock to occur because the fuel is only oxidized during the expansion cycle. In the gasoline engine the fuel is slowly oxidizing all the time while it is being compressed before the spark. This allows for changes to occur in the structure/makeup of the molecules before the very critical period of high temperature/pressure.
 
-== Knock detection ==
+## Knock detection
 
 Due to the large variation in fuel quality, atmospheric pressure, and ambient temperature as well as the possibility of a malfunction, every modern combustion engine contains mechanisms to detect and prevent knocking.
 
 A control loop permanently monitors the signal of one or more knock sensors (commonly piezoelectric sensors which are able to translate vibrations into an electric signal). If the characteristic pressure peak of a knocking combustion is detected, the ignition timing is retarded by steps of a few degrees. If the signal normalizes indicating a controlled combustion the ignition timing is advanced again in the same fashion keeping the engine at its best possible operating point - the so-called ″knock limit″. Modern knock control-loop systems are able to adjust ignition timings for every cylinder individually. Depending on the specific engine the boost pressure is regulated simultaneously. This way performance is kept at its optimum while mostly eliminating the risk of engine damage caused by knock (e.g. when running on low octane fuel). An early example of this is in turbocharged Saab H engines, where a system called Automatic Performance Control was used to reduce boost pressure if it caused the engine to knock.
 
-== Knock prediction ==
+## Knock prediction
 
 Since the avoidance of knocking combustion is so important to development engineers, a variety of simulation technologies have been developed which can identify engine design or operating conditions in which knock might be expected to occur. This then enables engineers to design ways to mitigate knocking combustion whilst maintaining a high thermal efficiency.[citation needed]
 
 Since the onset of knock is sensitive to the in-cylinder pressure, temperature and autoignition chemistry associated with the local mixture compositions within the combustion chamber, simulations which account for all of these aspects have thus proven most effective in determining knock operating limits and enabling engineers to determine the most appropriate operating strategy.
 
-== Knock control ==
+## Knock control
 
 The objective of knock control is to attempt to optimize the trade-off between protecting the engine from damaging knock events and maximizing the engine's output torque. Knock events are an independent random process. It is impossible to design knock controllers in a deterministic platform. A single time history simulation or experiment of knock control methods are not able to provide a repeatable measurement of controller's performance because of the random nature of arriving knock events. Therefore, the desired trade-off must be done in a stochastic framework which could provide a suitable environment for designing and evaluating different knock control strategies performances with rigorous statistical properties.[citation needed]

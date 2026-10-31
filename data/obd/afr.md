@@ -15,7 +15,7 @@ Air–fuel ratio (AFR) is the mass ratio of air to a solid, liquid, or gaseous f
 
 In an internal combustion engine or industrial furnace, the air–fuel ratio is an important measure for anti-pollution and performance-tuning reasons. If exactly enough air is provided to completely burn all of the fuel (stoichiometric combustion), the ratio is known as the stoichiometric mixture, often abbreviated to stoich. Ratios lower than stoichiometric (where the fuel is in excess) are considered "rich". Rich mixtures are less efficient, but may produce more power and burn cooler. Ratios higher than stoichiometric (where the air is in excess) are considered "lean". Lean mixtures are more efficient but may cause higher temperatures, which can lead to the formation of nitrogen oxides. Some engines are designed with features to allow lean-burn. For precise air–fuel ratio calculations, the oxygen content of combustion air should be specified because of different air density due to different altitude or intake air temperature, possible dilution by ambient water vapor, or enrichment by oxygen additions.
 
-== Air-fuel ratio meters ==
+## Air-fuel ratio meters
 
 An air-fuel ratio meter monitors the air–fuel ratio of an internal combustion engine. Also called air–fuel ratio gauge, air–fuel meter, or air–fuel gauge, it reads the voltage output of an oxygen sensor, sometimes also called AFR sensor or lambda sensor.
 
@@ -23,7 +23,7 @@ The original narrow-band oxygen sensors became factory installed standard in the
 
 Most stand-alone narrow-band meters have 10 LEDs and some have more. Also common, narrow band meters in round housings with the standard mounting 52 and 67 mm (2+1⁄16 and 2+5⁄8 in) diameters, as other types of car 'gauges'. These usually have 10 or 20 LEDs. Analogue 'needle' style gauges are also available.
 
-== Internal combustion engines ==
+## Internal combustion engines
 
 In theory, a stoichiometric mixture has just enough air to completely burn the available fuel. In practice, this is never quite achieved, due primarily to the very short time available in an internal combustion engine for each combustion cycle.
 
@@ -31,7 +31,7 @@ Most of the combustion process is completed in approximately 2 milliseconds at a
 
 A perfectly stoichiometric mixture burns very hot and can damage engine components if the engine is placed under high load at this fuel–air mixture. Due to the high flame temperatures at this mixture, detonation is possible under high load. (Detonation is known as knocking or pinging). Such detonation can cause serious engine damage as the uncontrolled burning of the fuel-air mix can create very high pressures in the cylinder. As a consequence, stoichiometric mixtures are only used under light to low-moderate load conditions. For acceleration and high-load conditions, a richer mixture (lower air–fuel ratio) is used to produce cooler combustion products and so avoid overheating of the cylinder head, and thus prevent detonation.
 
-== Engine management systems ==
+## Engine management systems
 
 The stoichiometric mixture for a gasoline engine is the ideal ratio of air to fuel that burns all fuel with no excess air. For gasoline fuel, the stoichiometric air–fuel mixture is about 14.7:1 i.e. for every one gram of fuel, 14.7 grams of air are required. For pure octane fuel, the oxidation reaction is:
 
@@ -39,15 +39,15 @@ The stoichiometric mixture for a gasoline engine is the ideal ratio of air to fu
 
 Any mixture greater than 14.7:1 is considered a lean mixture; any less than 14.7:1 is a rich mixture – given perfect (ideal) "test" fuel (gasoline consisting of solely n-heptane and iso-octane). In reality, most fuels consist of a combination of heptane, octane, a handful of other alkanes, plus additives including detergents, and possibly oxygenators such as MTBE (methyl tert-butyl ether) or ethanol/methanol. These compounds all alter the stoichiometric ratio, with most of the additives pushing the ratio downward (oxygenators bring extra oxygen to the combustion event in liquid form that is released at the time of combustions; for MTBE-laden fuel, a stoichiometric ratio can be as low as 14.1:1). Vehicles that use an oxygen sensor or other feedback loops to control fuel to air ratio (lambda control), compensate automatically for this change in the fuel's stoichiometric rate by measuring the exhaust gas composition and controlling fuel volume. Vehicles without such controls (such as most motorcycles until recently, and cars predating the mid-1980s) may have difficulties running certain fuel blends (especially winter fuels used in some areas) and may require different carburetor jets (or otherwise have the fueling ratios altered) to compensate. Vehicles that use oxygen sensors can monitor the air–fuel ratio with an air–fuel ratio meter.
 
-== Other types of engines ==
+## Other types of engines
 
 In the typical air to natural gas combustion burner, a double-cross limit strategy is employed to ensure ratio control. (This method was used in World War II).[citation needed] The strategy involves adding the opposite flow feedback into the limiting control of the respective gas (air or fuel). This assures ratio control within an acceptable margin.
 
-== Other terms used ==
+## Other terms used
 
 There are other terms commonly used when discussing the mixture of air and fuel in internal combustion engines.
 
-=== Mixture ===
+### Mixture
 
 Mixture is the predominant word that appears in training texts, operation manuals, and maintenance manuals in the aviation world.
 
@@ -61,13 +61,13 @@ In naturally aspirated engines powered by octane, maximum power is frequently re
 
 The air-fuel ratio of 12:1 is considered as the maximum output ratio, whereas the air-fuel ratio of 16:1 is considered as the maximum fuel economy ratio.[citation needed]
 
-=== Fuel–air ratio (FAR) ===
+### Fuel–air ratio (FAR)
 
 Fuel–air ratio is commonly used in the gas turbine industry as well as in government studies of internal combustion engine, and refers to the ratio of fuel to the air.[citation needed]
 
 {\displaystyle \mathrm {FAR} ={\frac {1}{\mathrm {AFR} }}}
 
-=== Air–fuel equivalence ratio (λ) ===
+### Air–fuel equivalence ratio (λ)
 
 Air–fuel equivalence ratio, λ (lambda), is the ratio of actual AFR to stoichiometry for a given mixture. λ = 1.0 is at stoichiometry, rich mixtures λ < 1.0, and lean mixtures λ > 1.0.
 
@@ -79,7 +79,7 @@ Because the composition of common fuels varies seasonally, and because many mode
 
 Most practical AFR devices actually measure the amount of residual oxygen (for lean mixes) or unburnt hydrocarbons (for rich mixtures) in the exhaust gas.
 
-=== Fuel–air equivalence ratio (Φ) ===
+### Fuel–air equivalence ratio (Φ)
 
 The fuel–air equivalence ratio, Φ (phi), of a system is defined as the ratio of the fuel-to-oxidizer ratio to the stoichiometric fuel-to-oxidizer ratio. Mathematically,
 
@@ -122,7 +122,7 @@ The fuel–air equivalence ratio is related to the air–fuel equivalence ratio 
 
 {\displaystyle \phi ={\frac {1}{\lambda }}}
 
-=== Mixture fraction ===
+### Mixture fraction
 
 Further information: Mixture fraction
 
@@ -146,7 +146,7 @@ assuming
 
 {\displaystyle \mathrm {AFR} ={\frac {Y_{\mathrm {O,0} }}{Y_{\mathrm {F,0} }}}}
 
-=== Percent excess combustion air ===
+### Percent excess combustion air
 
 Ideal stoichiometry
 
