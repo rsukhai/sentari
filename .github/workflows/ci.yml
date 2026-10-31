@@ -32,6 +32,13 @@ jobs:
       - name: Юніт-тести
         run: npm test
 
+      - name: Колекція документів (Лаб. 2, критерій A4)
+        run: npx tsx scripts/lab2/fetch-obd.ts check
+
+      - name: Еталонний набір (Лаб. 2, критерій A2)
+        if: hashFiles('docs/lab2/golden/queries.jsonl') != ''
+        run: npx tsx scripts/validate-golden.ts docs/lab2/golden/queries.jsonl
+
       - name: Збірка
         run: npm run build
 
