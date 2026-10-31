@@ -1,0 +1,36 @@
+{
+  "model": "gpt-5.6-terra",
+  "diff": "/var/folders/pb/vjw8tlfx3k78lzjgx6zbz4bw0000gn/T/verify-c05.diff",
+  "results": [
+    {
+      "id": "A1",
+      "verdict": "unknown",
+      "reason": "Критерій перевіряється прогоном CI, а diff не містить результату CI або фактичного запуску `npm test`. Запис у журналі про «Валідатор зелений» не підтверджує стан усіх тестів після цієї зміни.",
+      "evidence": ""
+    },
+    {
+      "id": "A2",
+      "verdict": "unknown",
+      "reason": "Diff прямо показує 20 рядків запитів (q-01…q-20), але не містить результату запуску `npx tsx scripts/validate-golden.ts`, тому проходження валідатора не підтверджено.",
+      "evidence": "docs/lab2/golden/queries.jsonl: у diff наявні записи від q-01 до q-20"
+    },
+    {
+      "id": "A3",
+      "verdict": "unknown",
+      "reason": "У diff немає файлу eval-report.md і немає числа точності на еталонному наборі, тож поріг ≥ 60% неможливо перевірити.",
+      "evidence": ""
+    },
+    {
+      "id": "A4",
+      "verdict": "unknown",
+      "reason": "Diff не містить файлів із data/obd/ і не показує результату запуску скрипта перевірки з кодом 0.",
+      "evidence": ""
+    },
+    {
+      "id": "A5",
+      "verdict": "unknown",
+      "reason": "Файл eval-report.md у diff відсутній, тому число частки відповідей із цитатою перевірити неможливо.",
+      "evidence": ""
+    }
+  ]
+}

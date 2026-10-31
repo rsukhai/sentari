@@ -1,0 +1,36 @@
+{
+  "model": "gpt-5.6-terra",
+  "diff": "/var/folders/pb/vjw8tlfx3k78lzjgx6zbz4bw0000gn/T/verify-c11.diff",
+  "results": [
+    {
+      "id": "A1",
+      "verdict": "unknown",
+      "reason": "Diff додає тести валідатора та крок `npm test` у CI, але не містить результату прогону CI чи `npm test`, тому його успішність прямо не підтверджена.",
+      "evidence": ""
+    },
+    {
+      "id": "A2",
+      "verdict": "pass",
+      "reason": "Файл містить рівно 20 JSONL-записів; усі обов’язкові пороги валідатора виконано (4 `unanswerable`, 2 `injection`), а `must_cite` посилаються на id зі специфікації.",
+      "evidence": "docs/lab2/golden/queries.jsonl, рядки 1–20; scripts/validate-golden.ts: SUBMIT = { total: 20, unanswerable: 3, injection: 2 }"
+    },
+    {
+      "id": "A3",
+      "verdict": "unknown",
+      "reason": "Файл eval-report.md у diff відсутній, тому число точності для цього критерію не наведено. Є лише baseline.md із базовою точністю 44%, що не є eval-report.md.",
+      "evidence": ""
+    },
+    {
+      "id": "A4",
+      "verdict": "pass",
+      "reason": "Diff додає рівно 23 Markdown-документи в `data/obd/`, і їхні назви відповідають усім 23 id із таблиці колекції у специфікації.",
+      "evidence": "Додано `data/obd/{afr,can-bus,catalytic,check-engine,ckp,dpf,ecu,egr,elm327,fuel-injection,iac,ignition-coil,j1939,knock,kwp2000,maf,map-sensor,o2-sensor,obd-pids,obd,spark-plug,tps,uds}.md`; `docs/lab2/spec.md` вказує «Усього документів: 23»."
+    },
+    {
+      "id": "A5",
+      "verdict": "unknown",
+      "reason": "Файл eval-report.md у diff не з’являється, тому числа частки відповідей із цитатою для цього критерію немає. Наведене 0% стосується лише baseline.md, а не eval-report.md.",
+      "evidence": ""
+    }
+  ]
+}
