@@ -1,0 +1,36 @@
+{
+  "model": "gpt-5.6-terra",
+  "diff": "/var/folders/pb/vjw8tlfx3k78lzjgx6zbz4bw0000gn/T/verify-c06.diff",
+  "results": [
+    {
+      "id": "A1",
+      "verdict": "unknown",
+      "reason": "Критерій перевіряється прогоном CI, а diff не містить його результату для цієї зміни. Посилання в журналi на зелений CI не є відтворюваним результатом у diff.",
+      "evidence": ""
+    },
+    {
+      "id": "A2",
+      "verdict": "unknown",
+      "reason": "Файл `docs/lab2/golden/queries.jsonl` у diff не показано, а успішний запуск валідатора неможливо підтвердити лише документацією. `eval-set.md` лише заявляє про 20 запитів і зелений валідатор.",
+      "evidence": ""
+    },
+    {
+      "id": "A3",
+      "verdict": "unknown",
+      "reason": "Файл eval-report.md у diff відсутній, тому числа точності на еталонному наборі немає для перевірки.",
+      "evidence": ""
+    },
+    {
+      "id": "A4",
+      "verdict": "unknown",
+      "reason": "Diff не містить файлів у data/obd/ і не показує виконання скрипта перевірки з кодом 0. Згадка в журналі про «23 документи» не є прямим результатом перевірки в цьому diff.",
+      "evidence": ""
+    },
+    {
+      "id": "A5",
+      "verdict": "unknown",
+      "reason": "Diff не містить файлу eval-report.md і не показує числової частки відповідей з цитатою.",
+      "evidence": ""
+    }
+  ]
+}

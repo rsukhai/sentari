@@ -1,0 +1,36 @@
+{
+  "model": "gpt-5.6-terra",
+  "diff": "/var/folders/pb/vjw8tlfx3k78lzjgx6zbz4bw0000gn/T/verify-c08.diff",
+  "results": [
+    {
+      "id": "A1",
+      "verdict": "unknown",
+      "reason": "Критерій перевіряється прогоном CI, а diff не містить результату цього прогону. Запис у документації про «npm test 117/117» не є перевірюваним логом CI.",
+      "evidence": ""
+    },
+    {
+      "id": "A2",
+      "verdict": "unknown",
+      "reason": "Файл `docs/lab2/golden/queries.jsonl` у diff не з’являється, а проходження валідатора неможливо підтвердити лише зі згадки в іншому документі.",
+      "evidence": ""
+    },
+    {
+      "id": "A3",
+      "verdict": "unknown",
+      "reason": "Файл eval-report.md у diff відсутній, тому перевірити число точності в ньому неможливо. Надане число 44% міститься у baseline.md і не є значенням з потрібного файлу.",
+      "evidence": ""
+    },
+    {
+      "id": "A4",
+      "verdict": "unknown",
+      "reason": "Diff не містить файлів або переліку вмісту `data/obd/`, а успішний код скрипта перевірки не показано.",
+      "evidence": ""
+    },
+    {
+      "id": "A5",
+      "verdict": "unknown",
+      "reason": "Файл eval-report.md у diff не з’являється, тому число частки відповідей із цитатою для нього перевірити неможливо.",
+      "evidence": ""
+    }
+  ]
+}

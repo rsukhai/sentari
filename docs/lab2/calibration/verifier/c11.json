@@ -1,0 +1,36 @@
+{
+  "model": "gpt-5.6-terra",
+  "diff": "/var/folders/pb/vjw8tlfx3k78lzjgx6zbz4bw0000gn/T/verify-c11.diff",
+  "results": [
+    {
+      "id": "A1",
+      "verdict": "unknown",
+      "reason": "Diff додає запуск `npm test` у CI та тести валідатора, але не містить результату прогону CI або `npm test` для цієї зміни.",
+      "evidence": ""
+    },
+    {
+      "id": "A2",
+      "verdict": "pass",
+      "reason": "Файл містить рівно 20 коректних JSONL-записів; у ньому 4 `unanswerable` і 2 `injection`, а всі `must_cite` відповідають id документів у специфікації. Код валідатора перевіряє саме ці пороги, схему, дублікати, витоки й наявність id у `spec.md`.",
+      "evidence": "docs/lab2/golden/queries.jsonl:1-20; scripts/validate-golden.ts:42-108; docs/lab2/spec.md:22-44"
+    },
+    {
+      "id": "A3",
+      "verdict": "unknown",
+      "reason": "Файл eval-report.md у diff не з’являється, тому числа точності для еталонного набору немає. Наведене 44% стосується іншого файлу baseline.md і не відповідає порогу ≥ 60%.",
+      "evidence": ""
+    },
+    {
+      "id": "A4",
+      "verdict": "unknown",
+      "reason": "Diff додає 23 файли в data/obd/, але не показує їхній фактичний вміст і не дає результату команди перевірки. Неможливо прямо встановити, що всі файли проходять перевірку непорожності та що скрипт повертає 0.",
+      "evidence": ""
+    },
+    {
+      "id": "A5",
+      "verdict": "unknown",
+      "reason": "Файл eval-report.md у diff не з’являється, тому число частки відповідей із цитатою перевірити неможливо.",
+      "evidence": ""
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "model": "gpt-5.6-terra",
+  "diff": "/var/folders/pb/vjw8tlfx3k78lzjgx6zbz4bw0000gn/T/verify-c02.diff",
+  "results": [
+    {
+      "id": "A1",
+      "verdict": "unknown",
+      "reason": "Diff показує, що CI запускає `npm test` і додає тести валідатора, але не містить результату прогону CI, який підтверджує зелений статус.",
+      "evidence": ""
+    },
+    {
+      "id": "A2",
+      "verdict": "unknown",
+      "reason": "Файл docs/lab2/golden/queries.jsonl у diff не з’являється, тому неможливо прямо підтвердити наявність ≥20 запитів і успішний запуск валідатора. Diff лише додає валідатор та умовний CI-крок для цього файлу.",
+      "evidence": ""
+    },
+    {
+      "id": "A3",
+      "verdict": "unknown",
+      "reason": "Diff не містить файлу eval-report.md і числа точності на еталонному наборі, тому підтвердити поріг ≥ 60% неможливо.",
+      "evidence": ""
+    },
+    {
+      "id": "A4",
+      "verdict": "unknown",
+      "reason": "Diff додає 23 Markdown-файли в data/obd/, але не містить результату запуску скрипта перевірки. Також docs/lab2/spec.md, з якого скрипт читає очікуваний перелік, у diff відсутній.",
+      "evidence": ""
+    },
+    {
+      "id": "A5",
+      "verdict": "unknown",
+      "reason": "Число з eval-report.md, за яким перевіряється частка відповідей із цитатою, у diff відсутнє.",
+      "evidence": ""
+    }
+  ]
+}

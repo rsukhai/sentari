@@ -1,0 +1,36 @@
+{
+  "model": "gpt-5.6-terra",
+  "diff": "/var/folders/pb/vjw8tlfx3k78lzjgx6zbz4bw0000gn/T/verify-c02.diff",
+  "results": [
+    {
+      "id": "A1",
+      "verdict": "unknown",
+      "reason": "Diff додає запуск `npm test` у CI та тести валідатора, але не містить результату прогону CI, тому зеленість тестів після зміни не підтверджена.",
+      "evidence": ""
+    },
+    {
+      "id": "A2",
+      "verdict": "unknown",
+      "reason": "Файл docs/lab2/golden/queries.jsonl у diff не з’являється, тому неможливо підтвердити ані кількість ≥ 20, ані успішне проходження валідатора. Diff лише додає валідатор і CI-крок його запуску за наявності файлу.",
+      "evidence": ""
+    },
+    {
+      "id": "A3",
+      "verdict": "unknown",
+      "reason": "Файл eval-report.md у diff відсутній, тому числа точності на еталонному наборі немає і поріг ≥ 60% неможливо перевірити.",
+      "evidence": ""
+    },
+    {
+      "id": "A4",
+      "verdict": "unknown",
+      "reason": "Diff додає рівно 23 Markdown-файли до data/obd/, але перелік обов’язкових документів береться з docs/lab2/spec.md, якого в diff немає. Тому неможливо прямо підтвердити, що check поверне 0.",
+      "evidence": ""
+    },
+    {
+      "id": "A5",
+      "verdict": "unknown",
+      "reason": "Файл eval-report.md у diff відсутній, тому число частки відповідей із цитатою неможливо перевірити.",
+      "evidence": ""
+    }
+  ]
+}
