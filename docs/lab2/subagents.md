@@ -82,9 +82,9 @@
 
 ## Делегування в журналі
 
-- Рядок делегування через інструмент Agent: [`.agent-log/claude-code.jsonl#L656`](../../.agent-log/claude-code.jsonl#L656) — `"tool":"Agent","input":{"subagent_type":"explorer","description":"Знайти npm-скрипти та кроки CI"}`, сесія `bb8bbe78`.
-- Запуск `claude -p --agent explorer`: [`#L636`](../../.agent-log/claude-code.jsonl#L636); дії самого explorer — рядки 620–635, сесія `68b6041f`, лише `Glob`/`Read`.
-- Запуск spec-auditor: [`#L618`](../../.agent-log/claude-code.jsonl#L618) (команда в журналі обрізана до 200 символів, тож `--agent spec-auditor` у рядок не влізло); дії аудитора — рядки 610–617, сесія `854ffbd6`, лише `Read`/`Glob`.
+- Рядок делегування через інструмент Agent: [`.agent-log/claude-code.jsonl#L656`](https://github.com/rsukhai/sentari/blob/786855de3b68894b2babc691634dba1954411b89/.agent-log/claude-code.jsonl#L656) — `"tool":"Agent","input":{"subagent_type":"explorer","description":"Знайти npm-скрипти та кроки CI"}`, сесія `bb8bbe78`.
+- Запуск `claude -p --agent explorer`: [`#L636`](https://github.com/rsukhai/sentari/blob/786855de3b68894b2babc691634dba1954411b89/.agent-log/claude-code.jsonl#L636); дії самого explorer — рядки 620–635, сесія `68b6041f`, лише `Glob`/`Read`.
+- Запуск spec-auditor: [`#L618`](https://github.com/rsukhai/sentari/blob/786855de3b68894b2babc691634dba1954411b89/.agent-log/claude-code.jsonl#L618) (команда в журналі обрізана до 200 символів, тож `--agent spec-auditor` у рядок не влізло); дії аудитора — рядки 610–617, сесія `854ffbd6`, лише `Read`/`Glob`.
 - Щоб делегування було видно в журналі, у фільтр `jq` hook `PostToolUse` / `PostToolUseFailure` (`.claude/settings.json`) додано поля `subagent_type` і `description`; до цього рядки `Agent` писались як `"input":{}` (рядки 609, 637). Промпт субагента в журнал не пишеться — це вміст, а не назва. Старі рядки не змінювались.
 
 ## Як зводяться результати
