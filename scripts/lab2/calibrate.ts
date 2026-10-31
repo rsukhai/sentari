@@ -26,8 +26,8 @@ const jsonl = <T>(file: string): T[] =>
 function run(cases: Case[]) {
   mkdirSync(join(DIR, 'verifier'), { recursive: true });
   for (const c of cases) {
-    const [from, to] = c.range.split('..');
-    const diff = execFileSync('git', ['diff', `${from}`, `${to}`], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+    // той самий генератор diff, що й у CI
+    const diff = execFileSync('bash', ['scripts/lab2/make-diff.sh', c.range], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
     const diffFile = join(tmpdir(), `verify-${c.id}.diff`);
     writeFileSync(diffFile, diff, 'utf8');
     const out = join(DIR, 'verifier', `${c.id}.json`);

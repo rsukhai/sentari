@@ -1,7 +1,7 @@
 /**
  * Верифікатор на іншій моделі (Лаб. 2, крок 03). ХОДИТЬ У МЕРЕЖУ (OpenAI, платно — центи):
  *
- *   git diff main...HEAD > docs/lab2/verify-input.diff
+ *   bash scripts/lab2/make-diff.sh main...HEAD > docs/lab2/verify-input.diff
  *   npm run verify                                  (= tsx scripts/verify.ts docs/lab2/verify-input.diff)
  *   npx tsx scripts/verify.ts <diff> --json <звіт.json>   те саме + звіт для калібрування
  *
@@ -14,6 +14,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { chatCompletionsModel, type Fetch } from '../src/agent/adapters';
 import { addUsage, priceUsd, ZERO_USAGE } from '../src/cost';
 import { CATALOG } from '../src/models';
+import { parseDocTable } from '../src/rag/corpus';
 import { judgeCriterion, parseCriteria, prepareDiff, type Ask } from '../src/verify/judge';
 import { isBlocked, verifyReport, type VerifyReport } from '../src/verify/schema';
 
@@ -29,8 +30,11 @@ async function main() {
   const spec = Object.values(CATALOG).find((s) => s.id === modelId);
   if (!spec || spec.provider !== 'openai') throw new Error(`VERIFY_MODEL «${modelId}» немає серед моделей OpenAI у src/models.ts`);
 
-  const criteria = parseCriteria(await readFile(SPEC, 'utf8'));
+  const specMd = await readFile(SPEC, 'utf8');
+  const criteria = parseCriteria(specMd);
   if (criteria.length === 0) throw new Error(`у ${SPEC} не знайдено критеріїв приймання (розділ 6)`);
+  const docIds = parseDocTable(specMd).map((d) => d.id);
+  const context = `таблиця розділу 2 spec.md — ${docIds.length} документів колекції, файл кожного — data/obd/<id>.md: ${docIds.join(', ')}`;
   const { text: diff, dropped } = prepareDiff(await readFile(diffFile, 'utf8'));
   if (diff.trim() === '') throw new Error(`${diffFile}: порожній diff — нема що перевіряти`);
 
@@ -54,7 +58,7 @@ async function main() {
 
   // один вимір — один суддя: окремий запит на кожен критерій
   const results = [];
-  for (const c of criteria) results.push(await judgeCriterion(ask, c, diff));
+  for (const c of criteria) results.push(await judgeCriterion(ask, c, diff, context));
   const report: VerifyReport = verifyReport.parse({ results });
 
   const cell = (s: string) => s.replace(/\s+/g, ' ').replace(/\|/g, '\\|');

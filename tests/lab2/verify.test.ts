@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { judgeCriterion, parseCriteria, prepareDiff, type Ask, type Criterion } from '../../src/verify/judge';
+import { judgeCriterion, judgePrompt, parseCriteria, prepareDiff, type Ask, type Criterion } from '../../src/verify/judge';
 import { isBlocked } from '../../src/verify/schema';
 
 const SPEC = `## 5. Обсяг
@@ -51,9 +51,16 @@ describe('prepareDiff', () => {
     const diff = fileDiff('data/obd/egr.md', '+EGR text') + fileDiff('docs/lab2/golden/queries.jsonl', '+{"id":"q-01"}');
     const { text } = prepareDiff(diff);
     expect(text).toContain('+++ b/data/obd/egr.md');
-    expect(text).toContain('[вміст пропущено верифікатором: +1 / -0 рядків]');
+    expect(text).toContain('[вміст пропущено верифікатором через обсяг: +1 / -0 рядків, 8 символів доданого тексту]');
     expect(text).not.toContain('EGR text');
     expect(text).toContain('{"id":"q-01"}');
+  });
+});
+
+describe('judgePrompt', () => {
+  it('додає довідку зі специфікації, лише якщо її передано', () => {
+    expect(judgePrompt(A4, 'd', 'ids: obd, egr')).toContain('Довідка зі специфікації: ids: obd, egr');
+    expect(judgePrompt(A4, 'd')).not.toContain('Довідка');
   });
 });
 

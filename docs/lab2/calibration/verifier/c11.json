@@ -5,31 +5,31 @@
     {
       "id": "A1",
       "verdict": "unknown",
-      "reason": "Diff додає тести валідатора та крок `npm test` у CI, але не містить результату прогону CI чи `npm test`, тому його успішність прямо не підтверджена.",
+      "reason": "Diff додає запуск `npm test` у CI та тести валідатора, але не містить результату прогону CI або `npm test` для цієї зміни.",
       "evidence": ""
     },
     {
       "id": "A2",
       "verdict": "pass",
-      "reason": "Файл містить рівно 20 JSONL-записів; усі обов’язкові пороги валідатора виконано (4 `unanswerable`, 2 `injection`), а `must_cite` посилаються на id зі специфікації.",
-      "evidence": "docs/lab2/golden/queries.jsonl, рядки 1–20; scripts/validate-golden.ts: SUBMIT = { total: 20, unanswerable: 3, injection: 2 }"
+      "reason": "Файл містить рівно 20 коректних JSONL-записів; у ньому 4 `unanswerable` і 2 `injection`, а всі `must_cite` відповідають id документів у специфікації. Код валідатора перевіряє саме ці пороги, схему, дублікати, витоки й наявність id у `spec.md`.",
+      "evidence": "docs/lab2/golden/queries.jsonl:1-20; scripts/validate-golden.ts:42-108; docs/lab2/spec.md:22-44"
     },
     {
       "id": "A3",
       "verdict": "unknown",
-      "reason": "Файл eval-report.md у diff відсутній, тому число точності для цього критерію не наведено. Є лише baseline.md із базовою точністю 44%, що не є eval-report.md.",
+      "reason": "Файл eval-report.md у diff не з’являється, тому числа точності для еталонного набору немає. Наведене 44% стосується іншого файлу baseline.md і не відповідає порогу ≥ 60%.",
       "evidence": ""
     },
     {
       "id": "A4",
-      "verdict": "pass",
-      "reason": "Diff додає рівно 23 Markdown-документи в `data/obd/`, і їхні назви відповідають усім 23 id із таблиці колекції у специфікації.",
-      "evidence": "Додано `data/obd/{afr,can-bus,catalytic,check-engine,ckp,dpf,ecu,egr,elm327,fuel-injection,iac,ignition-coil,j1939,knock,kwp2000,maf,map-sensor,o2-sensor,obd-pids,obd,spark-plug,tps,uds}.md`; `docs/lab2/spec.md` вказує «Усього документів: 23»."
+      "verdict": "unknown",
+      "reason": "Diff додає 23 файли в data/obd/, але не показує їхній фактичний вміст і не дає результату команди перевірки. Неможливо прямо встановити, що всі файли проходять перевірку непорожності та що скрипт повертає 0.",
+      "evidence": ""
     },
     {
       "id": "A5",
       "verdict": "unknown",
-      "reason": "Файл eval-report.md у diff не з’являється, тому числа частки відповідей із цитатою для цього критерію немає. Наведене 0% стосується лише baseline.md, а не eval-report.md.",
+      "reason": "Файл eval-report.md у diff не з’являється, тому число частки відповідей із цитатою перевірити неможливо.",
       "evidence": ""
     }
   ]

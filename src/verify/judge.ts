@@ -51,8 +51,10 @@ export function prepareDiff(diff: string): { text: string; dropped: string[] } {
       const lines = section.split('\n');
       const added = lines.filter((l) => l.startsWith('+') && !l.startsWith('+++')).length;
       const removed = lines.filter((l) => l.startsWith('-') && !l.startsWith('---')).length;
+      const chars = lines.filter((l) => l.startsWith('+') && !l.startsWith('+++')).reduce((n, l) => n + l.length - 1, 0);
       const header = lines.filter((l) => /^(diff --git|new file|deleted file|--- |\+\+\+ )/.test(l)).join('\n');
-      return `${header}\n[вміст пропущено верифікатором: +${added} / -${removed} рядків]\n`;
+      // розмір лишаємо: без нього суддя не відрізнить «стиснуто» від «порожньо» (калібрування 2, c11/A4)
+      return `${header}\n[вміст пропущено верифікатором через обсяг: +${added} / -${removed} рядків, ${chars} символів доданого тексту]\n`;
     }
     return section;
   });
@@ -73,10 +75,15 @@ export const JUDGE_SYSTEM = [
   'evidence порожній лише для unknown. Без загальних порад.',
 ].join('\n');
 
-export function judgePrompt(c: Criterion, diff: string): string {
+/**
+ * `context` — довідка зі специфікації, на яку посилаються критерії (перелік id документів розділу 2);
+ * без неї суддя не може звірити «усі 23 документи» з конкретними файлами (калібрування 2, c02/A4).
+ */
+export function judgePrompt(c: Criterion, diff: string, context = ''): string {
   return [
     `Критерій ${c.id}: ${c.statement}`,
     `Чим перевіряється: ${c.check}`,
+    ...(context ? ['', `Довідка зі специфікації: ${context}`] : []),
     '',
     'Diff зміни:',
     '```diff',
@@ -104,8 +111,8 @@ function parseVerdict(text: string, id: string): CriterionVerdict | string {
 }
 
 /** Суддя по одному критерію: невалідну відповідь перепитує один раз, потім падає. */
-export async function judgeCriterion(ask: Ask, c: Criterion, diff: string): Promise<CriterionVerdict> {
-  const prompt = judgePrompt(c, diff);
+export async function judgeCriterion(ask: Ask, c: Criterion, diff: string, context = ''): Promise<CriterionVerdict> {
+  const prompt = judgePrompt(c, diff, context);
   const first = parseVerdict(await ask(JUDGE_SYSTEM, prompt), c.id);
   if (typeof first !== 'string') return first;
   const retry = `${prompt}\n\nТвоя попередня відповідь не пройшла схему (${first}). Поверни лише JSON-обʼєкт за схемою.`;

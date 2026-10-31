@@ -28,7 +28,7 @@ jobs:
         run: npm ci
 
       - name: Diff пул-реквесту
-        run: git diff "origin/${{ github.base_ref }}...HEAD" > docs/lab2/verify-input.diff
+        run: bash scripts/lab2/make-diff.sh "origin/${{ github.base_ref }}...HEAD" > docs/lab2/verify-input.diff
 
       - name: Верифікатор
         env:
