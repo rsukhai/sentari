@@ -11,8 +11,6 @@ license: CC BY-SA 4.0 (Wikipedia contributors)
 
 Device for measuring oxygen concentration
 
-| This article may contain original research. Please improve it by verifying the claims made and adding inline citations. Statements consisting only of original research should be removed. (September 2017) (Learn how and when to remove this message)
-
 An oxygen sensor is an electronic component that detects the concentration of oxygen molecules in the air or a gas matrix such as in a combustion engine exhaust gas.
 
 For automotive applications, an oxygen sensor is referred to as a lambda sensor, where lambda refers to the air–fuel equivalence ratio, usually denoted by λ. It was developed by Robert Bosch GmbH during the late 1960s under the supervision of Günter Bauman. The original sensing element is made with a thimble-shaped zirconia ceramic coated on both the exhaust and reference sides with a thin layer of platinum and comes in both heated and unheated forms. The planar-style sensor entered the market in 1990 and significantly reduced the mass of the ceramic sensing element, as well as incorporating the heater within the ceramic structure. This resulted in a sensor that started sooner and responded faster.
@@ -28,8 +26,6 @@ Oxygen sensors are also used in hypoxic air fire prevention systems to continuou
 There are many different ways of measuring oxygen. These include technologies such as zirconia, electrochemical (also known as galvanic), infrared, ultrasonic, paramagnetic, and very recently, laser methods.
 
 == Automotive applications ==
-
-| This section needs more citations. Please help improve this section by adding citations to reliable sources. Unsourced material may be challenged and removed. (June 2013) (Learn how and when to remove this message)
 
 A three-wire oxygen sensor suitable for use in a Volvo 240 or similar vehicle
 
@@ -48,8 +44,6 @@ When an internal combustion engine is under high load (e.g. wide open throttle),
 O2 sensors provide feedback to an engine control unit (ECU). Where applicable, gasoline, propane, and natural gas engines are fitted with three-way catalysts to comply with on-road vehicle emissions legislation. Using the O2 sensor signal, the ECU can operate the engine with an air–fuel ratio very close to 14.7:1, which is the ideal operating mixture for a three-way catalyst to be effective. Robert Bosch GmbH introduced the first automotive lambda sensor in 1976, and it was first used by Volvo and Saab in that year. The sensors were introduced in the US from approximately 1979 and were required on all car models in many European countries by 1993.[citation needed]
 
 === The probe ===
-
-| This section does not cite any sources. Please help improve this section by adding citations to reliable sources. Unsourced material may be challenged and removed. (September 2023) (Learn how and when to remove this message)
 
 The sensor element is a ceramic cylinder, plated on the inside and outside with porous platinum electrodes; a metal gauze protects the whole assembly. It operates by measuring the difference in oxygen between the exhaust gas and the external air, generating a voltage or changing its resistance accordingly.
 
@@ -104,8 +98,6 @@ The wiring diagram for the wideband sensor typically has six wires:
 - common
 
 ==== Titania sensor ====
-
-| This section does not cite any sources. Please help improve this section by adding citations to reliable sources. Unsourced material may be challenged and removed. (April 2024) (Learn how and when to remove this message)
 
 A less common type of narrow-band lambda sensor has a ceramic element made of titania (titanium dioxide). This type does not generate its own voltage, but changes its electrical resistance in response to the oxygen concentration. The resistance of the titania is a function of the oxygen partial pressure and the temperature. Therefore, some sensors are used with a gas-temperature sensor to compensate for the resistance change due to temperature. The resistance value at any temperature is about 1/1000 the change in oxygen concentration. Luckily, at λ = 1, there is a large change of oxygen, so the resistance change is typically 1000 times between rich and lean, depending on the temperature.
 

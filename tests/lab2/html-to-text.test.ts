@@ -15,6 +15,12 @@ describe('wikiHtmlToText', () => {
     expect(wikiHtmlToText(html)).toBe('Response is BE1FA813, decoded:');
   });
 
+  it('прибирає службові плашки редакторів', () => {
+    const html =
+      '<table class="box-More_citations_needed plainlinks metadata ambox"><tbody><tr><td>This section needs more citations.</td></tr></tbody></table><p>Body</p>';
+    expect(wikiHtmlToText(html)).toBe('Body');
+  });
+
   it('заголовки зберігає з рівнем, виноски прибирає', () => {
     const html =
       '<div class="mw-heading mw-heading2"><h2 id="History">History</h2></div>' +

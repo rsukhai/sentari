@@ -39,6 +39,8 @@ export function wikiHtmlToText(html: string): string {
     // формули: лишаємо TeX з alttext замість MathML і картинки-заглушки
     .replace(/<math[^>]*alttext="([^"]*)"[\s\S]*?<\/math>/gi, (_, tex: string) => ` ${decodeEntities(tex)} `)
     .replace(/<(style|script)[^>]*>[\s\S]*?<\/\1>/gi, '')
+    // службові плашки редакторів («This section needs more citations…»)
+    .replace(/<table[^>]*class="[^"]*\b(ambox|box-[\w-]+)\b[^"]*"[\s\S]*?<\/table>/gi, '')
     .replace(/<sup[^>]*class="[^"]*reference[^"]*"[^>]*>[\s\S]*?<\/sup>/gi, '')
     .replace(/<div[^>]*class="[^"]*(navbox|reflist|mw-references-wrap)[^"]*"[\s\S]*?<\/div>/gi, '')
     .replace(/<span class="mw-editsection">[\s\S]*?<\/span>\s*<\/span>/gi, '');
@@ -68,6 +70,8 @@ export function wikiHtmlToText(html: string): string {
   return decodeEntities(stripTags(s))
     .split('\n')
     .map((line) => line.replace(/[ \t]+/g, ' ').replace(/\s*\|\s*$/, '').trim())
+    // хвіст складеної плашки (таблиця в таблиці), який не зрізав регулярний вираз вище
+    .filter((line) => line !== '(Learn how and when to remove this message)')
     .join('\n')
     .replace(/\n{3,}/g, '\n\n')
     .trim();

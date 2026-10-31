@@ -11,8 +11,6 @@ license: CC BY-SA 4.0 (Wikipedia contributors)
 
 NOx reduction technique used in gasoline and diesel engines
 
-| This article needs more citations. Please help improve this article by adding citations to reliable sources. Unsourced material may be challenged and removed.; Find sources: "Exhaust gas recirculation" – news · newspapers · books · scholar · JSTOR (March 2009) (Learn how and when to remove this message)
-
 EGR valve the top of box on top of the inlet manifold of a Saab H engine in a 1987 Saab 90
 
 In internal combustion engines, exhaust gas recirculation (EGR) is a nitrogen oxide (NOx) emissions reduction technique used in petrol/gasoline, diesel engines and some hydrogen engines. EGR works by recirculating a portion of an engine's exhaust gas back to the engine cylinders. The exhaust gas displaces atmospheric air and reduces O2 in the combustion chamber. Reducing the amount of oxygen reduces the amount of fuel that can burn in the cylinder thereby reducing peak in-cylinder temperatures. The actual amount of recirculated exhaust gas varies with the engine operating parameters.
@@ -26,8 +24,6 @@ In a gasoline engine, this inert exhaust displaces some amount of combustible ch
 The first EGR systems were crude; some were as simple as an orifice jet between the exhaust and intake tracts which admitted exhaust to the intake tract whenever the engine was running. Difficult starting, rough idling, reduced performance and lost fuel economy inevitably resulted. By 1973, an EGR valve controlled by manifold vacuum opened or closed to admit exhaust to the intake tract only under certain conditions. Control systems grew more sophisticated as automakers gained experience; Volkswagen's "Coolant Controlled Exhaust Gas Recirculation" system of 1973 exemplified this evolution: a coolant temperature sensor blocked vacuum to the EGR valve until the engine reached normal operating temperature. This prevented driveability problems due to unnecessary exhaust induction; NOx forms under elevated temperature conditions generally not present with a cold engine. Moreover, the EGR valve was controlled, in part, by vacuum drawn from the carburetor's venturi, which allowed more precise constraint of EGR flow to only those engine load conditions under which NOx is likely to form. Later, backpressure transducers were added to the EGR valve control to further tailor EGR flow to engine load conditions. Most modern engines now need exhaust gas recirculation to meet NOx emissions standards. However, recent innovations have led to the development of engines that do not require them. The 3.6 Chrysler Pentastar engine is one example that does not require EGR.
 
 == EGR ==
-
-| This section needs more citations. Please help improve this section by adding citations to reliable sources. Unsourced material may be challenged and removed. (August 2014) (Learn how and when to remove this message)
 
 The exhaust gas contains water vapor and carbon dioxide which both have lower heat capacity ratio than air. Adding exhaust gas therefore reduces pressure and temperature during the isentropic compression in the cylinder, thereby lowering the adiabatic flame temperature.
 

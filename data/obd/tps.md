@@ -11,8 +11,6 @@ license: CC BY-SA 4.0 (Wikipedia contributors)
 
 Sensor device
 
-| This article needs more citations. Please help improve this article by adding citations to reliable sources. Unsourced material may be challenged and removed.; Find sources: "Throttle position sensor" – news · newspapers · books · scholar · JSTOR (July 2013) (Learn how and when to remove this message)
-
 Throttle body showing throttle position sensor on the right
 
 Potentiometric type sensor, showing the multi-finger metal brush/rake...

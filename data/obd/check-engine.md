@@ -11,8 +11,6 @@ license: CC BY-SA 4.0 (Wikipedia contributors)
 
 Type of indicator light in automobiles
 
-| The examples and perspectives in this article may not represent a worldwide view of the subject. You may improve this article, discuss the issue on the talk page, or create a new article, as appropriate. (October 2007) (Learn how and when to remove this message)
-
 A check engine light on a Volkswagen Bora indicating a fault in the engine management system
 
 A check engine light labeled "service engine soon"

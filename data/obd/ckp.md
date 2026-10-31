@@ -11,8 +11,6 @@ license: CC BY-SA 4.0 (Wikipedia contributors)
 
 Import
 
-| This article includes a list of references, related reading, or external links, but its sources remain unclear because it lacks inline citations. Please help improve this article by introducing more precise citations. (December 2013) (Learn how and when to remove this message)
-
 Typical inductive crankshaft position sensor
 
 A crank sensor (CKP) is an electronic device used in an internal combustion engine, both petrol and diesel, to monitor the position or rotational speed of the crankshaft. This information is used by engine management systems to control the fuel injection or the ignition system timing and other engine parameters. Before electronic crank sensors were available, the distributor would have to be manually adjusted to a timing mark on petrol engines.

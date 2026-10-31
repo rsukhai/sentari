@@ -11,8 +11,6 @@ license: CC BY-SA 4.0 (Wikipedia contributors)
 
 Vehicle device controlling engines
 
-| This article needs more citations. Please help improve this article by adding citations to reliable sources. Unsourced material may be challenged and removed.; Find sources: "Idle air control actuator" – news · newspapers · books · scholar · JSTOR (July 2018) (Learn how and when to remove this message)
-
 An idle air control actuator or idle air control valve (IAC actuator/valve) is a device commonly used in fuel-injected vehicles to control the engine's idling rotational speed (RPM). In carburetted vehicles a similar device known as an idle speed control actuator is used.
 
 == Description ==

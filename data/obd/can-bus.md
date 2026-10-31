@@ -11,14 +11,6 @@ license: CC BY-SA 4.0 (Wikipedia contributors)
 
 Standard for serial communication between devices without host computer
 
-| This article has multiple issues. Please help improve it or discuss these issues on the talk page. (Learn how and when to remove these messages) | This article's lead section may be too short to adequately summarize the key points. Please consider expanding the lead to provide an accessible overview of all important aspects of the article. (November 2020) (Learn how and when to remove this message)
-
-| This article's use of external links may not follow Wikipedia's policies or guidelines. Please improve this article by removing excessive or inappropriate external links, and converting useful links where appropriate into footnote references. (January 2024) (Learn how and when to remove this message)
-
-| This article may be too technical for most readers to understand. Please help improve it to make it understandable to non-experts, without removing the technical details. (January 2024) (Learn how and when to remove this message)
-
-(Learn how and when to remove this message)
-
 Controller Area Network
 Unofficial logo of the CAN bus by CAN-in-Automation.
 Type | Serial communication

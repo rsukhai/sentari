@@ -17,8 +17,6 @@ Uses | Internal combustion engine's electronic control system
 
 The examples and descriptions in this article apply strictly to four-stroke cycle gasoline engines. Other engine types such as diesel, or two-stroke cycle can differ in the exact implementation, but the general ideas still apply.
 
-| This article includes a list of general references but lacks sufficient corresponding inline citations. Please help improve this article by introducing more precise citations. (December 2013) (Learn how and when to remove this message)
-
 The manifold absolute pressure sensor (MAP sensor) is one of the sensors used in an internal combustion engine's electronic control system.
 
 Engines that use a MAP sensor are typically fuel injected. The manifold absolute pressure sensor provides instantaneous manifold pressure information to the engine's electronic control unit (ECU). The data is used to calculate air density and determine the engine's air mass flow rate, which in turn determines the required fuel metering for optimum combustion (see stoichiometry) and influence the advance or retard of ignition timing. A fuel-injected engine may alternatively use a mass airflow sensor (MAF sensor) to detect the intake airflow. A typical naturally aspirated engine configuration employs one or the other, whereas forced induction engines typically use both; a MAF sensor on the cold air intake leading to the turbo and a MAP sensor on the intake tract post-turbo before the throttle body on the intake manifold.

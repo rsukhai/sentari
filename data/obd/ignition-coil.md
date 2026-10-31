@@ -25,8 +25,6 @@ Diesel engines use compression ignition and therefore do not have ignition coils
 
 == Design ==
 
-| This section needs more citations. Please help improve this section by adding citations to reliable sources. Unsourced material may be challenged and removed. (February 2023) (Learn how and when to remove this message)
-
 An ignition coil consists of an iron core surrounded by two coils (windings) made from copper wire. The primary winding has relatively few turns of heavy wire, while the secondary winding consists of thousands of turns of smaller wire and is insulated from the high voltage by enamel on the wires and layers of oiled paper insulation.
 
 When the electrical circuit connected from the power source (e.g. the car's battery) to the primary winding is closed (by a contact breaker or transistor), current flows through the primary winding, which produces a magnetic field around the core. This current flow lasts for a period of time to build up energy in the coil. Once the coil is charged, the circuit is opened, and the resulting oscillation in the magnetic field induces a high voltage in the secondary winding. This high-voltage electricity travels through several components (such as a distributor and spark plug wires), before reaching the spark plug, where it is used to ignite the air/fuel mixture.
@@ -38,8 +36,6 @@ Modern electronic ignition systems operate using the same principle of charging 
 A modern single-spark system has one coil per spark plug. To prevent premature sparking at the start of the primary pulse, a diode or secondary spark gap is installed in the coil to block the reverse pulse that would otherwise form. In older wasted spark systems for four-stroke engines, the secondary winding of the ignition coil has two output terminals, both of which connect to a spark plug. The reverse pulse triggers the spark plug in a cylinder containing no air/fuel mixture (since that cylinder is out of phase by 180 degrees).
 
 == Materials ==
-
-| This section needs more citations. Please help improve this section by adding citations to reliable sources. Unsourced material may be challenged and removed. (February 2023) (Learn how and when to remove this message)
 
 Formerly, ignition coils were made with varnish and paper insulated high-voltage windings, inserted into a drawn-steel can and filled with transformer oil or asphalt for insulation and moisture protection. Later[when?], ignition coils were instead cast in filled epoxy resins, which penetrate any voids forming within the windings.
 

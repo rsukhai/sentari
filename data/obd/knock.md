@@ -13,8 +13,6 @@ Problem in internal combustion engines
 
 "Pinging" redirects here. For other uses, see Ping (disambiguation).
 
-| This article needs images. Please consider adding images so that it can be better illustrated. (April 2022)
-
 Two flame fronts in a combustion chamber, one of which (left) is caused by premature ignition
 
 In spark-ignition internal combustion engines, knocking (also called knock, detonation, spark knock, or pinging) occurs when combustion of some of the air/fuel mixture in the cylinder results from a source other than the flame front ignited by the spark plug, in other words, when one or more pockets of air/fuel mixture explode outside the envelope of the normal combustion front. The fuel–air charge is meant to be ignited by the spark plug only, and at a precise point in the piston's stroke. Knock occurs when the peak of the combustion process no longer occurs at the optimum moment for the four-stroke cycle. The shock wave creates the characteristic metallic "pinging" sound, and cylinder pressure increases dramatically. Effects of engine knocking range from inconsequential to completely destructive.

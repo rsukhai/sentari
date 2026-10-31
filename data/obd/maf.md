@@ -11,8 +11,6 @@ license: CC BY-SA 4.0 (Wikipedia contributors)
 
 Internal combustion engine sensor
 
-| This article needs more citations. Please help improve this article by adding citations to reliable sources. Unsourced material may be challenged and removed.; Find sources: "Mass flow sensor" – news · newspapers · books · scholar · JSTOR (November 2009) (Learn how and when to remove this message)
-
 A mass airflow sensor
 
 MAF sensor location in an automotive diesel engine
