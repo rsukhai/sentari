@@ -599,3 +599,6 @@
 {"ts":"2026-10-31T11:21:10Z","tool":"Write","input":{"file_path":"/Users/roman/sentari/docs/lab2/baseline.md"},"result":"ok","session":"4b9d5995-d5ad-42fb-85fa-7a43472a301c","source":"claude-code"}
 {"ts":"2026-10-31T11:21:26Z","tool":"Edit","input":{"file_path":"/Users/roman/sentari/docs/lab2/baseline.md"},"result":"ok","session":"4b9d5995-d5ad-42fb-85fa-7a43472a301c","source":"claude-code"}
 {"ts":"2026-10-31T11:21:27Z","tool":"Edit","input":{"file_path":"/Users/roman/sentari/docs/lab2/autonomy-log.md"},"result":"ok","session":"4b9d5995-d5ad-42fb-85fa-7a43472a301c","source":"claude-code"}
+{"ts":"2026-10-31T11:21:27Z","tool":"Bash","input":{"command":"git add docs/lab2 .agent-log/claude-code.jsonl && git commit -q -m \"docs(lab2): базова лінія без пошуку — 20 відповідей gpt-5.6-luna, оцінки (чернетка)\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthro"},"result":"ok","session":"4b9d5995-d5ad-42fb-85fa-7a43472a301c","source":"claude-code"}
+{"ts":"2026-10-31T11:22:35Z","tool":"Edit","input":{"file_path":"/Users/roman/sentari/docs/lab2/baseline.md"},"result":"ok","session":"4b9d5995-d5ad-42fb-85fa-7a43472a301c","source":"claude-code"}
+{"ts":"2026-10-31T11:22:36Z","tool":"Bash","input":{"command":"cat /tmp/l2s02.txt"},"result":"ok","session":"4b9d5995-d5ad-42fb-85fa-7a43472a301c","source":"claude-code"}
