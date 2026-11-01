@@ -1,2 +1,8 @@
 {"ts":"2026-11-01T18:47:45.200Z","source":"unknown","tool":"search_corpus","args":{"query":"Can I clean a dirty MAF sensor with brake cleaner?","topK":5},"result":"ok","hits":5}
 {"ts":"2026-11-01T18:47:46.117Z","source":"unknown","tool":"fetch_chunk","args":{"id":"egr#9999"},"result":"refused","why":"Error: фрагмента egr#9999 немає в індексі"}
+{"ts":"2026-11-01T19:02:47.836Z","source":"claude-code","tool":"search_corpus","args":{"query":"What happens if the EGR valve is clogged?","topK":3},"result":"ok","hits":3}
+{"ts":"2026-11-01T19:02:50.041Z","source":"claude-code","tool":"fetch_chunk","args":{"id":"egr#0006"},"result":"ok"}
+{"ts":"2026-11-01T19:02:52.326Z","source":"claude-code","tool":"fetch_chunk","args":{"id":"egr#9999"},"result":"refused","why":"Error: фрагмента egr#9999 немає в індексі"}
+{"ts":"2026-11-01T19:03:50.645Z","source":"sentari-app","tool":"search_corpus","args":{"query":"Can I clean a dirty MAF sensor with brake cleaner?","topK":3},"result":"ok","hits":3}
+{"ts":"2026-11-01T19:03:50.647Z","source":"sentari-app","tool":"fetch_chunk","args":{"id":"maf#0008"},"result":"ok"}
+{"ts":"2026-11-01T19:03:50.647Z","source":"sentari-app","tool":"fetch_chunk","args":{"id":"maf#9999"},"result":"refused","why":"Error: фрагмента maf#9999 немає в індексі"}

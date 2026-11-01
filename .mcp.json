@@ -3,6 +3,18 @@
     "context7": {
       "type": "http",
       "url": "https://mcp.context7.com/mcp"
+    },
+    "sentari-obd": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "tsx",
+        "src/mcp/server.ts"
+      ],
+      "env": {
+        "MCP_CLIENT_LABEL": "claude-code",
+        "OLLAMA_URL": "${OLLAMA_URL:-http://localhost:11434}"
+      }
     }
   }
 }
