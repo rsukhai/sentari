@@ -1,0 +1,2 @@
+{"ts":"2026-11-01T18:47:45.200Z","source":"unknown","tool":"search_corpus","args":{"query":"Can I clean a dirty MAF sensor with brake cleaner?","topK":5},"result":"ok","hits":5}
+{"ts":"2026-11-01T18:47:46.117Z","source":"unknown","tool":"fetch_chunk","args":{"id":"egr#9999"},"result":"refused","why":"Error: фрагмента egr#9999 немає в індексі"}
