@@ -2,6 +2,7 @@
  * Колекція документів Лаб. 2 (розділ 2 docs/lab2/spec.md).
  *
  *   npx tsx scripts/lab2/fetch-obd.ts         ХОДИТЬ У МЕРЕЖУ: завантажує статті Вікіпедії в data/obd/
+ *                                             (ревізію бере з шапки наявного файлу — ті самі тексти; --latest — найновіші)
  *   npx tsx scripts/lab2/fetch-obd.ts check   критерій A4, без мережі: усі документи на місці → exit 0
  *
  * Текст береться через MediaWiki API (action=parse, HTML → текст зі збереженими таблицями)
@@ -24,7 +25,7 @@ interface ParseResult {
   error?: { info: string };
 }
 
-async function fetchDoc(doc: DocRef): Promise<string> {
+async function fetchDoc(doc: DocRef, oldid?: string): Promise<string> {
   const params = new URLSearchParams({
     action: 'parse',
     format: 'json',
@@ -33,7 +34,7 @@ async function fetchDoc(doc: DocRef): Promise<string> {
     prop: 'text|revid',
     disableeditsection: '1',
     disabletoc: '1',
-    page: wikiTitle(doc.url),
+    ...(oldid ? { oldid } : { page: wikiTitle(doc.url) }),
   });
   const res = await fetch(`${API}?${params}`, { headers: { 'User-Agent': USER_AGENT } });
   if (!res.ok) throw new Error(`${doc.id}: HTTP ${res.status}`);
@@ -82,8 +83,11 @@ async function main() {
   }
 
   await mkdir(DIR, { recursive: true });
+  const latest = process.argv.includes('--latest');
   for (const doc of docs) {
-    const text = await fetchDoc(doc);
+    const existing = await readFile(join(DIR, docFile(doc.id)), 'utf8').catch(() => '');
+    const oldid = latest ? undefined : /oldid=(\d+)/.exec(existing)?.[1];
+    const text = await fetchDoc(doc, oldid);
     await writeFile(join(DIR, docFile(doc.id)), text, 'utf8');
     console.log(`${doc.id.padEnd(15)} ${String(text.length).padStart(7)} симв.`);
   }

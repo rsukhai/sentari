@@ -45,10 +45,9 @@ export function wikiHtmlToText(html: string): string {
     .replace(/<div[^>]*class="[^"]*(navbox|reflist|mw-references-wrap)[^"]*"[\s\S]*?<\/div>/gi, '')
     .replace(/<span class="mw-editsection">[\s\S]*?<\/span>\s*<\/span>/gi, '');
 
-  // заголовки
+  // заголовки — Markdown (h2 → ##): за ними ріже src/rag/chunk.ts
   s = s.replace(/<h([2-4])[^>]*>([\s\S]*?)<\/h\1>/gi, (_, level: string, inner: string) => {
-    const marks = '='.repeat(Number(level));
-    return `\n\n${marks} ${cellText(inner)} ${marks}\n`;
+    return `\n\n${'#'.repeat(Number(level))} ${cellText(inner)}\n`;
   });
 
   // таблиці: кожен <tr> — один рядок, клітинки через « | »; пробіли між тегами таблиці — шум

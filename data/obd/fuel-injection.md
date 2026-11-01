@@ -23,25 +23,25 @@ There are two main functional principles of mixture formation systems for intern
 
 Internal mixture formation systems can be separated into several varieties of "direct" and "indirect" injection; the most common is common rail injection, a form of direct injection. The term "electronic fuel injection" refers to any fuel injection system controlled by an engine control unit.
 
-== System functions ==
+## System functions
 
-=== Pressurising fuel ===
+### Pressurising fuel
 
 Fuel injection sprays pressurised fuel into the engine. Therefore a device to pressurise the fuel is needed, such as a fuel pump.
 
-=== Metering fuel ===
+### Metering fuel
 
 The system must determine the appropriate amount of fuel to be supplied and control the fuel flow to deliver it.
 
 Several early mechanical injection systems used relatively sophisticated helix-controlled injection pump(s) that both metered fuel and created injection pressure. Since the 1980s, electronic systems have been used to control fuel metering. More recent systems use an electronic engine control unit, which meters the fuel and controls the ignition timing and various other engine functions.
 
-=== Injecting fuel ===
+### Injecting fuel
 
 The fuel injector is essentially a spray nozzle that delivers fuel to the engine during the final stage of fuel delivery. The injector is located in the combustion chamber, inlet manifold, or – less commonly – the throttle body.
 
 Fuel injectors that also control the metering, are called "injection valves", while injectors that perform all three functions are called "unit injectors".
 
-== Direct injection systems ==
+## Direct injection systems
 
 Direct injection means that the fuel is injected into the main combustion chamber of each cylinder. As air and fuel are mixed only inside the combustion chamber, air alone is sucked into the engine during the intake stroke. The injection scheme is always intermittent (either sequential or cylinder-individual).
 
@@ -49,13 +49,13 @@ Fuel is injected directly into the combustion chamber either with a blast of air
 
 Typically, hydraulic direct injection systems spray fuel into the air inside the cylinder, or combustion chamber. Direct injection can be achieved with a conventional helix-controlled injection pump, unit injectors, or a sophisticated common-rail injection system. The last is the most common system in modern automotive engines.
 
-=== Direct injection for petrol engines ===
+### Direct injection for petrol engines
 
 Main article: Petrol direct injection
 
 During the 20th century, most petrol engines used either a carburettor or indirect fuel injection. Use of direct injection in petrol engines has become increasingly common in the 21st century.
 
-=== Common-rail injection systems ===
+### Common-rail injection systems
 
 Main article: Common-rail injection
 
@@ -63,7 +63,7 @@ In a common-rail system, fuel from the fuel tank is supplied to a common header 
 
 The types of common-rail systems include air-guided injection and spray-guided injection.
 
-=== Unit injector systems ===
+### Unit injector systems
 
 Main article: Unit injector
 
@@ -73,7 +73,7 @@ Used by diesel engines, these systems include:
 
 - Pump-rail-nozzle system
 
-=== Helix-controlled pump systems ===
+### Helix-controlled pump systems
 
 This injection method was previously used in many diesel engines. Types of systems include:
 
@@ -89,17 +89,17 @@ This injection method was previously used in many diesel engines. Types of syste
 
 - Flat piston (combustion chamber between piston and head)
 
-=== Air-blast injection systems ===
+### Air-blast injection systems
 
 Main article: Air-blast injection
 
-=== Other systems ===
+### Other systems
 
 The M-System, used in some diesel engines from the 1960s to the 1980s, sprayed the fuel onto the walls of the combustion chamber, as opposed to most other direct-injection systems which spray the fuel into the middle of the chamber.
 
-== Indirect injection systems ==
+## Indirect injection systems
 
-=== Manifold injection ===
+### Manifold injection
 
 Main article: Manifold injection
 
@@ -107,18 +107,18 @@ Manifold injection systems are common in petrol-fuelled engines such as Otto and
 
 These systems use either a "continuous" or an "intermittent" injection design. In a continuous injection system, fuel flows at all times from the fuel injectors, but at a variable flow rate. The most common automotive continuous-injection system is the multi-point Bosch K-Jetronic system, introduced in 1974 and used by various car manufacturers until the mid-1990s. Intermittent injection systems can be sequential, in which injection is timed to coincide with each cylinder's intake stroke; batched, in which fuel is injected to the cylinders in groups, without precise synchronization to any particular cylinder's intake stroke; simultaneous, in which fuel is injected at the same time to all the cylinders; or cylinder-individual, in which the engine control unit can adjust the injection for each cylinder individually.
 
-==== Multi-point injection ====
+#### Multi-point injection
 
 Schematic of a mechanical port injection system
 
 Multi-point injection (also called 'port injection') injects fuel into the intake ports just upstream of each cylinder's intake valve, rather than at a central point within an intake manifold. Typically, multi-point injected systems use multiple fuel injectors, but some systems, such as GM's central port injection system, use tubes with poppet valves fed by a central injector instead of multiple injectors.
 
-==== Single-point injection ====
+#### Single-point injection
 
 Single-point injection (also called 'throttle-body injection') uses one injector in a throttle body mounted similarly to a carburettor on an intake manifold. As in a carburetted induction system, the fuel is mixed with the air before entering the intake manifold. Single-point injection was a relatively low-cost way for automakers to reduce exhaust emissions to comply with tightening regulations while providing better "driveability" (easy starting, smooth running, no engine stuttering) than could be obtained with a carburettor. Many of the carburettor's supporting components—such as the air filter, intake manifold, and fuel line routing—could be used with few or no changes. This postponed the redesign and tooling costs of these components. Single-point injection was used extensively on American-made passenger cars and light trucks during 1980–1995, and in some European cars in the early and mid-1990s.
 In the US, the G10 engine in the 2000 Chevrolet Metro became the last engine available on an American-sold vehicle to use throttle body injection.
 
-=== Diesel engines ===
+### Diesel engines
 
 In indirect-injected diesel engines (as well as Akroyd engines), there are two combustion chambers: the main combustion chamber, and a pre-chamber (also called an ante-chamber) that is connected to the main one. The fuel is injected only into the pre-chamber (where it begins to combust), and not directly into the main combustion chamber. Therefore, this principle is called indirect injection. There exist several slightly different indirect injection systems that have similar characteristics.
 
@@ -128,13 +128,13 @@ Types of indirect injection used by diesel engines include:
 
 - Air-cell chamber injection
 
-=== Hot-bulb injection ===
+### Hot-bulb injection
 
 Main article: Hot-bulb engine
 
-== History ==
+## History
 
-=== 1870s–1930s: early systems ===
+### 1870s–1930s: early systems
 
 Air-blast injection system for an 1898 diesel engine
 
@@ -148,13 +148,13 @@ In 1898, German company Deutz AG started producing four-stroke petrol stationary
 
 The Cummins Model H diesel truck engine was introduced in America in 1933. In 1936, the Mercedes-Benz OM 138 diesel engine (using a precombustion chamber) became one of the first fuel-injected engines used in a mass-production passenger car.
 
-=== 1940s–1950s: WWII aircraft and early direct-injection petrol engines ===
+### 1940s–1950s: WWII aircraft and early direct-injection petrol engines
 
 During World War II, several petrol engines for aircraft used direct-injection systems, such as the European Junkers Jumo 210, Daimler-Benz DB 601, BMW 801, and the Shvetsov ASh-82FN (M-82FN). The German direct-injection systems were based on diesel injection systems used by Bosch, Deckel, Junkers and l'Orange. By around 1943, the Rolls-Royce Merlin and Wright R-3350 had switched from traditional carburettors to fuel injection (called "pressure carburettors" at the time), however these engines used throttle body manifold injection, rather than the direct-injection systems of the German engines. From 1940, the Mitsubishi Kinsei 60 series engine used a direct-injection system, along with the related Mitsubishi Kasei engine from 1941. In 1943, a low-pressure fuel injection system was added to the Nakajima Homare Model 23 radial engine.
 
 The first mass-produced petrol direct-injection system was developed by Bosch and was initially used in small automotive two-stroke petrol engines. Introduced in the 1950 Goliath GP700 small saloon, it was also added to the Gutbrod Superior engine in 1952. This mechanically controlled system was essentially a specially lubricated high-pressure diesel direct-injection pump of the type that is governed by the vacuum behind an intake throttle valve. A Bosch mechanical direct-injection system was also used in the straight-eight used in the 1954 Mercedes-Benz W196 Formula One racing car. The first four-stroke direct-injection petrol engine for a passenger car was released the following year, in the Mercedes-Benz 300SL sports car. However the engine suffered lubrication problems due to petrol diluting the engine oil, and subsequent Mercedes-Benz engines were switched to a manifold injection design. Likewise, most petrol injection systems before the 2000s used the less-expensive manifold injection design.
 
-=== 1950s–1970s: manifold injection for petrol engines ===
+### 1950s–1970s: manifold injection for petrol engines
 
 1950s Rochester Ramjet mechanical port injection system (on a Chevrolet 283 engine)
 
@@ -170,7 +170,7 @@ The Electrojector patents were subsequently sold to Bosch, who developed the Ele
 
 Also in 1974, Bosch introduced the L-Jetronic system, a pulsed-flow system that used an air flow meter to calculate the amount of fuel required. L-Jetronic was widely adopted on European cars during the 1970s and 1980s. As a system that uses electronically controlled fuel injectors which open and close to control the amount of fuel entering the engine, the L-Jetronic system uses the same basic principles as modern electronic fuel injection (EFI) systems.
 
-=== 1980s–present: digital electronics and common-rail injection ===
+### 1980s–present: digital electronics and common-rail injection
 
 Prior to 1979, the electronics in fuel injection systems used analogue electronics for the control system. The Bosch Motronic multi-point fuel injection system (also amongst the first systems where the ignition system is controlled by the same device as the fuel injection system) was the first mass-produced system to use digital electronics. The Ford EEC-III single-point fuel injection system, introduced in 1980, was another early digital fuel injection system. These and other electronic manifold injection systems (using either port injection or throttle-body injection) became more widespread through the 1980s, and by the early 1990s they had replaced carburettors in most new petrol-engined cars sold in developed countries.
 

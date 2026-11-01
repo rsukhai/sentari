@@ -23,7 +23,7 @@ The first widespread introduction of catalytic converters was in the United Stat
 
 Although catalytic converters are most commonly applied to exhaust systems in automobiles, they are also used on electrical generators, forklifts, mining equipment, trucks, buses, locomotives, motorcycles, and on ships. Rarely, devices similar to catalytic converters are used in appliances such as wood stoves to control emissions.
 
-== History ==
+## History
 
 Catalytic converter prototypes were first designed in France at the end of the 19th century, when only a few thousand "oil cars" were on the roads; these prototypes had inert clay-based materials coated with platinum, rhodium, and palladium and sealed into a double metallic cylinder. A few decades later, a catalytic converter was patented by Eugene Houdry, a French mechanical engineer. Houdry was an expert in catalytic oil refining, having invented the catalytic cracking process that all modern refining is based on today. Houdry moved to the United States in 1930 to live near the refineries in Philadelphia and develop his catalytic refining process.
 
@@ -37,7 +37,7 @@ To lower harmful NOx emissions, a twin-catalyst system was developed in the 1970
 
 William C. Pfefferle developed a catalytic combustor for gas turbines in the early 1970s, allowing combustion without significant formation of nitrogen oxides and carbon monoxide. Four-way catalytic converters have also been developed which also remove particulates from engine exhaust; since most of these particulates are unburned hydrocarbons, they can be burned to convert them into carbon dioxide.
 
-== Construction ==
+## Construction
 
 Cutaway of a metal-core converter
 
@@ -55,13 +55,13 @@ The catalytic converter's construction is as follows:
 
 Upon failure, a catalytic converter can be recycled rather than being scrapped. The precious metals inside the converter – the platinum, palladium, and rhodium – are extracted.
 
-== Placement of catalytic converters ==
+## Placement of catalytic converters
 
 Catalytic converters require a temperature of 400 °C (750 °F) to operate effectively. Therefore, they are placed as close to the engine as possible, or one or more smaller catalytic converters (known as "pre-cats"[citation needed]) are placed immediately after the exhaust manifold.
 
-== Types ==
+## Types
 
-=== Two-way ===
+### Two-way
 
 A 2-way (or "oxidation", sometimes called an "oxi-cat") catalytic converter has two simultaneous tasks:
 
@@ -71,7 +71,7 @@ A 2-way (or "oxidation", sometimes called an "oxi-cat") catalytic converter has 
 
 The two-way catalytic converter is widely used on diesel engines to reduce hydrocarbon and carbon monoxide emissions. They were also used on gasoline engines in American and Canadian automobile markets until 1981. Because of their inability to control oxides of nitrogen, manufacturers briefly installed twin catalyst systems, with an NOx reducing, rhodium/platinum catalyst ahead of the air pump, which led to the development of the three-way catalytic converter. The two-way catalytic converter also continued to be used on certain, lower-cost cars in some markets such as Europe, where NOx emissions were not universally regulated until the introduction of the Euro 3 emissions standard in 2000.
 
-=== Three-way ===
+### Three-way
 
 The three-way catalytic converters have the additional advantage of controlling the emission of nitric oxide (NO) and nitrogen dioxide (NO2) (both together abbreviated with NOx and not to be confused with nitrous oxide (N2O)). NOx are precursors to acid rain and smog.
 
@@ -103,11 +103,11 @@ Closed-loop control under light to moderate load is accomplished by using one or
 
 Closed-loop control is often suspended during high load/maximum power operation, when an increase in emissions is permitted and a rich mixture is commanded to increase power and prevent exhaust gas temperature from exceeding design limits. This presents a challenge for control system and catalyst design. During such operations, large amounts of unburnt HC are produced by the engine, well beyond the capacity of the catalyst to release oxygen. The surface of the catalyst quickly becomes saturated with HC. When returning to lower power output and leaner air-fuel ratios, the control system must prevent excessive oxygen from reaching the catalyst too quickly, as this will rapidly burn the HC in the already hot catalyst, potentially exceeding the design temperature limit of the catalyst. Excessive catalyst temperature can prematurely age the catalyst, reducing its efficiency before reaching its design lifetime. Excessive catalyst temperature can also be caused by cylinder misfire, which continuously flows unburnt HC combined with oxygen to the hot catalyst, burning in the catalyst and increasing its temperature.
 
-==== Unwanted reactions ====
+#### Unwanted reactions
 
 Unwanted reactions result in the formation of hydrogen sulfide and ammonia, which poison catalysts. Nickel or manganese is sometimes added to the washcoat to limit hydrogen-sulfide emissions.[citation needed] Sulfur-free or low-sulfur fuels eliminate or minimize problems with hydrogen sulfide.
 
-=== Diesel engines ===
+### Diesel engines
 
 For compression-ignition (i.e., diesel) engines, the most commonly used catalytic converter is the diesel oxidation catalyst (DOC). DOCs contain palladium or platinum supported on alumina. This catalyst converts particulate matter (PM), hydrocarbons, and carbon monoxide to carbon dioxide and water. These converters often operate at 90 percent efficiency, virtually eliminating diesel odor and helping reduce visible particulates. These catalysts are ineffective for NOx, so NOx emissions from diesel engines are controlled by exhaust gas recirculation (EGR).
 
@@ -117,11 +117,11 @@ Instead of precious metal-containing NOx absorbers, most manufacturers selected 
 
 Diesel exhaust contains relatively high levels of particulate matter. Catalytic converters (soot traps/DOCs) can remove 20–40% of PM The diesel particulate filter (DPF) is typically effective at removing at least 85% of PM. In the U.S., all on-road light, medium, and heavy-duty diesel-powered vehicles built after 1 January 2007, are subject to diesel particulate emission limits, and so are equipped with a 2-way catalytic converter and a diesel particulate filter. As long as the engine was manufactured before 1 January 2007, the vehicle is not required to have the DPF system. This led to an inventory runup by engine manufacturers in late 2006 so they could continue selling pre-DPF vehicles well into 2007.
 
-=== Lean-burn spark-ignition engines ===
+### Lean-burn spark-ignition engines
 
 For lean-burn spark-ignition engines, an oxidation catalyst is used in the same manner as in a diesel engine. Emissions from lean burn spark ignition engines are very similar to emissions from a diesel compression ignition engine.
 
-== Installation ==
+## Installation
 
 Many vehicles have a close-coupled catalytic converter located near the engine's exhaust manifold. The converter heats up quickly, due to its exposure to the very hot exhaust gases, allowing it to reduce undesirable emissions during the engine warm-up period. This is achieved by burning off the excess hydrocarbons which result from the extra-rich mixture required for a cold start.
 
@@ -131,7 +131,7 @@ Some three-way catalytic converter systems have air injection systems with the a
 
 Most newer vehicles have electronic fuel injection systems, and do not require air injection systems in their exhausts. Instead, they provide a precisely controlled air-fuel mixture that quickly and continually cycles between lean and rich combustion. Oxygen sensors monitor the exhaust oxygen content before and after the catalytic converter, and the engine control unit uses this information to adjust the fuel injection so as to prevent the first (NOx reduction) catalyst from becoming oxygen-loaded, while simultaneously ensuring the second (HC and CO oxidation) catalyst is sufficiently oxygen-saturated.
 
-== Damage ==
+## Damage
 
 Catalyst poisoning occurs when the catalytic converter is exposed to exhaust containing substances that coat the working surfaces, so that they cannot contact and react with the exhaust. The most notable contaminant is lead, so vehicles equipped with catalytic converters can run only on unleaded fuel. Other common catalyst poisons include sulfur, manganese (originating primarily from the gasoline additive MMT), and silicon, which can enter the exhaust stream if the engine has a leak that allows coolant into the combustion chamber. Phosphorus is another catalyst contaminant. Although phosphorus is no longer used in gasoline, it (and zinc, another low-level catalyst contaminant) was widely used in engine oil antiwear additives such as zinc dithiophosphate (ZDDP). Beginning in 2004, a limit of phosphorus concentration in engine oils was adopted in the API SM and ILSAC GF-4 specifications.
 
@@ -139,7 +139,7 @@ Depending on the contaminant, catalyst poisoning can sometimes be reversed by ru
 
 Any condition that causes abnormally high levels of unburned hydrocarbons (raw or partially burnt fuel or oils) to reach the converter will tend to significantly elevate its temperature bringing the risk of a meltdown of the substrate and resultant catalytic deactivation and severe exhaust restriction. These conditions include failure of the upstream components of the exhaust system (manifold or header assembly and associated clamps susceptible to rust, corrosion or fatigue such as the exhaust manifold splintering after repeated heat cycling), ignition system (e.g., coil packs, primary ignition components, distributor cap, wires, ignition coil and spark plugs) or damaged fuel system components (e.g., fuel injectors, fuel pressure regulator, and associated sensors). Oil and coolant leaks, perhaps caused by a head gasket leak, can also cause high unburned hydrocarbons.
 
-== Regulations ==
+## Regulations
 
 Emissions regulations vary considerably from jurisdiction to jurisdiction. Most automobile spark-ignition engines in North America have been fitted with catalytic converters since 1975, and the technology used in non-automotive applications is generally based on automotive technology. In many jurisdictions, it is illegal to remove or disable a catalytic converter for any reason other than its direct and immediate replacement. Nevertheless, some vehicle owners remove or "gut" the catalytic converter on their vehicle. In such cases, the converter may be replaced by a welded-in section of ordinary pipe or a flanged "test pipe", ostensibly meant to check if the converter is clogged by comparing how the engine runs with and without the converter. This facilitates temporary reinstallation of the converter in order to pass an emission test.
 
@@ -147,15 +147,15 @@ In the United States, it is a violation of Section 203(a)(3)(A) of the 1990 amen
 
 Catalytic converters have been mandatory on all new gasoline cars sold in the European Union and the United Kingdom since 1 January 1993 in order to comply with the Euro 1 emission standards.
 
-== Effect on exhaust flow ==
+## Effect on exhaust flow
 
 Faulty catalytic converters as well as undamaged early types of converters can restrict the flow of exhaust, which negatively affects vehicle performance and fuel economy. Modern catalytic converters do not significantly restrict exhaust flow. A 2006 test on a 1999 Honda Civic, for example, showed that removing the stock catalytic converter netted only a 3% increase in maximum horsepower; a new metallic core converter only cost the car 1% horsepower, compared to no converter.
 
-== Dangers ==
+## Dangers
 
 Carburetors on pre-1981 vehicles without feedback fuel-air mixture control could easily provide too much fuel to the engine, which could cause the catalytic converter to overheat and potentially ignite flammable materials under the car.
 
-=== Warm-up period ===
+### Warm-up period
 
 Vehicles fitted with catalytic converters emit most of their total pollution during the first five minutes of engine operation; that is, before the catalytic converter has warmed up sufficiently to be fully effective.
 
@@ -164,7 +164,7 @@ In 1995, Alpina introduced an electrically heated catalyst. Called "E-KAT", it w
 
 Some vehicles contain a pre-cat, a small catalytic converter upstream of the main catalytic converter which heats up faster on vehicle start up, reducing the emissions associated with cold starts. A pre-cat is most commonly used by an auto manufacturer when trying to attain the Ultra Low Emissions Vehicle (ULEV) rating, such as on the Toyota MR2 Roadster.
 
-=== Environmental effect ===
+### Environmental effect
 
 Catalytic converters have proven to be reliable and effective in reducing noxious tailpipe emissions. However, they also have some shortcomings in use, and also adverse environmental effects in production:
 
@@ -174,7 +174,7 @@ Catalytic converters have proven to be reliable and effective in reducing noxiou
 
 - The extreme heat of the converters themselves can cause wildfires, especially in dry areas.
 
-== Theft ==
+## Theft
 
 See also: 2020–2022 catalytic converter theft ring
 
@@ -184,7 +184,7 @@ Pipecutters are often used to quietly remove the converter but other tools such 
 
 In 2023, bipartisan legislation to combat catalytic converter theft was introduced in the U.S. Senate. The Preventing Auto Recycling Thefts Act (PART Act) would mandate catalytic converters in new vehicles to come with traceable identification numbers. Additionally, the legislation would make catalytic converter theft a federal criminal offense.
 
-=== Statistics ===
+### Statistics
 
 Rising metal prices in the U.S. during the 2000s commodities boom led to a significant increase in converter theft. A catalytic converter can cost more than $1,000 to replace, more if the vehicle is damaged during the theft. Apart from damaging other systems of the vehicle, theft can also cause death and injury to thieves.
 
@@ -194,7 +194,7 @@ From 2019 to 2020, thieves in the United Kingdom were targeting older-model hybr
 
 In 2021 a trend emerged in the Democratic Republic of the Congo where catalytic converters were alleged to be stolen for use in illicit street drug production. The drug, a powder known as "bombé", was said to be a mixture of powdered pills/vitamins and pulverized honeycomb structures of catalytic converters. In 2023, however, a study of various samples of the drug concluded that its alleged origin from catalytic exhausts was found to be unsubstantiated.
 
-== Diagnostics ==
+## Diagnostics
 
 Various jurisdictions now require on-board diagnostics to monitor the function and condition of the emissions-control system, including the catalytic converter. Vehicles equipped with OBD-II diagnostic systems are designed to alert the driver to a misfire condition by means of illuminating the "check engine" light on the dashboard, or flashing it if the current misfire conditions are severe enough to potentially damage the catalytic converter. On-board diagnostic systems take several forms.
 

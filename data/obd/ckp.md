@@ -19,13 +19,13 @@ The crank sensor can be used in combination with a similar camshaft position sen
 
 Common mounting locations include the main crank pulley, the flywheel, the camshaft or on the crankshaft itself. This sensor is one of the two most important sensors in modern-day engines, together with the camshaft position sensor. As the fuel injection (diesel engines) or spark ignition (petrol engines) is usually timed from the crank sensor position signal, failing sensor will cause an engine not to start or will cut out while running. Engine speed indicator takes speed indication also from this sensor.
 
-== Types of sensors ==
+## Types of sensors
 
 Types of crank sensor include: the inductive sensor, Hall-effect sensor, magnetoresistive sensor, and optical sensor. Inductive sensors have the simplest construction and are usually purely passive devices. Hall-effect and magnetoresistive sensors have the advantage over inductive sensors in that they can detect static (non-changing) magnetic fields. Optical sensors do not have great resistance against fouling but are able to provide the most precise edge detection.
 
 Some engines, such as GM's Premium V family, use crank position sensors which read a reluctor ring integral to the harmonic balancer. This is a much more accurate method of determining the position of the crankshaft and allows the computer to determine, within a few degrees, the exact position of the crankshaft (and thereby all connected components) at any given time.
 
-== Function ==
+## Function
 
 The functional objective for the crankshaft position sensor is to determine the position and/or rotational speed (RPM) of the crank. Engine Control Units use the information transmitted by the sensor to control parameters such as ignition timing and fuel injection timing. In a diesel, the sensor will control the fuel injection. The sensor output may also be related to other sensor data including the cam position to derive the current combustion cycle, this is very important for the starting of a four-stroke engine.
 
@@ -37,6 +37,6 @@ The first sign of crankshaft sensor failure, usually, is the refusal of the engi
 
 One detail of some designs is the "three-wire" inductive crank sensor whereby the third wire is actually just a co-axial shield around the two main sensor wires to prevent them from picking up stray electrical pulses from elsewhere in the vehicle engine bay.
 
-== Examples ==
+## Examples
 
 Another type of crank sensor is used on bicycles to monitor the position of the crankset, usually for the cadence readout of a cyclocomputer. These are usually reed switches mounted on the bicycle frame with a corresponding magnet attached to one of the pedals crankset arms.

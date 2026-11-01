@@ -23,7 +23,7 @@ The ignition coil is constructed of two sets of coils wound around an iron core.
 
 Diesel engines use compression ignition and therefore do not have ignition coils.
 
-== Design ==
+## Design
 
 An ignition coil consists of an iron core surrounded by two coils (windings) made from copper wire. The primary winding has relatively few turns of heavy wire, while the secondary winding consists of thousands of turns of smaller wire and is insulated from the high voltage by enamel on the wires and layers of oiled paper insulation.
 
@@ -35,23 +35,23 @@ Modern electronic ignition systems operate using the same principle of charging 
 
 A modern single-spark system has one coil per spark plug. To prevent premature sparking at the start of the primary pulse, a diode or secondary spark gap is installed in the coil to block the reverse pulse that would otherwise form. In older wasted spark systems for four-stroke engines, the secondary winding of the ignition coil has two output terminals, both of which connect to a spark plug. The reverse pulse triggers the spark plug in a cylinder containing no air/fuel mixture (since that cylinder is out of phase by 180 degrees).
 
-== Materials ==
+## Materials
 
 Formerly, ignition coils were made with varnish and paper insulated high-voltage windings, inserted into a drawn-steel can and filled with transformer oil or asphalt for insulation and moisture protection. Later[when?], ignition coils were instead cast in filled epoxy resins, which penetrate any voids forming within the windings.
 
 The ignition coil is usually inserted into a metal can or plastic case with insulated terminals for the high voltage and low voltage connections.
 
-== History ==
+## History
 
-=== Predecessor ===
+### Predecessor
 
 Early cars used a magneto ignition system, due to the lack of an electric power source (e.g. battery) in the car. Ignition coils replaced magneto ignition in new cars as batteries became a common inclusion in cars (for cranking and lighting). Compared with magneto ignition, an ignition coil system can provide a high-voltage spark at low engine speeds (RPM), making starting easier.
 
-=== Early systems ===
+### Early systems
 
 Most older ignition coil systems used a single coil shared by all the spark plugs (via a distributor). There were some exceptions, such as the Saab 92 and the Wartburg 353 using a separate coil for each cylinder and the 1948 Citroën 2CV using a wasted spark system with a double-ended ignition coil and no distributor.
 
-=== Distributorless systems ===
+### Distributorless systems
 
 Ignition module for a 2003–2010 GM Z18XE engine
 

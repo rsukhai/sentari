@@ -19,7 +19,7 @@ Off-road – DPF installation
 
 A diesel particulate filter (DPF) is a device designed to remove diesel particulate matter or soot from the exhaust gas of a diesel engine.
 
-== Mode of action ==
+## Mode of action
 
 Wall-flow diesel particulate filters usually remove 85% or more of the soot, and under certain conditions can attain soot removal efficiencies approaching 100%. Some filters are single-use, intended for disposal and replacement once full of accumulated ash. Others are designed to burn off the accumulated particulate either passively through the use of a catalyst or by active means such as a fuel burner which heats the filter to soot combustion temperatures. This is accomplished by engine programming to run (when the filter is full) in a manner that elevates exhaust temperature, in conjunction with an extra fuel injector in the exhaust stream that injects fuel to react with a catalyst element to burn off accumulated soot in the DPF filter, or through other methods. This is known as filter regeneration. Cleaning is also required as part of periodic maintenance, and it must be done carefully to avoid damaging the filter. Failure of fuel injectors or turbochargers resulting in contamination of the filter with raw diesel or engine oil can also necessitate cleaning. The regeneration process occurs at road speeds higher than can generally be attained on city streets; vehicles driven exclusively at low speeds in urban traffic can require periodic trips at higher speeds to clean out the DPF. If the driver ignores the warning light and waits too long to operate the vehicle above 60 km/h (40 mph), the DPF may not regenerate properly, and continued operation past that point may spoil the DPF completely so it must be replaced. Some newer diesel engines, namely those installed in combination vehicles, can also perform what is called a Parked Regeneration, where the engine increases RPM to around 1400 while parked, to increase the temperature of the exhaust.
 
@@ -28,7 +28,7 @@ Diesel engines produce a variety of particles during the combustion of the fuel/
 Diesel particulate matter resulting from the incomplete combustion of diesel fuel produces soot (black carbon) particles. These particles include tiny nanoparticles—smaller than one micrometre (one micron). Soot and other particles from diesel engines worsen the particulate matter pollution in the air and are harmful to health.
 New particulate filters can capture from 30% to greater than 95% of the harmful soot. With an optimal diesel particulate filter (DPF), soot emissions may be decreased to 0.001 g/km or less.
 
-== History ==
+## History
 
 Diesel particulate filtering was first considered in the 1970s due to concerns regarding the impacts of inhaled particulates. Particulate filters have been in use on non-road machines since 1980, and in automobiles since 1985. Historically medium and heavy duty diesel engine emissions were not regulated until 1987 when the first California Heavy Truck rule was introduced capping particulate emissions at 0.60 g/BHP Hour. Since then, progressively tighter standards have been introduced for light- and heavy-duty road-going diesel-powered vehicles and for off-road diesel engines. Similar regulations have also been adopted by the European Union and some individual European countries, most Asian countries, and the rest of North and South America.
 
@@ -52,7 +52,7 @@ Inadequately maintained particulate filters on vehicles with diesel engines are 
 
 In 2018, the UK made changes to its MOT test requirements, including tougher scrutiny of diesel cars. One requirement was to have a properly fitted and working DPF. Driving without a DPF could incur a £1000 fine.
 
-== Variants of DPFs ==
+## Variants of DPFs
 
 Cordierite Diesel Particulate Filter on GM 7.8 Isuzu
 
@@ -68,13 +68,13 @@ Unlike a catalytic converter which is a flow-through device, a DPF retains bigge
 
 - Product durability
 
-=== Cordierite wall flow filters ===
+### Cordierite wall flow filters
 
 The most common filter is made of cordierite (a ceramic material that is also used as catalytic converter supports (cores)). Cordierite filters provide excellent filtration efficiency, are relatively inexpensive, and have thermal properties that make packaging them for installation in the vehicle simple. The major drawback is that cordierite has a relatively low melting point (about 1200 °C) and cordierite substrates have been known to melt during filter regeneration. This is mostly an issue if the filter has become loaded more heavily than usual, and is more of an issue with passive systems than with active systems, unless there is a system breakdown.
 
 Cordierite filter cores look like catalytic converter cores that have had alternate channels plugged – the plugs force the exhaust gas flow through the wall and the particulate collects on the inlet face.
 
-=== Silicon carbide wall flow filters ===
+### Silicon carbide wall flow filters
 
 The second most popular filter material is silicon carbide, or SiC. It has a higher (2700 °C) melting point than cordierite, however, it is not as stable thermally, making packaging an issue. Small SiC cores are made of single pieces, while larger cores are made in segments, which are separated by a special cement so that heat expansion of the core will be taken up by the cement, and not the package. SiC cores are usually more expensive than cordierite cores, however they are manufactured in similar sizes, and one can often be used to replace the other. Silicon carbide filter cores also look like catalytic converter cores that have had alternate channels plugged – again the plugs force the exhaust gas flow through the wall and the particulate collects on the inlet face.
 
@@ -90,23 +90,23 @@ The characteristics of the wall flow diesel particulate filter substrate are:
 
 - high boiling point.
 
-=== Ceramic fiber filters ===
+### Ceramic fiber filters
 
 Fibrous ceramic filters are made from several different types of ceramic fibers that are mixed together to form a porous medium. This medium can be formed into almost any shape and can be customized to suit various applications. The porosity can be controlled in order to produce high flow, lower efficiency or high efficiency lower volume filtration. Fibrous filters have an advantage over wall flow design of producing lower back pressure. Fibrous ceramic filters remove carbon particulates almost completely, including fine particulates less than 100 nanometres (nm) diameter with an efficiency of greater than 95% in mass and greater than 99% in number of particles over a wide range of engine operating conditions. Since the continuous flow of soot into the filter would eventually block it, it is necessary to 'regenerate' the filtration properties of the filter by burning off the collected particulate on a regular basis. Soot particulate burn-off forms water and CO2 in small quantities amounting to less than 0.05% of the CO2 emitted by the engine.
 
-=== Metal fiber flow-through filters ===
+### Metal fiber flow-through filters
 
 Some cores are made from metal fibers – generally the fibers are "woven" into a monolith. Such cores have the advantage that an electrical current can be passed through the monolith to heat the core for regeneration purposes, allowing the filter to regenerate at low exhaust temperatures and/or low exhaust flow rates. Metal fiber cores tend to be more expensive than cordierite or silicon carbide cores, and are generally not interchangeable with them because of the electrical requirement.
 
-=== Paper ===
+### Paper
 
 Disposable paper cores are used in certain specialty applications, without a regeneration strategy. Coal mines are common users – the exhaust gas is usually first passed through a water trap to cool it, and then through the filter. Paper filters are also used when a diesel machine must be used indoors for short periods of time, such as on a forklift being used to install equipment inside a store.
 
-=== Partial filters ===
+### Partial filters
 
 There are a variety of devices that produce over 50% particulate matter filtration, but less than 85%. Partial filters come in a variety of materials. The only commonality between them is that they produce more back pressure than a catalytic converter, and less than a diesel particulate filter. Partial filter technology is popular for retrofit.
 
-== Maintenance ==
+## Maintenance
 
 Filters require more maintenance than catalytic converters. Ash, a byproduct of oil consumption from normal engine operation, builds up in the filter as it cannot be converted into a gas and pass through the walls of the filter. This increases the pressure before the filter.
 
@@ -122,11 +122,11 @@ When a regeneration occurs, the soot is turned to gasses and ash of which some r
 
 Regeneration typically requires the vehicle to be driven continuously at 50-60mph (80-100km/h) for 30 to 45 minutes every few hundred miles/kilometers of city driving. Heavy duty pickup trucks have less stringent requirements for all three parameters, and Class 8 trucks significantly less. If the vehicle is often driven in cities the DPF may become clogged, causing a reduction in power and acceleration either passively due to increased exhaust pressure or actively due to vehicle going into "limp/turtle mode" as it tries to prevent engine and turbo damage. Once clogged both passive and active regeneration may become ineffective. DPF may be unclogged by high temperature pressure washing (not officially recommended) and/or burn-off oven.
 
-== Safety ==
+## Safety
 
 In 2011, Ford recalled 37,400 F-Series trucks with diesel engines after fuel and oil leaks caused fires in the diesel particulate filters of the trucks. No injuries occurred before the recall, though one grass fire was started. A similar recall was issued for 2005-2007 Jaguar S-Type and XJ diesels, where large amounts of soot became trapped in the DPF In affected vehicles, smoke and fire emanated from the vehicle underside, accompanied by flames from the rear of the exhaust. The heat from the fire could cause heating through the transmission tunnel to the interior, melting interior components and potentially causing interior fires.
 
-== Regeneration ==
+## Regeneration
 
 Metering pump for Diesel or additive injection, 3 L/h at 5 bar
 
@@ -158,6 +158,6 @@ Some applications use off-board regeneration. Off-board regeneration requires op
 
 Many forklifts may also use off-board regeneration – typically mining machinery and other machinery that spend their operational lives in one location, which makes having a stationary regeneration station practical. In situations where the filter is physically removed from the machine for regeneration there is also the advantage of being able to inspect the filter core on a daily basis (DPF cores for non-road applications are typically sized to be usable for one shift – so regeneration is a daily occurrence).
 
-== Removal or tampering ==
+## Removal or tampering
 
 Intentionally removing or tampering with a DPF is prohibited by the EPA. The act of removing emission control devices, such as a DPF, is commonly referred to as "deleting." Several manufacturers and retailers of diesel emissions defeat devices have been fined up to $1 million.
