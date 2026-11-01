@@ -76,7 +76,25 @@ npx tsx scripts/search.ts "The scanner shows a code that starts with P03 and the
 
 ## 5. Приклад відповіді з джерелами
 
-*(заповнюється після запуску `scripts/ask.ts` власником репозиторію — потрібен ключ OpenAI)*
+Запускав власник репозиторію (ключ OpenAI), 2026-10-31: `npx tsx --env-file=.env.local scripts/ask.ts "<запит>"`.
+
+**Запит q-12** (`easy`, `must_cite: maf`): «Can I clean a dirty MAF sensor with brake cleaner?»
+
+Відповідь асистента (дослівно, разом із цитатами):
+
+> No. Use a specific MAF sensor cleaner or electronics cleaner instead, because brake cleaner can be too chemically aggressive. [maf#0008]
+
+Джерела: `[maf#0008] maf › Mass flow sensor › Coldwire sensor · символи 6991–8015`
+
+Видані фрагменти: `maf#0008` (cos 0.8042), `maf#0009` (0.8537), `maf#0002` (0.7714), `maf#0000` (0.7917), `maf#0007` (0.7621) · **validateAnswer: проблем 0** · `gpt-5.6-luna`, 1096/32 ток., $0.000258, 3486 мс
+
+**Запит q-16** (`unanswerable`): «How often should the timing belt be replaced?»
+
+Відповідь асистента (дослівно):
+
+> The documents in the collection do not contain the answer to this question.
+
+Видані фрагменти: `ckp#0000` (cos 0.7179), `catalytic#0030` (0.6622), `obd-pids#0005` (0.7378), `obd#0000` (0.7203), `spark-plug#0004` (0.5724) — косинус топ-1 0,7378 ≥ 0,65, тож пошук не відмовив (ступінь 1), а модель відмовилась дослівною фразою `REFUSAL` (ступінь 2) · `gpt-5.6-luna`, 1441/17 ток., $0.000309, 1173 мс. Для порівняння: у базовій лінії без документів на цей самий запит модель назвала інтервал «60,000–100,000 miles» ([`baseline.md`](baseline.md), q-16).
 
 ## 6. Що перевіряють тести (без мережі)
 
