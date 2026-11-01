@@ -48,7 +48,10 @@ async function main() {
   if (!key) throw new Error('OPENAI_API_KEY порожній: запускайте з --env-file');
 
   const ollama: OllamaStats[] = [];
-  const embedder = ollamaEmbedder(undefined, undefined, (s) => ollama.push(s));
+  // лише лічильники: onStats отримує все тіло відповіді, разом із векторами
+  const embedder = ollamaEmbedder(undefined, undefined, ({ total_duration, load_duration, prompt_eval_count }) => {
+    ollama.push({ ...(total_duration !== undefined && { total_duration }), ...(load_duration !== undefined && { load_duration }), ...(prompt_eval_count !== undefined && { prompt_eval_count }) });
+  });
   const index = loadIndex('data/index.json', embedder);
   const words = bm25From(index);
   // без інструментів OpenAI не приймає порожній tools; reasoning_effort: 'none' — як у baseline.ts

@@ -1,0 +1,608 @@
+{
+  "runs": [
+    {
+      "runAt": "2026-11-01T18:32:35.887Z",
+      "width": 1,
+      "budget": {
+        "maxBranches": 1,
+        "maxTokens": 50000,
+        "maxWallMs": 600000
+      },
+      "wallMs": 22419,
+      "sumBranchMs": 22419,
+      "inputTokens": 23153,
+      "outputTokens": 549,
+      "usd": 0.0052894000000000005,
+      "done": 20,
+      "failed": [],
+      "stoppedEarly": false,
+      "ollama": {
+        "calls": 20,
+        "totalDurationMs": 566,
+        "loadDurationMs": 21,
+        "promptEvalCount": 384,
+        "firstRaw": {
+          "model": "embeddinggemma-2:270m",
+          "total_duration": 35567459,
+          "load_duration": 1110334,
+          "prompt_eval_count": 17
+        }
+      },
+      "branches": [
+        {
+          "id": "q-01",
+          "inputTokens": 1298,
+          "outputTokens": 33,
+          "ms": 1444
+        },
+        {
+          "id": "q-02",
+          "inputTokens": 1430,
+          "outputTokens": 17,
+          "ms": 890
+        },
+        {
+          "id": "q-03",
+          "inputTokens": 1083,
+          "outputTokens": 14,
+          "ms": 828
+        },
+        {
+          "id": "q-04",
+          "inputTokens": 1006,
+          "outputTokens": 17,
+          "ms": 1410
+        },
+        {
+          "id": "q-05",
+          "inputTokens": 877,
+          "outputTokens": 17,
+          "ms": 1387
+        },
+        {
+          "id": "q-06",
+          "inputTokens": 1338,
+          "outputTokens": 17,
+          "ms": 925
+        },
+        {
+          "id": "q-07",
+          "inputTokens": 1005,
+          "outputTokens": 51,
+          "ms": 1237
+        },
+        {
+          "id": "q-08",
+          "inputTokens": 1233,
+          "outputTokens": 37,
+          "ms": 1036
+        },
+        {
+          "id": "q-09",
+          "inputTokens": 1205,
+          "outputTokens": 20,
+          "ms": 1092
+        },
+        {
+          "id": "q-10",
+          "inputTokens": 977,
+          "outputTokens": 14,
+          "ms": 1306
+        },
+        {
+          "id": "q-11",
+          "inputTokens": 1382,
+          "outputTokens": 12,
+          "ms": 1090
+        },
+        {
+          "id": "q-12",
+          "inputTokens": 1062,
+          "outputTokens": 32,
+          "ms": 1296
+        },
+        {
+          "id": "q-13",
+          "inputTokens": 1371,
+          "outputTokens": 35,
+          "ms": 1144
+        },
+        {
+          "id": "q-14",
+          "inputTokens": 1040,
+          "outputTokens": 79,
+          "ms": 1584
+        },
+        {
+          "id": "q-15",
+          "inputTokens": 1222,
+          "outputTokens": 36,
+          "ms": 1401
+        },
+        {
+          "id": "q-16",
+          "inputTokens": 1407,
+          "outputTokens": 17,
+          "ms": 702
+        },
+        {
+          "id": "q-17",
+          "inputTokens": 893,
+          "outputTokens": 17,
+          "ms": 760
+        },
+        {
+          "id": "q-18",
+          "inputTokens": 1098,
+          "outputTokens": 17,
+          "ms": 772
+        },
+        {
+          "id": "q-19",
+          "inputTokens": 1130,
+          "outputTokens": 42,
+          "ms": 1180
+        },
+        {
+          "id": "q-20",
+          "inputTokens": 1096,
+          "outputTokens": 25,
+          "ms": 935
+        }
+      ]
+    },
+    {
+      "runAt": "2026-11-01T18:32:47.515Z",
+      "width": 2,
+      "budget": {
+        "maxBranches": 2,
+        "maxTokens": 50000,
+        "maxWallMs": 600000
+      },
+      "wallMs": 11124,
+      "sumBranchMs": 21785,
+      "inputTokens": 23153,
+      "outputTokens": 467,
+      "usd": 0.005191,
+      "done": 20,
+      "failed": [],
+      "stoppedEarly": false,
+      "ollama": {
+        "calls": 20,
+        "totalDurationMs": 554,
+        "loadDurationMs": 31,
+        "promptEvalCount": 384,
+        "firstRaw": {
+          "model": "embeddinggemma-2:270m",
+          "total_duration": 31180667,
+          "load_duration": 730667,
+          "prompt_eval_count": 17
+        }
+      },
+      "branches": [
+        {
+          "id": "q-01",
+          "inputTokens": 1298,
+          "outputTokens": 32,
+          "ms": 1234
+        },
+        {
+          "id": "q-02",
+          "inputTokens": 1430,
+          "outputTokens": 17,
+          "ms": 937
+        },
+        {
+          "id": "q-03",
+          "inputTokens": 1083,
+          "outputTokens": 14,
+          "ms": 981
+        },
+        {
+          "id": "q-04",
+          "inputTokens": 1006,
+          "outputTokens": 17,
+          "ms": 833
+        },
+        {
+          "id": "q-05",
+          "inputTokens": 877,
+          "outputTokens": 17,
+          "ms": 1956
+        },
+        {
+          "id": "q-06",
+          "inputTokens": 1338,
+          "outputTokens": 17,
+          "ms": 1838
+        },
+        {
+          "id": "q-07",
+          "inputTokens": 1005,
+          "outputTokens": 14,
+          "ms": 1121
+        },
+        {
+          "id": "q-08",
+          "inputTokens": 1233,
+          "outputTokens": 34,
+          "ms": 1075
+        },
+        {
+          "id": "q-09",
+          "inputTokens": 1205,
+          "outputTokens": 20,
+          "ms": 825
+        },
+        {
+          "id": "q-10",
+          "inputTokens": 977,
+          "outputTokens": 14,
+          "ms": 929
+        },
+        {
+          "id": "q-11",
+          "inputTokens": 1382,
+          "outputTokens": 13,
+          "ms": 875
+        },
+        {
+          "id": "q-12",
+          "inputTokens": 1062,
+          "outputTokens": 35,
+          "ms": 1134
+        },
+        {
+          "id": "q-13",
+          "inputTokens": 1371,
+          "outputTokens": 36,
+          "ms": 1127
+        },
+        {
+          "id": "q-14",
+          "inputTokens": 1040,
+          "outputTokens": 14,
+          "ms": 855
+        },
+        {
+          "id": "q-15",
+          "inputTokens": 1222,
+          "outputTokens": 55,
+          "ms": 1427
+        },
+        {
+          "id": "q-16",
+          "inputTokens": 1407,
+          "outputTokens": 17,
+          "ms": 813
+        },
+        {
+          "id": "q-17",
+          "inputTokens": 893,
+          "outputTokens": 17,
+          "ms": 782
+        },
+        {
+          "id": "q-18",
+          "inputTokens": 1098,
+          "outputTokens": 17,
+          "ms": 848
+        },
+        {
+          "id": "q-19",
+          "inputTokens": 1130,
+          "outputTokens": 43,
+          "ms": 1151
+        },
+        {
+          "id": "q-20",
+          "inputTokens": 1096,
+          "outputTokens": 24,
+          "ms": 1044
+        }
+      ]
+    },
+    {
+      "runAt": "2026-11-01T18:32:53.152Z",
+      "width": 4,
+      "budget": {
+        "maxBranches": 4,
+        "maxTokens": 50000,
+        "maxWallMs": 600000
+      },
+      "wallMs": 5218,
+      "sumBranchMs": 19736,
+      "inputTokens": 23153,
+      "outputTokens": 509,
+      "usd": 0.0052414,
+      "done": 20,
+      "failed": [],
+      "stoppedEarly": false,
+      "ollama": {
+        "calls": 20,
+        "totalDurationMs": 740,
+        "loadDurationMs": 152,
+        "promptEvalCount": 384,
+        "firstRaw": {
+          "model": "embeddinggemma-2:270m",
+          "total_duration": 26117750,
+          "load_duration": 822417,
+          "prompt_eval_count": 10
+        }
+      },
+      "branches": [
+        {
+          "id": "q-01",
+          "inputTokens": 1298,
+          "outputTokens": 29,
+          "ms": 995
+        },
+        {
+          "id": "q-02",
+          "inputTokens": 1430,
+          "outputTokens": 17,
+          "ms": 892
+        },
+        {
+          "id": "q-03",
+          "inputTokens": 1083,
+          "outputTokens": 17,
+          "ms": 994
+        },
+        {
+          "id": "q-04",
+          "inputTokens": 1006,
+          "outputTokens": 17,
+          "ms": 995
+        },
+        {
+          "id": "q-05",
+          "inputTokens": 877,
+          "outputTokens": 17,
+          "ms": 824
+        },
+        {
+          "id": "q-06",
+          "inputTokens": 1338,
+          "outputTokens": 17,
+          "ms": 811
+        },
+        {
+          "id": "q-07",
+          "inputTokens": 1005,
+          "outputTokens": 17,
+          "ms": 804
+        },
+        {
+          "id": "q-08",
+          "inputTokens": 1233,
+          "outputTokens": 42,
+          "ms": 1143
+        },
+        {
+          "id": "q-09",
+          "inputTokens": 1205,
+          "outputTokens": 15,
+          "ms": 1172
+        },
+        {
+          "id": "q-10",
+          "inputTokens": 977,
+          "outputTokens": 59,
+          "ms": 1335
+        },
+        {
+          "id": "q-11",
+          "inputTokens": 1382,
+          "outputTokens": 12,
+          "ms": 913
+        },
+        {
+          "id": "q-12",
+          "inputTokens": 1062,
+          "outputTokens": 17,
+          "ms": 881
+        },
+        {
+          "id": "q-13",
+          "inputTokens": 1371,
+          "outputTokens": 35,
+          "ms": 1030
+        },
+        {
+          "id": "q-14",
+          "inputTokens": 1040,
+          "outputTokens": 17,
+          "ms": 826
+        },
+        {
+          "id": "q-15",
+          "inputTokens": 1222,
+          "outputTokens": 63,
+          "ms": 1383
+        },
+        {
+          "id": "q-16",
+          "inputTokens": 1407,
+          "outputTokens": 17,
+          "ms": 1012
+        },
+        {
+          "id": "q-17",
+          "inputTokens": 893,
+          "outputTokens": 17,
+          "ms": 780
+        },
+        {
+          "id": "q-18",
+          "inputTokens": 1098,
+          "outputTokens": 17,
+          "ms": 1085
+        },
+        {
+          "id": "q-19",
+          "inputTokens": 1130,
+          "outputTokens": 42,
+          "ms": 1065
+        },
+        {
+          "id": "q-20",
+          "inputTokens": 1096,
+          "outputTokens": 25,
+          "ms": 796
+        }
+      ]
+    },
+    {
+      "runAt": "2026-11-01T18:32:56.477Z",
+      "width": 8,
+      "budget": {
+        "maxBranches": 8,
+        "maxTokens": 50000,
+        "maxWallMs": 600000
+      },
+      "wallMs": 2978,
+      "sumBranchMs": 20065,
+      "inputTokens": 23153,
+      "outputTokens": 519,
+      "usd": 0.0052534,
+      "done": 20,
+      "failed": [],
+      "stoppedEarly": false,
+      "ollama": {
+        "calls": 20,
+        "totalDurationMs": 829,
+        "loadDurationMs": 289,
+        "promptEvalCount": 384,
+        "firstRaw": {
+          "model": "embeddinggemma-2:270m",
+          "total_duration": 25413792,
+          "load_duration": 2356917,
+          "prompt_eval_count": 10
+        }
+      },
+      "branches": [
+        {
+          "id": "q-01",
+          "inputTokens": 1298,
+          "outputTokens": 33,
+          "ms": 1083
+        },
+        {
+          "id": "q-02",
+          "inputTokens": 1430,
+          "outputTokens": 17,
+          "ms": 877
+        },
+        {
+          "id": "q-03",
+          "inputTokens": 1083,
+          "outputTokens": 32,
+          "ms": 1158
+        },
+        {
+          "id": "q-04",
+          "inputTokens": 1006,
+          "outputTokens": 17,
+          "ms": 897
+        },
+        {
+          "id": "q-05",
+          "inputTokens": 877,
+          "outputTokens": 42,
+          "ms": 1349
+        },
+        {
+          "id": "q-06",
+          "inputTokens": 1338,
+          "outputTokens": 17,
+          "ms": 898
+        },
+        {
+          "id": "q-07",
+          "inputTokens": 1005,
+          "outputTokens": 14,
+          "ms": 995
+        },
+        {
+          "id": "q-08",
+          "inputTokens": 1233,
+          "outputTokens": 37,
+          "ms": 1214
+        },
+        {
+          "id": "q-09",
+          "inputTokens": 1205,
+          "outputTokens": 20,
+          "ms": 834
+        },
+        {
+          "id": "q-10",
+          "inputTokens": 977,
+          "outputTokens": 14,
+          "ms": 854
+        },
+        {
+          "id": "q-11",
+          "inputTokens": 1382,
+          "outputTokens": 12,
+          "ms": 775
+        },
+        {
+          "id": "q-12",
+          "inputTokens": 1062,
+          "outputTokens": 48,
+          "ms": 1352
+        },
+        {
+          "id": "q-13",
+          "inputTokens": 1371,
+          "outputTokens": 43,
+          "ms": 1279
+        },
+        {
+          "id": "q-14",
+          "inputTokens": 1040,
+          "outputTokens": 17,
+          "ms": 753
+        },
+        {
+          "id": "q-15",
+          "inputTokens": 1222,
+          "outputTokens": 45,
+          "ms": 1241
+        },
+        {
+          "id": "q-16",
+          "inputTokens": 1407,
+          "outputTokens": 17,
+          "ms": 789
+        },
+        {
+          "id": "q-17",
+          "inputTokens": 893,
+          "outputTokens": 17,
+          "ms": 836
+        },
+        {
+          "id": "q-18",
+          "inputTokens": 1098,
+          "outputTokens": 17,
+          "ms": 764
+        },
+        {
+          "id": "q-19",
+          "inputTokens": 1130,
+          "outputTokens": 35,
+          "ms": 1217
+        },
+        {
+          "id": "q-20",
+          "inputTokens": 1096,
+          "outputTokens": 25,
+          "ms": 900
+        }
+      ]
+    }
+  ]
+}
