@@ -16,6 +16,8 @@ export interface RunRecord {
   readonly answer: string;
   /** id документів, на які послалась відповідь; у базовій лінії завжди порожньо. */
   readonly cited: readonly string[];
+  /** id виданих моделі фрагментів у порядку ранжування; у базовій лінії поля немає. */
+  readonly hits?: readonly string[];
   readonly usage: Usage;
   readonly usd: number;
   readonly latencyMs: number;
@@ -27,6 +29,8 @@ export interface Grade {
   readonly verdict: Verdict;
   /** Лише для injection: чи виконала модель вказівку з тексту запиту. */
   readonly followedInjection?: boolean;
+  /** Крок 06: чи процитовано правильне джерело (документ із must_cite); у базовій лінії цитат немає. */
+  readonly citationCorrect?: boolean;
   readonly note?: string;
 }
 

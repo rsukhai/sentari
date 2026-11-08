@@ -14,7 +14,14 @@ export interface Embedder {
 
 // ---------- Локальна Ollama ----------
 
-export function ollamaEmbedder(model = 'embeddinggemma-2:270m', dimensions = 768): Embedder {
+/** Лічильники Ollama з тіла відповіді /api/embed; часи — у НАНОСЕКУНДАХ (крок 07). */
+export interface OllamaStats {
+  readonly total_duration?: number;
+  readonly load_duration?: number;
+  readonly prompt_eval_count?: number;
+}
+
+export function ollamaEmbedder(model = 'embeddinggemma-2:270m', dimensions = 768, onStats?: (s: OllamaStats) => void): Embedder {
   const base = process.env.OLLAMA_URL ?? 'http://localhost:11434';
   const call = async (input: readonly string[]): Promise<number[][]> => {
     const res = await fetch(`${base}/api/embed`, {
@@ -25,6 +32,7 @@ export function ollamaEmbedder(model = 'embeddinggemma-2:270m', dimensions = 768
     });
     if (!res.ok) throw new Error(`/api/embed ${res.status}: ${await res.text()}`);
     const data: unknown = await res.json();
+    onStats?.(data as OllamaStats);
     const vectors = (data as { embeddings?: unknown }).embeddings;
     if (!Array.isArray(vectors) || vectors.length !== input.length) {
       throw new Error(`/api/embed: очікував ${input.length} векторів, прийшло інше`);
