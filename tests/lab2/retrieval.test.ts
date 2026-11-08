@@ -69,6 +69,25 @@ describe('hybridSearch на мінікорпусі з підробленим е�
     expect(r.hits[0]?.rankWords).toBe(1);
     expect(r.hits[0]?.cosine).toBeGreaterThan(0);
   });
+
+  it('приймає допустиме topK=5', async () => {
+    const vectors = await embedder.embedDocuments(texts.map(([, , t]) => t));
+    const chunks: IndexedChunk[] = texts.map(([id, docId, text], i) => ({
+      id, docId, heading: '', start: 0, end: text.length, text, vector: vectors[i] ?? [],
+    }));
+    const index = { chunks } as unknown as IndexFile;
+    const r = await hybridSearch(index, bm25From(index), embedder, 'MAF sensor cleaner', 5);
+    expect(r.hits.length).toBeGreaterThan(0);
+  });
+
+  it.each([0, 21, 2.5])('кидає RangeError на недопустиме topK=%s', async (topK) => {
+    const vectors = await embedder.embedDocuments(texts.map(([, , t]) => t));
+    const chunks: IndexedChunk[] = texts.map(([id, docId, text], i) => ({
+      id, docId, heading: '', start: 0, end: text.length, text, vector: vectors[i] ?? [],
+    }));
+    const index = { chunks } as unknown as IndexFile;
+    await expect(hybridSearch(index, bm25From(index), embedder, 'MAF sensor cleaner', topK)).rejects.toThrow(/topK/);
+  });
 });
 
 describe('validateAnswer', () => {

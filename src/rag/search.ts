@@ -40,6 +40,9 @@ export async function hybridSearch(
   query: string,
   topK = 5,
 ): Promise<SearchResult> {
+  if (!Number.isInteger(topK) || topK < 1 || topK > DEPTH) {
+    throw new RangeError(`topK має бути цілим числом від 1 до ${DEPTH}, отримано: ${topK}`);
+  }
   const qv = await embedder.embedQuery(query);
   const cosines = new Map(index.chunks.map((c) => [c.id, cosineSimilarity(qv, c.vector)]));
   const vector = [...cosines.entries()]
