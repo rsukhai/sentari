@@ -1,0 +1,58 @@
+{
+  "task_id": "s-02",
+  "agent_path": "claude-code@2.1.269 model=sonnet (-p, dontAsk)",
+  "artifact_dir": "runs/s-02-1794157916099",
+  "started_at": "2026-11-08T17:11:56.099Z",
+  "ended_at": "2026-11-08T17:12:06.268Z",
+  "duration_s": 10.2,
+  "exit_status": "budget_or_turns",
+  "exit_code": 1,
+  "acceptance": [
+    {
+      "cmd": "grep -q 'id у шапці не збігається' src/rag/corpus.ts",
+      "exit": 1
+    },
+    {
+      "cmd": "grep -q 'id у шапці не збігається' tests/lab2/corpus.test.ts",
+      "exit": 1
+    },
+    {
+      "cmd": "npx vitest run tests/lab2/corpus.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "npx tsx scripts/lab2/fetch-obd.ts check",
+      "exit": 0
+    },
+    {
+      "cmd": "git diff --quiet HEAD -- data/obd",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    }
+  ],
+  "acceptance_passed": false,
+  "session_id": "c44f481b-fef5-434e-809d-e273e5b62a86",
+  "input_tokens": 4,
+  "output_tokens": 341,
+  "cache_creation_input_tokens": 56062,
+  "cache_read_input_tokens": 54599,
+  "cost_usd_estimate": 0.2397158,
+  "num_turns": 3,
+  "agent_subtype": "error_max_turns",
+  "terminal_reason": "max_turns",
+  "trace_id": null,
+  "gates": {},
+  "branch": "harness/s-02",
+  "base_ref": "origin/main",
+  "base_commit": "071ac814f645bd28a4f500d376db38ac5dfdc00a",
+  "branch_commit": "071ac814f645bd28a4f500d376db38ac5dfdc00a",
+  "committed_changes": false,
+  "main_checkout_unchanged": true
+}

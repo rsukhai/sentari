@@ -1,0 +1,4 @@
+{"ts":"2026-11-08T17:11:59Z","tool":"Read","input":{"file_path":"/Users/roman/harness-runs/s-02-1794157916004/src/rag/corpus.ts"},"result":"ok","session":"c44f481b-fef5-434e-809d-e273e5b62a86","source":"claude-code"}
+{"ts":"2026-11-08T17:12:00Z","tool":"Glob","input":{"pattern":"tests/lab2/corpus.test.ts"},"result":"ok","session":"c44f481b-fef5-434e-809d-e273e5b62a86","source":"claude-code"}
+{"ts":"2026-11-08T17:12:02Z","tool":"Read","input":{"file_path":"/Users/roman/harness-runs/s-02-1794157916004/tests/lab2/corpus.test.ts"},"result":"ok","session":"c44f481b-fef5-434e-809d-e273e5b62a86","source":"claude-code"}
+{"ts":"2026-11-08T17:12:02Z","tool":"Glob","input":{"pattern":"data/obd/*.md"},"result":"ok","session":"c44f481b-fef5-434e-809d-e273e5b62a86","source":"claude-code"}

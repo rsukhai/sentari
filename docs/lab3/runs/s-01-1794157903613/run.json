@@ -1,0 +1,62 @@
+{
+  "task_id": "s-01",
+  "agent_path": "claude-code@2.1.269 model=sonnet (-p, dontAsk)",
+  "artifact_dir": "runs/s-01-1794157903613",
+  "started_at": "2026-11-08T17:11:43.613Z",
+  "ended_at": "2026-11-08T17:11:55.912Z",
+  "duration_s": 12.3,
+  "exit_status": "budget_or_turns",
+  "exit_code": 1,
+  "acceptance": [
+    {
+      "cmd": "grep -q 'query повторюється' scripts/validate-golden.ts",
+      "exit": 1
+    },
+    {
+      "cmd": "grep -q 'тег повторюється' scripts/validate-golden.ts",
+      "exit": 1
+    },
+    {
+      "cmd": "grep -q 'query повторюється' tests/validate-golden.test.ts",
+      "exit": 1
+    },
+    {
+      "cmd": "npx vitest run tests/validate-golden.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "npx tsx scripts/validate-golden.ts docs/lab2/golden/queries.jsonl",
+      "exit": 0
+    },
+    {
+      "cmd": "git diff --quiet HEAD -- docs/lab2/golden/queries.jsonl",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    }
+  ],
+  "acceptance_passed": false,
+  "session_id": "50e76090-9b01-4e02-83f4-4ed83ea2c78d",
+  "input_tokens": 4,
+  "output_tokens": 458,
+  "cache_creation_input_tokens": 46725,
+  "cache_read_input_tokens": 42981,
+  "cost_usd_estimate": 0.2012502,
+  "num_turns": 3,
+  "agent_subtype": "error_max_turns",
+  "terminal_reason": "max_turns",
+  "trace_id": null,
+  "gates": {},
+  "branch": "harness/s-01",
+  "base_ref": "origin/main",
+  "base_commit": "071ac814f645bd28a4f500d376db38ac5dfdc00a",
+  "branch_commit": "f681a44546d48ed11cb8b5621a271908ce516da5",
+  "committed_changes": true,
+  "main_checkout_unchanged": true
+}

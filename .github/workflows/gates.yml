@@ -140,6 +140,7 @@ jobs:
           cache: npm
       - run: npm ci
       - id: g
+        timeout-minutes: 6 # крок із викликом моделі: ліміт на кроці, а не лише на задачі (на задачі — 10)
         shell: bash
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

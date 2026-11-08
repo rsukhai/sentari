@@ -188,7 +188,7 @@ export function readMeta(stdout: string): Meta {
 /**
  * Ненульовий код виходу ще не означає падіння: вичерпаний бюджет теж дає exit 1.
  * Спостережено: бюджет — subtype "error_max_budget_usd" + terminal_reason "budget_exhausted".
- * Ліміт ходів за SDK — subtype "error_max_turns" (у цій роботі ще не спостерігався — див. factory.md).
+ * Ліміт ходів за SDK — subtype "error_max_turns": спостерігався на кроці 03 (docs/lab3/stop.md): код виходу 1, num_turns = max_turns + 1.
  */
 export function classify(res: AgentResult, meta: Meta): ExitStatus {
   if (res.timedOut === true) return 'timeout';

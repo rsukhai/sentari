@@ -1,0 +1,12 @@
+diff --git a/scripts/validate-golden.ts b/scripts/validate-golden.ts
+index 5bb0a292..b4c0ab18 100644
+--- a/scripts/validate-golden.ts
++++ b/scripts/validate-golden.ts
+@@ -46,6 +46,7 @@ export function validateGolden(
+   const problems: string[] = [];
+   const entries: Entry[] = [];
+   const seen = new Set<string>();
++  const seenQueries = new Set<string>();
+ 
+   // BOM і CRLF: файл міг бути створений у Windows-редакторі
+   const lines = text.replace(/^﻿/, '').split(/\r?\n/);
