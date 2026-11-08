@@ -46,6 +46,7 @@ export function validateGolden(
   const problems: string[] = [];
   const entries: Entry[] = [];
   const seen = new Set<string>();
+  const seenQueries = new Set<string>();
 
   // BOM і CRLF: файл міг бути створений у Windows-редакторі
   const lines = text.replace(/^﻿/, '').split(/\r?\n/);
@@ -69,6 +70,16 @@ export function validateGolden(
 
     if (seen.has(entry.id)) problems.push(`рядок ${n}: id "${entry.id}" повторюється`);
     seen.add(entry.id);
+
+    const normQuery = entry.query.trim().toLowerCase();
+    if (seenQueries.has(normQuery)) problems.push(`рядок ${n}: query повторюється`);
+    seenQueries.add(normQuery);
+
+    const seenTags = new Set<string>();
+    for (const tag of entry.tags) {
+      if (seenTags.has(tag)) problems.push(`${entry.id}: тег повторюється`);
+      seenTags.add(tag);
+    }
 
     const unanswerable = entry.tags.includes('unanswerable');
     if (unanswerable && entry.must_cite.length > 0) {

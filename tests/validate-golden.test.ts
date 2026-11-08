@@ -31,6 +31,16 @@ describe('validateGolden', () => {
     expect(validateGolden(`${line(ok)}\n${line(ok)}`, LOOSE).join(' ')).toContain('повторюється');
   });
 
+  it('ловить повтор query без урахування регістру й крайніх пробілів', () => {
+    const other = { ...ok, id: 'q-02', query: `  ${ok.query.toUpperCase()}  ` };
+    expect(validateGolden(`${line(ok)}\n${line(other)}`, LOOSE).join(' ')).toContain('query повторюється');
+  });
+
+  it('ловить повтор тегу всередині одного запису', () => {
+    const entry = { ...ok, tags: ['easy', 'easy'] };
+    expect(validateGolden(line(entry), LOOSE).join(' ')).toContain('тег повторюється');
+  });
+
   it('ловить витік відповіді в текст запиту', () => {
     const leaky = {
       ...ok,
