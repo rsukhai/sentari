@@ -11,3 +11,5 @@
 {"at":"2026-11-08T18:03:39.288Z","layer":"task","task_id":"t-03","action":"спробу evals позначено; прогін іде далі, якщо брейкер закритий","run_dir":"docs/lab3/evals-runs/t-03-a2","limit":"max_turns","configured":14,"observed":15}
 {"at":"2026-11-08T18:11:23.306Z","layer":"task","task_id":"t-06","action":"спробу evals позначено; прогін іде далі, якщо брейкер закритий","run_dir":"docs/lab3/evals-runs/t-06-a1","limit":"max_turns","configured":16,"observed":17}
 {"at":"2026-11-08T18:17:12.028Z","layer":"task","task_id":"e-10","action":"спробу evals позначено; прогін іде далі, якщо брейкер закритий","run_dir":"docs/lab3/evals-runs/e-10-a1","limit":"max_turns","configured":6,"observed":7}
+{"at":"2026-11-08T18:59:09.805Z","layer":"breaker","task_id":"s-06","limit":"breaker_half_open","configured":30,"observed":null,"action":"перепочинок минув; рівно одна пробна задача"}
+{"at":"2026-11-08T18:59:16.238Z","layer":"breaker","task_id":"s-06","limit":"breaker_closed","configured":null,"observed":null,"action":"пробна задача зелена; брейкер закрито"}
