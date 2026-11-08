@@ -1,0 +1,238 @@
+name: gates
+
+# Лаб. 3, крок 01: ланцюг детермінованих брам types → lint → tests → build, плюс record (свідок).
+# Порядок — за ціною й визначеністю: найдешевша перевірка першою; поки types червоні, решта skipped.
+on:
+  push:
+  pull_request:
+
+# новий push у ту саму гілку скасовує попередній прогін
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  types:
+    name: types
+    runs-on: ubuntu-latest
+    timeout-minutes: 5 # без цього діє типове значення 360 хвилин
+    outputs:
+      verdict: ${{ steps.g.outputs.verdict }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - id: g
+        shell: bash
+        run: |
+          npm run typecheck 2>&1 | tee types.log
+          echo "verdict=pass" >> "$GITHUB_OUTPUT"
+      - if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: gate-types
+          path: types.log
+          if-no-files-found: ignore
+
+  lint:
+    name: lint
+    needs: types # типи зелені — тільки тоді лінт
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      verdict: ${{ steps.g.outputs.verdict }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - id: g
+        shell: bash
+        run: |
+          npm run lint 2>&1 | tee lint.log
+          echo "verdict=pass" >> "$GITHUB_OUTPUT"
+      - if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: gate-lint
+          path: lint.log
+          if-no-files-found: ignore
+
+  tests:
+    name: tests
+    needs: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      verdict: ${{ steps.g.outputs.verdict }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - id: g
+        shell: bash
+        run: |
+          npm test 2>&1 | tee tests.log
+          echo "verdict=pass" >> "$GITHUB_OUTPUT"
+      - if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: gate-tests
+          path: |
+            tests.log
+            docs/lab3/runs/**
+          if-no-files-found: ignore
+
+  build:
+    name: build
+    needs: tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      verdict: ${{ steps.g.outputs.verdict }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - id: g
+        shell: bash
+        run: |
+          npm run build 2>&1 | tee build.log
+          echo "verdict=pass" >> "$GITHUB_OUTPUT"
+      - if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: gate-build
+          path: |
+            build.log
+            .next/BUILD_ID
+          if-no-files-found: ignore
+
+  evals:
+    name: evals
+    # регресійна брама (крок 04): перегрейд збережених спроб замороженого банку + порівняння з базовим рівнем поіменно.
+    # needs: tests — неявний success(): на червоних тестах не стартує. Агента тут НЕ запускають (платно, ключа в CI немає):
+    # спроби роблять локально run-evals.ts, а CI ловить регресії оцінювачів, міток і банку — межа записана в evals.md.
+    needs: tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      verdict: ${{ steps.g.outputs.verdict }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - id: g
+        timeout-minutes: 5
+        shell: bash
+        run: |
+          # ненульовий код брами (регресія) не глушимо: ні `|| true`, ні continue-on-error; pipefail пропускає його крізь tee
+          npx tsx scripts/evals/regrade.ts 2>&1 | tee evals.log
+          npx tsx scripts/evals/gate.ts 2>&1 | tee -a evals.log
+          echo "verdict=pass" >> "$GITHUB_OUTPUT"
+      - if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: gate-evals
+          path: |
+            evals.log
+            docs/lab3/evals.jsonl
+          if-no-files-found: ignore
+
+  verify:
+    name: verify
+    # остання брама (крок 02): модель іншої родини, ніж виконавець (Claude Code → OpenAI), читає критерії задачі.
+    # needs: build — неявний success(): поки хоч одна детермінована брама червона, верифікатор не стартує і токенів не коштує.
+    # Бігає лише на гілках прогонів фабрики (harness/t-NN…); на lab3/*, main і навмисно червоних гілках — skipped.
+    needs: build
+    if: ${{ startsWith(github.head_ref || github.ref_name, 'harness/t-') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      verdict: ${{ steps.g.outputs.verdict }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # diff береться від батька комміту «harness: t-NN», тож потрібна вся історія
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - id: g
+        timeout-minutes: 6 # крок із викликом моделі: ліміт на кроці, а не лише на задачі (на задачі — 10)
+        shell: bash
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          BRANCH: ${{ github.head_ref || github.ref_name }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          TASK=$(echo "$BRANCH" | sed -E 's#^harness/(t-[0-9]{2}).*#\1#')
+          # ненульовий код, якщо хоч один критерій не pass (unknown теж); pipefail пропускає його крізь tee
+          npx tsx scripts/harness/verify-task.ts --task "$TASK" --head "$HEAD_SHA" 2>&1 | tee verify.log
+          echo "verdict=pass" >> "$GITHUB_OUTPUT"
+      - if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: gate-verify
+          path: |
+            verify.log
+            docs/lab3/verdicts/
+          if-no-files-found: ignore
+
+  record:
+    name: record
+    # складається й на червоному прогоні; needs бачить ЛИШЕ прямі залежності,
+    # тому тут перелічені всі брами, а не одна остання
+    needs: [types, lint, tests, build, verify]
+    if: ${{ !cancelled() }} # не always(): зависла брама має право скасуватися
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - uses: actions/download-artifact@v8 # інший мажор, ніж в upload
+        continue-on-error: true # на ранньому падінні частини артефактів немає — свідок усе одно має скластися
+        with:
+          path: incoming
+          merge-multiple: true
+      - name: Вердикти брам у gate-record.json
+        env:
+          # result — факт (success/failure/cancelled/skipped); verdict з outputs — підтвердження, що брама дійшла до кінця
+          R_TYPES: ${{ needs.types.result }}
+          R_LINT: ${{ needs.lint.result }}
+          R_TESTS: ${{ needs.tests.result }}
+          R_BUILD: ${{ needs.build.result }}
+          R_VERIFY: ${{ needs.verify.result }}
+          O_TYPES: ${{ needs.types.outputs.verdict }}
+          O_LINT: ${{ needs.lint.outputs.verdict }}
+          O_TESTS: ${{ needs.tests.outputs.verdict }}
+          O_BUILD: ${{ needs.build.outputs.verdict }}
+          O_VERIFY: ${{ needs.verify.outputs.verdict }}
+        shell: bash
+        run: |
+          node scripts/harness/record-gates.mjs \
+            --types "$R_TYPES" --lint "$R_LINT" --tests "$R_TESTS" --build "$R_BUILD" --verify "$R_VERIFY" \
+            --types-out "$O_TYPES" --lint-out "$O_LINT" --tests-out "$O_TESTS" --build-out "$O_BUILD" --verify-out "$O_VERIFY" \
+            --branch "${{ github.head_ref || github.ref_name }}" --sha "${{ github.event.pull_request.head.sha || github.sha }}" \
+            --run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: gate-record
+          path: gate-record.json

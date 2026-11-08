@@ -1,0 +1,99 @@
+diff --git a/scripts/search.ts b/scripts/search.ts
+index 70911a68..ee675ac6 100644
+--- a/scripts/search.ts
++++ b/scripts/search.ts
+@@ -10,20 +10,13 @@ import { readFileSync } from 'node:fs';
+ 
+ import { renderCitation, toCitation } from '../src/rag/cite';
+ import { ollamaEmbedder } from '../src/rag/embed';
+-import { bm25From, hybridSearch, type SearchResult } from '../src/rag/search';
++import { bm25From, hybridSearch, rankOfDocs, type SearchResult } from '../src/rag/search';
+ import { loadIndex } from '../src/rag/store';
+ import type { Entry } from './validate-golden';
+ 
+ const embedder = ollamaEmbedder();
+ const index = loadIndex('data/index.json', embedder);
+ const words = bm25From(index);
+-const docOf = (chunkId: string) => chunkId.split('#')[0] ?? '';
+-
+-/** Ранг (з 1) найкращого фрагмента з будь-якого з документів must_cite; null — немає в списку. */
+-function rankOf(list: readonly { id: string }[], docs: readonly string[]): number | null {
+-  const i = list.findIndex((r) => docs.includes(docOf(r.id)));
+-  return i < 0 ? null : i + 1;
+-}
+ 
+ function explain(r: SearchResult) {
+   const col = (list: readonly { id: string; score: number }[], i: number, digits: number) => {
+@@ -46,7 +39,7 @@ async function golden() {
+     const show = (n: number | null) => (n === null ? '—' : String(n));
+     const ranks = e.must_cite.length === 0
+       ? '— | — | —'
+-      : `${show(rankOf(r.vector, e.must_cite))} | ${show(rankOf(r.words, e.must_cite))} | ${show(rankOf(r.fused, e.must_cite))}`;
++      : `${show(rankOfDocs(r.vector, e.must_cite))} | ${show(rankOfDocs(r.words, e.must_cite))} | ${show(rankOfDocs(r.fused, e.must_cite))}`;
+     console.log(`| ${e.id} | ${e.tags.join(', ')} | ${e.must_cite.join(', ') || '—'} | ${ranks} | ${(r.vector[0]?.score ?? 0).toFixed(4)} | ${r.words.length} |`);
+   }
+ }
+diff --git a/src/rag/search.ts b/src/rag/search.ts
+index 6f60ccf1..557f52de 100644
+--- a/src/rag/search.ts
++++ b/src/rag/search.ts
+@@ -33,6 +33,17 @@ export function bm25From(index: IndexFile): Bm25Index {
+   return buildBm25(index.chunks.map((c) => ({ id: c.id, text: c.text })));
+ }
+ 
++/** Документ з id фрагмента (до '#'). */
++export function docOfChunk(chunkId: string): string {
++  return chunkId.split('#')[0] ?? '';
++}
++
++/** Ранг (з 1) найкращого фрагмента з будь-якого з документів must_cite; null — немає в списку. */
++export function rankOfDocs(list: readonly { id: string }[], docs: readonly string[]): number | null {
++  const i = list.findIndex((r) => docs.includes(docOfChunk(r.id)));
++  return i < 0 ? null : i + 1;
++}
++
+ export async function hybridSearch(
+   index: IndexFile,
+   words: Bm25Index,
+diff --git a/tests/lab2/retrieval.test.ts b/tests/lab2/retrieval.test.ts
+index 62216a7a..ab2d8e42 100644
+--- a/tests/lab2/retrieval.test.ts
++++ b/tests/lab2/retrieval.test.ts
+@@ -5,7 +5,7 @@ import { buildBm25, searchBm25, tokenize } from '../../src/rag/bm25';
+ import { citedIds, validateAnswer } from '../../src/rag/cite';
+ import { fakeEmbedder } from '../../src/rag/embed';
+ import { rrf } from '../../src/rag/rrf';
+-import { bm25From, hybridSearch } from '../../src/rag/search';
++import { bm25From, docOfChunk, hybridSearch, rankOfDocs } from '../../src/rag/search';
+ import type { IndexedChunk, IndexFile } from '../../src/rag/store';
+ 
+ describe('bm25', () => {
+@@ -71,6 +71,28 @@ describe('hybridSearch на мінікорпусі з підробленим е
+   });
+ });
+ 
++describe('docOfChunk', () => {
++  it('бере частину id до #', () => {
++    expect(docOfChunk('egr#0003')).toBe('egr');
++  });
++
++  it('без # повертає весь рядок', () => {
++    expect(docOfChunk('egr')).toBe('egr');
++  });
++});
++
++describe('rankOfDocs', () => {
++  const list = [{ id: 'maf#0000' }, { id: 'egr#0001' }, { id: 'dpf#0002' }];
++
++  it('знаходить ранг (з 1) першого фрагмента з потрібного документа', () => {
++    expect(rankOfDocs(list, ['egr'])).toBe(2);
++  });
++
++  it('повертає null, якщо жодного з документів немає в списку', () => {
++    expect(rankOfDocs(list, ['maf2'])).toBeNull();
++  });
++});
++
+ describe('validateAnswer', () => {
+   const served = [{ id: 'egr#0003', text: 'Clogged EGR valves can sometimes be cleaned, but replacement is necessary.' }];
+ 

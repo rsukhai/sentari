@@ -1,0 +1,39 @@
+# 2026-11-08 · модель · trace_id 60390ff13cbb4d80853a95f3ba6eab49
+прогін: docs/lab3/evals-runs/t-05-a2 · задача t-05
+доказ класу: інструменти викликано (execute_tool: 15, успішних Edit/Write: 2), але acceptance червоний: npm run typecheck → 2
+
+кореневий спан: invoke_agent harness-run-task  (2026-11-08T18:07:45.344Z → 2026-11-08T18:08:54.145Z)  status=OK
+  gen_ai.operation.name = invoke_agent
+  gen_ai.provider.name = anthropic
+  gen_ai.request.model = haiku
+  gen_ai.agent.name = harness-run-task
+  gen_ai.response.finish_reasons = ["completed"]
+  gen_ai.usage.input_tokens = 114
+  gen_ai.usage.output_tokens = 6315
+  gen_ai.usage.cache_creation.input_tokens = 19836
+  gen_ai.usage.cache_read.input_tokens = 654590
+  harness.task_id = t-05
+  harness.exit_status = ok
+  harness.agent_subtype = success
+  harness.turns = 16
+  harness.acceptance_passed = false
+  harness.failed = true
+  harness.cost_usd_estimate = 0.137985
+  harness.duration_s = 68.8
+
+спани інструментів (15; вміст і аргументи не записуються):
+  2026-11-08T18:07:48Z  execute_tool Read  OK
+  2026-11-08T18:07:49Z  execute_tool Read  OK
+  2026-11-08T18:07:53Z  execute_tool Glob  OK
+  2026-11-08T18:07:55Z  execute_tool Read  OK
+  2026-11-08T18:07:55Z  execute_tool Read  OK
+  2026-11-08T18:08:10Z  execute_tool Edit  OK
+  2026-11-08T18:08:19Z  execute_tool Edit  OK
+  2026-11-08T18:08:21Z  execute_tool Bash  OK
+  2026-11-08T18:08:25Z  execute_tool Bash  OK
+  2026-11-08T18:08:27Z  execute_tool Read  OK
+  2026-11-08T18:08:30Z  execute_tool Bash  OK
+  2026-11-08T18:08:34Z  execute_tool Bash  OK
+  2026-11-08T18:08:36Z  execute_tool Bash  OK
+  2026-11-08T18:08:40Z  execute_tool Bash  OK
+  2026-11-08T18:08:43Z  execute_tool Bash  OK

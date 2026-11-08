@@ -1,0 +1,57 @@
+{
+  "model": "gpt-5.6-terra",
+  "task": "t-08",
+  "source": "1c7e036c (harness-комміт 1c7e036c)",
+  "blocked": true,
+  "cost_usd": 0.050922,
+  "results": [
+    {
+      "id": "c1",
+      "verdict": "pass",
+      "reason": "Diff прямо додає до README.md розділ із заголовком, що буквально відповідає зазначеному тексту.",
+      "evidence": "README.md: `## Лаб. 2: колекція і пошук`"
+    },
+    {
+      "id": "c2",
+      "verdict": "pass",
+      "reason": "Блок коду нового розділу містить усі чотири задані команди дослівно й у повному вигляді.",
+      "evidence": "README.md diff: ```bash\\nnpm run index\\nnpx tsx scripts/search.ts \"<запит>\" --explain\\nnpx tsx scripts/validate-golden.ts docs/lab2/golden/queries.jsonl\\nnpx tsx scripts/lab2/fetch-obd.ts check\\n```"
+    },
+    {
+      "id": "c3",
+      "verdict": "pass",
+      "reason": "Після блоку коду додано речення, які окремо описують призначення кожної з чотирьох команд.",
+      "evidence": "README.md diff: після ``` наведено: \"`npm run index` будує...\"; \"`npx tsx scripts/search.ts ...` виконує...\"; \"`npx tsx scripts/validate-golden.ts ...` перевіряє...\"; \"`npx tsx scripts/lab2/fetch-obd.ts check` перевіряє...\"."
+    },
+    {
+      "id": "c4",
+      "verdict": "pass",
+      "reason": "Речення коректно описує `npm run index` як побудову індексу колекції для пошуку, що відповідає призначенню `scripts/build-index.ts`.",
+      "evidence": "README.md diff: \"`npm run index` будує індекс колекції для пошуку.\"; scripts/build-index.ts: \"Побудова індексу\" і \"Колекція — data/obd/\"."
+    },
+    {
+      "id": "c5",
+      "verdict": "pass",
+      "reason": "Речення коректно описує режим `--explain`: команда виконує пошук за запитом і показує пояснювальні списки результатів.",
+      "evidence": "README.md: `... --explain` виконує пошук за запитом і пояснює, чому знайдено саме ці результати.; scripts/search.ts: `--explain    три списки: вектор, слова, RRF`."
+    },
+    {
+      "id": "c6",
+      "verdict": "fail",
+      "reason": "Речення стверджує, що скрипт перевіряє відповіді на наборі запитів, тоді як він читає JSONL і перевіряє його схему та пороги (а також must_cite), без виконання чи оцінювання відповідей пошуку.",
+      "evidence": "README.md у diff: «перевіряє відповіді на еталонному наборі запитів»; довідка scripts/validate-golden.ts: «Читає JSONL, перевіряє схему й пороги. Мережі не потребує.»"
+    },
+    {
+      "id": "c7",
+      "verdict": "fail",
+      "reason": "Речення описує перевірку «доступності та коректності джерела даних OBD», тоді як команда `check` без мережі перевіряє наявність усіх документів у корпусі й завершується з exit 0.",
+      "evidence": "Довідка `scripts/lab2/fetch-obd.ts`: `check   критерій A4, без мережі: усі документи на місці → exit 0`; diff README: `перевіряє доступність та коректність джерела даних OBD`."
+    },
+    {
+      "id": "c8",
+      "verdict": "pass",
+      "reason": "Diff містить зміни лише у README.md і лише вставку нового розділу між наявними розділами; інших файлів або наявних розділів не змінено.",
+      "evidence": "diff --git a/README.md b/README.md; єдиний hunk додає рядки після «Повні критерії прийняття...» та перед «## Чому не найновіші версії»."
+    }
+  ]
+}

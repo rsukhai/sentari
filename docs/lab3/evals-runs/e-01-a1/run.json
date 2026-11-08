@@ -1,0 +1,29 @@
+{
+  "task_id": "e-01",
+  "agent_path": "claude-code@2.1.269 model=haiku (-p, dontAsk)",
+  "artifact_dir": "runs/e-01-1794161746819",
+  "started_at": "2026-11-08T18:15:46.819Z",
+  "ended_at": "2026-11-08T18:15:53.633Z",
+  "duration_s": 6.8,
+  "exit_status": "ok",
+  "exit_code": 0,
+  "acceptance": [
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    }
+  ],
+  "acceptance_passed": true,
+  "session_id": "238e2da6-d4fe-4773-9b3e-922d7a7d3167",
+  "input_tokens": 10,
+  "output_tokens": 313,
+  "cache_creation_input_tokens": 6166,
+  "cache_read_input_tokens": 33596,
+  "cost_usd_estimate": 0.0182666,
+  "num_turns": 1,
+  "agent_subtype": "success",
+  "terminal_reason": "completed",
+  "trace_id": "238e2da6d4fe47739b3e922d7a7d3167",
+  "gates": {},
+  "trace_id_source": "session_id (backfill 2026-11-08)"
+}

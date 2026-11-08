@@ -1,0 +1,90 @@
+[
+  {
+    "trace_id": "c44f481bfef5434e809de273e5b62a86",
+    "span_id": "0912477873263222",
+    "parent_span_id": null,
+    "name": "invoke_agent harness-run-task",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T17:11:56.099Z",
+    "end": "2026-11-08T17:12:06.268Z",
+    "status": "ERROR",
+    "attributes": {
+      "gen_ai.operation.name": "invoke_agent",
+      "gen_ai.provider.name": "anthropic",
+      "gen_ai.request.model": "sonnet",
+      "gen_ai.agent.name": "harness-run-task",
+      "gen_ai.response.finish_reasons": [
+        "max_turns"
+      ],
+      "gen_ai.usage.input_tokens": 4,
+      "gen_ai.usage.output_tokens": 341,
+      "gen_ai.usage.cache_creation.input_tokens": 56062,
+      "gen_ai.usage.cache_read.input_tokens": 54599,
+      "error.type": "budget_or_turns",
+      "harness.task_id": "s-02",
+      "harness.exit_status": "budget_or_turns",
+      "harness.agent_subtype": "error_max_turns",
+      "harness.turns": 3,
+      "harness.acceptance_passed": false,
+      "harness.failed": true,
+      "harness.cost_usd_estimate": 0.2397158,
+      "harness.duration_s": 10.2
+    }
+  },
+  {
+    "trace_id": "c44f481bfef5434e809de273e5b62a86",
+    "span_id": "1df05efd3fd1ef53",
+    "parent_span_id": "0912477873263222",
+    "name": "execute_tool Read",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T17:11:59Z",
+    "end": "2026-11-08T17:12:00Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Read"
+    }
+  },
+  {
+    "trace_id": "c44f481bfef5434e809de273e5b62a86",
+    "span_id": "889b369abaaca2d8",
+    "parent_span_id": "0912477873263222",
+    "name": "execute_tool Glob",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T17:12:00Z",
+    "end": "2026-11-08T17:12:02Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Glob"
+    }
+  },
+  {
+    "trace_id": "c44f481bfef5434e809de273e5b62a86",
+    "span_id": "e6d7b607b4d0b279",
+    "parent_span_id": "0912477873263222",
+    "name": "execute_tool Read",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T17:12:02Z",
+    "end": "2026-11-08T17:12:02Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Read"
+    }
+  },
+  {
+    "trace_id": "c44f481bfef5434e809de273e5b62a86",
+    "span_id": "05f1fa342fab65fe",
+    "parent_span_id": "0912477873263222",
+    "name": "execute_tool Glob",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T17:12:02Z",
+    "end": "2026-11-08T17:12:06.268Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Glob"
+    }
+  }
+]

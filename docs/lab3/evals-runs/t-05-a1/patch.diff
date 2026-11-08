@@ -1,0 +1,50 @@
+diff --git a/src/rag/corpus.ts b/src/rag/corpus.ts
+index 92672f2b..a85dc9e5 100644
+--- a/src/rag/corpus.ts
++++ b/src/rag/corpus.ts
+@@ -35,6 +35,14 @@ export function wikiTitle(url: string): string {
+ /** Файл документа в data/obd/ за його id. */
+ export const docFile = (id: string) => `${id}.md`;
+ 
++/** Витягує значення поля `id` з YAML-шапки (між першим і другим ---). Повертає undefined, якщо шапки немає. */
++function getYamlId(text: string): string | undefined {
++  const match = text.match(/^---\n([\s\S]*?)\n---/);
++  if (!match?.[1]) return undefined;
++  const idMatch = match[1].match(/^\s*id:\s*(\S+)/m);
++  return idMatch?.[1];
++}
++
+ /**
+  * Критерій A4: усі документи зі специфікації лежать у колекції й не порожні.
+  * `files` — імʼя файлу → вміст. Повертає перелік проблем; порожній = «зелено».
+@@ -49,6 +57,10 @@ export function checkCorpus(docs: readonly DocRef[], files: ReadonlyMap<string,
+     const text = files.get(docFile(doc.id));
+     if (text === undefined) problems.push(`${doc.id}: немає файлу ${docFile(doc.id)}`);
+     else if (text.trim().length < 500) problems.push(`${doc.id}: документ підозріло короткий`);
++    else {
++      const yamlId = getYamlId(text);
++      if (yamlId && yamlId !== doc.id) problems.push(`${doc.id}: id у шапці не збігається (у шапці "${yamlId}")`);
++    }
+   }
+   for (const name of files.keys()) {
+     if (!ids.has(name.replace(/\.md$/, ''))) problems.push(`${name}: файл не описаний у spec.md`);
+diff --git a/tests/lab2/corpus.test.ts b/tests/lab2/corpus.test.ts
+index 9b83c5c2..d5eac874 100644
+--- a/tests/lab2/corpus.test.ts
++++ b/tests/lab2/corpus.test.ts
+@@ -47,4 +47,15 @@ describe('checkCorpus', () => {
+   it('порожня специфікація — це проблема, а не «зелено»', () => {
+     expect(checkCorpus([], new Map())).not.toEqual([]);
+   });
++
++  it('звіряє id у YAML-шапці з імʼям файлу', () => {
++    const correctYaml = `---\nid: obd\ntitle: Test\n---\n${long}`;
++    const wrongYaml = `---\nid: wrong-id\ntitle: Test\n---\n${long}`;
++    const noYaml = long;
++
++    expect(checkCorpus(docs, new Map([['obd.md', correctYaml], ['afr.md', noYaml]]))).toEqual([]);
++
++    const problems = checkCorpus(docs, new Map([['obd.md', wrongYaml], ['afr.md', noYaml]]));
++    expect(problems.join(' ')).toContain('obd: id у шапці не збігається');
++  });
+ });

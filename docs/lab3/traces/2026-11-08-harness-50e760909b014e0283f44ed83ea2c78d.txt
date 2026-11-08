@@ -1,0 +1,28 @@
+# 2026-11-08 · харнес · trace_id 50e760909b014e0283f44ed83ea2c78d
+прогін: docs/lab3/runs/s-01-1794157903613 · задача s-01
+доказ класу: exit_status=budget_or_turns, subtype=error_max_turns, terminal_reason=max_turns: зупинив ліміт харнеса (stop.md), приймання червоне
+
+кореневий спан: invoke_agent harness-run-task  (2026-11-08T17:11:43.613Z → 2026-11-08T17:11:55.912Z)  status=ERROR
+  gen_ai.operation.name = invoke_agent
+  gen_ai.provider.name = anthropic
+  gen_ai.request.model = sonnet
+  gen_ai.agent.name = harness-run-task
+  gen_ai.response.finish_reasons = ["max_turns"]
+  gen_ai.usage.input_tokens = 4
+  gen_ai.usage.output_tokens = 458
+  gen_ai.usage.cache_creation.input_tokens = 46725
+  gen_ai.usage.cache_read.input_tokens = 42981
+  error.type = budget_or_turns
+  harness.task_id = s-01
+  harness.exit_status = budget_or_turns
+  harness.agent_subtype = error_max_turns
+  harness.turns = 3
+  harness.acceptance_passed = false
+  harness.failed = true
+  harness.cost_usd_estimate = 0.2012502
+  harness.duration_s = 12.3
+
+спани інструментів (3; вміст і аргументи не записуються):
+  2026-11-08T17:11:46Z  execute_tool Read  OK
+  2026-11-08T17:11:47Z  execute_tool Read  OK
+  2026-11-08T17:11:51Z  execute_tool Edit  OK

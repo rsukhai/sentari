@@ -1,0 +1,53 @@
+{
+  "task_id": "t-08",
+  "agent_path": "claude-code@2.1.269 model=haiku (-p, dontAsk)",
+  "artifact_dir": "runs/t-08-1794161689695",
+  "started_at": "2026-11-08T18:14:49.695Z",
+  "ended_at": "2026-11-08T18:15:07.781Z",
+  "duration_s": 18.1,
+  "exit_status": "ok",
+  "exit_code": 0,
+  "acceptance": [
+    {
+      "cmd": "grep -q '## Лаб. 2: колекція і пошук' README.md",
+      "exit": 0
+    },
+    {
+      "cmd": "grep -q 'npm run index' README.md",
+      "exit": 0
+    },
+    {
+      "cmd": "grep -q 'scripts/search.ts' README.md",
+      "exit": 0
+    },
+    {
+      "cmd": "grep -q 'scripts/validate-golden.ts' README.md",
+      "exit": 0
+    },
+    {
+      "cmd": "grep -q 'fetch-obd.ts check' README.md",
+      "exit": 0
+    },
+    {
+      "cmd": "git diff --quiet HEAD -- . ':(exclude)README.md' ':(exclude).agent-log'",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    }
+  ],
+  "acceptance_passed": true,
+  "session_id": "b3980a3f-1948-4096-93fa-4b0581600c0d",
+  "input_tokens": 26,
+  "output_tokens": 1569,
+  "cache_creation_input_tokens": 10585,
+  "cache_read_input_tokens": 116549,
+  "cost_usd_estimate": 0.0418389,
+  "num_turns": 3,
+  "agent_subtype": "success",
+  "terminal_reason": "completed",
+  "trace_id": "b3980a3f1948409693fa4b0581600c0d",
+  "gates": {},
+  "trace_id_source": "session_id (backfill 2026-11-08)"
+}

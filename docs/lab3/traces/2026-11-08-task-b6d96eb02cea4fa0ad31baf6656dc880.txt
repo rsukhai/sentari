@@ -1,0 +1,26 @@
+# 2026-11-08 · задача · trace_id b6d96eb02cea4fa0ad31baf6656dc880
+прогін: docs/lab3/runs/t-08-1794130149040 · задача t-08
+доказ класу: ручна анотація: перший прогін t-08 створено від застарілого локального main (18 комітів позаду origin/main), а приймання складалось із grep по тексту README і порівняння з main: воно пройшло, хоча агент описав скрипти, яких у його дереві не було. Умова приймання не могла впіймати цю помилку (autonomy-log.md, інцидент 1; factory.md)
+
+кореневий спан: invoke_agent harness-run-task  (2026-11-08T09:29:09.040Z → 2026-11-08T09:29:26.908Z)  status=OK
+  gen_ai.operation.name = invoke_agent
+  gen_ai.provider.name = anthropic
+  gen_ai.request.model = sonnet
+  gen_ai.agent.name = harness-run-task
+  gen_ai.response.finish_reasons = ["completed"]
+  gen_ai.usage.input_tokens = 6
+  gen_ai.usage.output_tokens = 1035
+  gen_ai.usage.cache_creation.input_tokens = 47021
+  gen_ai.usage.cache_read.input_tokens = 88936
+  harness.task_id = t-08
+  harness.exit_status = ok
+  harness.agent_subtype = success
+  harness.turns = 3
+  harness.acceptance_passed = true
+  harness.failed = false
+  harness.cost_usd_estimate = 0.2173562
+  harness.duration_s = 17.9
+
+спани інструментів (2; вміст і аргументи не записуються):
+  2026-11-08T09:29:12Z  execute_tool Read  OK
+  2026-11-08T09:29:22Z  execute_tool Edit  OK

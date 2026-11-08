@@ -1,0 +1,68 @@
+diff --git a/src/rag/search.ts b/src/rag/search.ts
+index 6f60ccf1..decfecf5 100644
+--- a/src/rag/search.ts
++++ b/src/rag/search.ts
+@@ -40,6 +40,9 @@ export async function hybridSearch(
+   query: string,
+   topK = 5,
+ ): Promise<SearchResult> {
++  if (!Number.isInteger(topK) || topK < 1 || topK > DEPTH) {
++    throw new RangeError(`topK must be an integer between 1 and ${DEPTH}, got ${topK}`);
++  }
+   const qv = await embedder.embedQuery(query);
+   const cosines = new Map(index.chunks.map((c) => [c.id, cosineSimilarity(qv, c.vector)]));
+   const vector = [...cosines.entries()]
+diff --git a/tests/lab2/retrieval.test.ts b/tests/lab2/retrieval.test.ts
+index 62216a7a..759435e9 100644
+--- a/tests/lab2/retrieval.test.ts
++++ b/tests/lab2/retrieval.test.ts
+@@ -69,6 +69,49 @@ describe('hybridSearch на мінікорпусі з підробленим е
+     expect(r.hits[0]?.rankWords).toBe(1);
+     expect(r.hits[0]?.cosine).toBeGreaterThan(0);
+   });
++
++  it('кидає RangeError для topK=0', async () => {
++    const vectors = await embedder.embedDocuments(texts.map(([, , t]) => t));
++    const chunks: IndexedChunk[] = texts.map(([id, docId, text], i) => ({
++      id, docId, heading: '', start: 0, end: text.length, text, vector: vectors[i] ?? [],
++    }));
++    const index = { chunks } as unknown as IndexFile;
++    await expect(hybridSearch(index, bm25From(index), embedder, 'MAF', 0)).rejects.toThrow(
++      /topK/,
++    );
++  });
++
++  it('кидає RangeError для topK=21', async () => {
++    const vectors = await embedder.embedDocuments(texts.map(([, , t]) => t));
++    const chunks: IndexedChunk[] = texts.map(([id, docId, text], i) => ({
++      id, docId, heading: '', start: 0, end: text.length, text, vector: vectors[i] ?? [],
++    }));
++    const index = { chunks } as unknown as IndexFile;
++    await expect(hybridSearch(index, bm25From(index), embedder, 'MAF', 21)).rejects.toThrow(
++      /topK/,
++    );
++  });
++
++  it('кидає RangeError для topK=2.5', async () => {
++    const vectors = await embedder.embedDocuments(texts.map(([, , t]) => t));
++    const chunks: IndexedChunk[] = texts.map(([id, docId, text], i) => ({
++      id, docId, heading: '', start: 0, end: text.length, text, vector: vectors[i] ?? [],
++    }));
++    const index = { chunks } as unknown as IndexFile;
++    await expect(hybridSearch(index, bm25From(index), embedder, 'MAF', 2.5)).rejects.toThrow(
++      /topK/,
++    );
++  });
++
++  it('дозволяє допустиме topK=5', async () => {
++    const vectors = await embedder.embedDocuments(texts.map(([, , t]) => t));
++    const chunks: IndexedChunk[] = texts.map(([id, docId, text], i) => ({
++      id, docId, heading: '', start: 0, end: text.length, text, vector: vectors[i] ?? [],
++    }));
++    const index = { chunks } as unknown as IndexFile;
++    const r = await hybridSearch(index, bm25From(index), embedder, 'MAF', 5);
++    expect(r.hits).toBeDefined();
++  });
+ });
+ 
+ describe('validateAnswer', () => {

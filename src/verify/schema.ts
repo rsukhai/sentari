@@ -24,3 +24,12 @@ export type VerifyReport = z.infer<typeof verifyReport>;
 export function isBlocked(report: VerifyReport): boolean {
   return report.results.some((r) => r.verdict === 'fail');
 }
+
+/**
+ * Брама харнеса (Лаб. 3, крок 02): червоно, якщо хоч один критерій НЕ pass.
+ * Відмінність від isBlocked (Лаб. 2): unknown теж блокує — в автономному прогоні нікому
+ * подивитися на unknown очима, і «невідомо» не повинно тихо проїжджати в main.
+ */
+export function isBlockedStrict(report: VerifyReport): boolean {
+  return report.results.some((r) => r.verdict !== 'pass');
+}

@@ -1,0 +1,43 @@
+{
+  "task_id": "t-02",
+  "agent_path": "claude-code@2.1.269 model=sonnet (-p, dontAsk)",
+  "artifact_dir": "runs/t-02-1794130312732",
+  "started_at": "2026-11-08T09:31:52.732Z",
+  "ended_at": "2026-11-08T09:33:18.494Z",
+  "duration_s": 85.8,
+  "exit_status": "ok",
+  "exit_code": 0,
+  "acceptance": [
+    {
+      "cmd": "npx vitest run tests/lab2/answer.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    }
+  ],
+  "acceptance_passed": true,
+  "session_id": "4fc96842-b9ca-4804-8cc5-e6a696efd489",
+  "input_tokens": 22,
+  "output_tokens": 6620,
+  "cache_creation_input_tokens": 26403,
+  "cache_read_input_tokens": 677190,
+  "cost_usd_estimate": 0.308466,
+  "num_turns": 14,
+  "agent_subtype": "success",
+  "terminal_reason": "completed",
+  "trace_id": "4fc96842b9ca48048cc5e6a696efd489",
+  "gates": {},
+  "branch": "harness/t-02",
+  "base_ref": "origin/main",
+  "base_commit": "071ac814f645bd28a4f500d376db38ac5dfdc00a",
+  "branch_commit": "5795833ea8b100a69c970d7f2f5b56f5a08608bb",
+  "committed_changes": true,
+  "main_checkout_unchanged": false,
+  "trace_id_source": "session_id (backfill 2026-11-08)"
+}

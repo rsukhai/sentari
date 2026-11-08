@@ -1,0 +1,76 @@
+[
+  {
+    "trace_id": "50e760909b014e0283f44ed83ea2c78d",
+    "span_id": "96d211abe3d03a69",
+    "parent_span_id": null,
+    "name": "invoke_agent harness-run-task",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T17:11:43.613Z",
+    "end": "2026-11-08T17:11:55.912Z",
+    "status": "ERROR",
+    "attributes": {
+      "gen_ai.operation.name": "invoke_agent",
+      "gen_ai.provider.name": "anthropic",
+      "gen_ai.request.model": "sonnet",
+      "gen_ai.agent.name": "harness-run-task",
+      "gen_ai.response.finish_reasons": [
+        "max_turns"
+      ],
+      "gen_ai.usage.input_tokens": 4,
+      "gen_ai.usage.output_tokens": 458,
+      "gen_ai.usage.cache_creation.input_tokens": 46725,
+      "gen_ai.usage.cache_read.input_tokens": 42981,
+      "error.type": "budget_or_turns",
+      "harness.task_id": "s-01",
+      "harness.exit_status": "budget_or_turns",
+      "harness.agent_subtype": "error_max_turns",
+      "harness.turns": 3,
+      "harness.acceptance_passed": false,
+      "harness.failed": true,
+      "harness.cost_usd_estimate": 0.2012502,
+      "harness.duration_s": 12.3
+    }
+  },
+  {
+    "trace_id": "50e760909b014e0283f44ed83ea2c78d",
+    "span_id": "b814cab23cc7662a",
+    "parent_span_id": "96d211abe3d03a69",
+    "name": "execute_tool Read",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T17:11:46Z",
+    "end": "2026-11-08T17:11:47Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Read"
+    }
+  },
+  {
+    "trace_id": "50e760909b014e0283f44ed83ea2c78d",
+    "span_id": "0733d797f746c7bd",
+    "parent_span_id": "96d211abe3d03a69",
+    "name": "execute_tool Read",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T17:11:47Z",
+    "end": "2026-11-08T17:11:51Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Read"
+    }
+  },
+  {
+    "trace_id": "50e760909b014e0283f44ed83ea2c78d",
+    "span_id": "128f5d04a79a5c78",
+    "parent_span_id": "96d211abe3d03a69",
+    "name": "execute_tool Edit",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T17:11:51Z",
+    "end": "2026-11-08T17:11:55.912Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Edit"
+    }
+  }
+]

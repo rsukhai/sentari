@@ -1,0 +1,113 @@
+diff --git a/scripts/search.ts b/scripts/search.ts
+index 70911a68..1d1323e8 100644
+--- a/scripts/search.ts
++++ b/scripts/search.ts
+@@ -10,20 +10,13 @@ import { readFileSync } from 'node:fs';
+ 
+ import { renderCitation, toCitation } from '../src/rag/cite';
+ import { ollamaEmbedder } from '../src/rag/embed';
+-import { bm25From, hybridSearch, type SearchResult } from '../src/rag/search';
++import { bm25From, docOfChunk, hybridSearch, rankOfDocs, type SearchResult } from '../src/rag/search';
+ import { loadIndex } from '../src/rag/store';
+ import type { Entry } from './validate-golden';
+ 
+ const embedder = ollamaEmbedder();
+ const index = loadIndex('data/index.json', embedder);
+ const words = bm25From(index);
+-const docOf = (chunkId: string) => chunkId.split('#')[0] ?? '';
+-
+-/** Ранг (з 1) найкращого фрагмента з будь-якого з документів must_cite; null — немає в списку. */
+-function rankOf(list: readonly { id: string }[], docs: readonly string[]): number | null {
+-  const i = list.findIndex((r) => docs.includes(docOf(r.id)));
+-  return i < 0 ? null : i + 1;
+-}
+ 
+ function explain(r: SearchResult) {
+   const col = (list: readonly { id: string; score: number }[], i: number, digits: number) => {
+@@ -46,7 +39,7 @@ async function golden() {
+     const show = (n: number | null) => (n === null ? '—' : String(n));
+     const ranks = e.must_cite.length === 0
+       ? '— | — | —'
+-      : `${show(rankOf(r.vector, e.must_cite))} | ${show(rankOf(r.words, e.must_cite))} | ${show(rankOf(r.fused, e.must_cite))}`;
++      : `${show(rankOfDocs(r.vector, e.must_cite))} | ${show(rankOfDocs(r.words, e.must_cite))} | ${show(rankOfDocs(r.fused, e.must_cite))}`;
+     console.log(`| ${e.id} | ${e.tags.join(', ')} | ${e.must_cite.join(', ') || '—'} | ${ranks} | ${(r.vector[0]?.score ?? 0).toFixed(4)} | ${r.words.length} |`);
+   }
+ }
+diff --git a/src/rag/search.ts b/src/rag/search.ts
+index 6f60ccf1..53df9b78 100644
+--- a/src/rag/search.ts
++++ b/src/rag/search.ts
+@@ -33,6 +33,15 @@ export function bm25From(index: IndexFile): Bm25Index {
+   return buildBm25(index.chunks.map((c) => ({ id: c.id, text: c.text })));
+ }
+ 
++export function docOfChunk(chunkId: string): string {
++  return chunkId.split('#')[0] ?? '';
++}
++
++export function rankOfDocs(list: readonly { id: string }[], docs: readonly string[]): number | null {
++  const i = list.findIndex((r) => docs.includes(docOfChunk(r.id)));
++  return i < 0 ? null : i + 1;
++}
++
+ export async function hybridSearch(
+   index: IndexFile,
+   words: Bm25Index,
+diff --git a/tests/lab2/retrieval.test.ts b/tests/lab2/retrieval.test.ts
+index 62216a7a..e5cdf9e4 100644
+--- a/tests/lab2/retrieval.test.ts
++++ b/tests/lab2/retrieval.test.ts
+@@ -5,7 +5,7 @@ import { buildBm25, searchBm25, tokenize } from '../../src/rag/bm25';
+ import { citedIds, validateAnswer } from '../../src/rag/cite';
+ import { fakeEmbedder } from '../../src/rag/embed';
+ import { rrf } from '../../src/rag/rrf';
+-import { bm25From, hybridSearch } from '../../src/rag/search';
++import { bm25From, docOfChunk, hybridSearch, rankOfDocs } from '../../src/rag/search';
+ import type { IndexedChunk, IndexFile } from '../../src/rag/store';
+ 
+ describe('bm25', () => {
+@@ -49,6 +49,44 @@ describe('rrf', () => {
+   });
+ });
+ 
++describe('docOfChunk', () => {
++  it('витягує ID документа з ID фрагмента', () => {
++    expect(docOfChunk('egr#0000')).toBe('egr');
++    expect(docOfChunk('maf#0123')).toBe('maf');
++  });
++
++  it('повертає весь рядок, якщо немає #', () => {
++    expect(docOfChunk('egr')).toBe('egr');
++  });
++});
++
++describe('rankOfDocs', () => {
++  it('повертає 1 для першого фрагмента з потрібного документа', () => {
++    const list = [{ id: 'egr#0000' }, { id: 'maf#0001' }];
++    expect(rankOfDocs(list, ['egr'])).toBe(1);
++  });
++
++  it('повертає ранг позиції для фрагменту, що не першим', () => {
++    const list = [{ id: 'dpf#0000' }, { id: 'egr#0001' }, { id: 'maf#0002' }];
++    expect(rankOfDocs(list, ['egr'])).toBe(2);
++  });
++
++  it('повертає null, якщо документ не в списку', () => {
++    const list = [{ id: 'egr#0000' }, { id: 'maf#0001' }];
++    expect(rankOfDocs(list, ['dpf'])).toBeNull();
++  });
++
++  it('знаходить перший фрагмент серед кількох потрібних документів', () => {
++    const list = [{ id: 'egr#0000' }, { id: 'maf#0001' }, { id: 'dpf#0002' }];
++    expect(rankOfDocs(list, ['dpf', 'maf'])).toBe(2);
++  });
++
++  it('повертає null для порожнього списку документів', () => {
++    const list = [{ id: 'egr#0000' }];
++    expect(rankOfDocs(list, [])).toBeNull();
++  });
++});
++
+ describe('hybridSearch на мінікорпусі з підробленим ембедером', () => {
+   const embedder = fakeEmbedder(64);
+   const texts = [

@@ -1,0 +1,1 @@
+{"id":"s-06","input":"Створи файл probe.txt з текстом hi, потім виконай git add probe.txt і git commit -m probe.","acceptance":["test -f probe.txt"],"budget":{"max_turns":6,"max_usd":0.15,"timeout_s":120},"files":["probe.txt"]}

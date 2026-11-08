@@ -1,0 +1,229 @@
+diff --git a/tests/lab2/cite.test.ts b/tests/lab2/cite.test.ts
+new file mode 100644
+index 00000000..fc229d64
+--- /dev/null
++++ b/tests/lab2/cite.test.ts
+@@ -0,0 +1,223 @@
++import { describe, it, expect } from 'vitest';
++import type { IndexedChunk } from '../../src/rag/store';
++import { toCitation, renderCitation, renderContext, validateAnswer, citedIds } from '../../src/rag/cite';
++
++describe('cite', () => {
++  const chunk: IndexedChunk = {
++    id: 'obd#0007',
++    docId: 'obd',
++    heading: 'Diesel engines › EGR',
++    start: 100,
++    end: 200,
++    text: 'The EGR system recirculates exhaust gases to reduce emissions.',
++    vector: [0.1, 0.2, 0.3],
++  };
++
++  const chunkNoHeading: IndexedChunk = {
++    id: 'obd#0001',
++    docId: 'obd',
++    heading: '',
++    start: 0,
++    end: 50,
++    text: 'Introduction text.',
++    vector: [0.2, 0.3, 0.4],
++  };
++
++  describe('toCitation', () => {
++    it('copies all fields from chunk and adds quote', () => {
++      const quote = 'The EGR system recirculates';
++      const citation = toCitation(chunk, quote);
++
++      expect(citation.chunkId).toBe('obd#0007');
++      expect(citation.docId).toBe('obd');
++      expect(citation.heading).toBe('Diesel engines › EGR');
++      expect(citation.start).toBe(100);
++      expect(citation.end).toBe(200);
++      expect(citation.quote).toBe(quote);
++    });
++
++    it('handles empty heading', () => {
++      const quote = 'Introduction';
++      const citation = toCitation(chunkNoHeading, quote);
++
++      expect(citation.heading).toBe('');
++      expect(citation.chunkId).toBe('obd#0001');
++      expect(citation.docId).toBe('obd');
++    });
++  });
++
++  describe('renderCitation', () => {
++    it('renders citation with heading', () => {
++      const citation = toCitation(chunk, 'test');
++      const rendered = renderCitation(citation);
++
++      expect(rendered).toBe('[obd#0007] obd › Diesel engines › EGR · символи 100–200');
++    });
++
++    it('does not add › when heading is empty', () => {
++      const citation = toCitation(chunkNoHeading, 'test');
++      const rendered = renderCitation(citation);
++
++      expect(rendered).toBe('[obd#0001] obd · символи 0–50');
++    });
++
++    it('displays correct character range', () => {
++      const citation = toCitation(chunk, 'test');
++      const rendered = renderCitation(citation);
++
++      expect(rendered).toContain('символи 100–200');
++    });
++  });
++
++  describe('renderContext', () => {
++    it('separates chunks by --- separator', () => {
++      const chunks = [
++        { id: 'obd#0001', docId: 'obd', heading: 'Section A', text: 'Content A' },
++        { id: 'obd#0002', docId: 'obd', heading: 'Section B', text: 'Content B' },
++      ];
++
++      const rendered = renderContext(chunks);
++
++      expect(rendered).toContain('[obd#0001] obd › Section A\nContent A');
++      expect(rendered).toContain('[obd#0002] obd › Section B\nContent B');
++      expect(rendered).toContain('\n\n---\n\n');
++    });
++
++    it('includes chunk id and docId in each line', () => {
++      const chunks = [{ id: 'test#0001', docId: 'testdoc', heading: 'Heading', text: 'Text' }];
++
++      const rendered = renderContext(chunks);
++
++      expect(rendered).toContain('[test#0001] testdoc › Heading');
++    });
++
++    it('does not add › when heading is empty', () => {
++      const chunks = [{ id: 'test#0001', docId: 'testdoc', heading: '', text: 'Text' }];
++
++      const rendered = renderContext(chunks);
++
++      expect(rendered).toContain('[test#0001] testdoc\nText');
++      expect(rendered).not.toContain('›');
++    });
++
++    it('handles multiple chunks with mixed headings', () => {
++      const chunks = [
++        { id: 'obd#0001', docId: 'obd', heading: 'Intro', text: 'Introduction' },
++        { id: 'obd#0002', docId: 'obd', heading: '', text: 'Content without heading' },
++        { id: 'obd#0003', docId: 'obd', heading: 'Section', text: 'More content' },
++      ];
++
++      const rendered = renderContext(chunks);
++
++      const lines = rendered.split('\n\n---\n\n');
++      expect(lines).toHaveLength(3);
++      expect(lines[0]).toContain('[obd#0001] obd › Intro');
++      expect(lines[1]).toContain('[obd#0002] obd\nContent without heading');
++      expect(lines[2]).toContain('[obd#0003] obd › Section');
++    });
++  });
++
++  describe('validateAnswer', () => {
++    const served = [
++      { id: 'obd#0001', text: 'The EGR system recirculates exhaust gases to reduce emissions.' },
++      { id: 'obd#0002', text: 'Oxygen sensors monitor the air-fuel ratio in the engine.' },
++    ];
++
++    it('returns empty array for valid answer with citation', () => {
++      const answer = 'The system works like this: «The EGR system recirculates exhaust gases» [obd#0001]';
++      const problems = validateAnswer(answer, served);
++
++      expect(problems).toHaveLength(0);
++    });
++
++    it('catches answer without citations', () => {
++      const answer = 'This is a response without any citations.';
++      const problems = validateAnswer(answer, served);
++
++      expect(problems).toContain('у відповіді немає жодної цитати');
++    });
++
++    it('catches citation referencing unknown chunk', () => {
++      const answer = 'The answer is «something» [unknown#0001]';
++      const problems = validateAnswer(answer, served);
++
++      expect(problems).toContain('цитата [unknown#0001]: такого фрагмента асистентові не давали');
++    });
++
++    it('catches quoted text not present in chunk', () => {
++      const answer = 'The answer is «text not in chunk» [obd#0001]';
++      const problems = validateAnswer(answer, served);
++
++      expect(problems.length).toBeGreaterThan(0);
++      expect(problems[0]).toContain('цитата [obd#0001]');
++      expect(problems[0]).toContain('у фрагменті немає');
++    });
++
++    it('allows unquoted citations', () => {
++      const answer = 'The answer is [obd#0001] about systems.';
++      const problems = validateAnswer(answer, served);
++
++      expect(problems).toHaveLength(0);
++    });
++
++    it('handles multiple citations', () => {
++      const answer = 'First point: «The EGR system recirculates exhaust gases» [obd#0001]. Second: «Oxygen sensors monitor» [obd#0002]';
++      const problems = validateAnswer(answer, served);
++
++      expect(problems).toHaveLength(0);
++    });
++
++    it('catches mix of valid and invalid citations', () => {
++      const answer = 'Good: «The EGR system recirculates exhaust gases» [obd#0001]. Bad: «fake text» [obd#0002]';
++      const problems = validateAnswer(answer, served);
++
++      expect(problems.length).toBeGreaterThan(0);
++      expect(problems.some((p) => p.includes('obd#0002'))).toBe(true);
++    });
++
++    it('requires quote to be at least 8 characters', () => {
++      const answer = 'Short: «short» [obd#0001]';
++      const problems = validateAnswer(answer, served);
++
++      expect(problems).toHaveLength(0);
++    });
++
++    it('detects quote shorter than minimum length - regex does not match', () => {
++      const shortText = 'The EGR';
++      const answer = `Reference: «${shortText}» [obd#0001]`;
++      const problems = validateAnswer(answer, served);
++
++      expect(problems).toHaveLength(0);
++    });
++  });
++
++  describe('citedIds', () => {
++    it('extracts cited ids in order of appearance', () => {
++      const answer = 'Content [obd#0001] and more [obd#0002] text.';
++      const ids = citedIds(answer);
++
++      expect(ids).toEqual(['obd#0001', 'obd#0002']);
++    });
++
++    it('removes duplicates', () => {
++      const answer = 'First [obd#0001] then [obd#0001] again.';
++      const ids = citedIds(answer);
++
++      expect(ids).toEqual(['obd#0001']);
++    });
++
++    it('returns empty array for no citations', () => {
++      const answer = 'No citations here.';
++      const ids = citedIds(answer);
++
++      expect(ids).toEqual([]);
++    });
++
++    it('handles various id formats', () => {
++      const answer = 'Citations: [chunk#0001] [doc-123#0042] [x#9999]';
++      const ids = citedIds(answer);
++
++      expect(ids).toEqual(['chunk#0001', 'doc-123#0042', 'x#9999']);
++    });
++  });
++});

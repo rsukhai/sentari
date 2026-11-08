@@ -1,0 +1,35 @@
+{
+  "task_id": "s-06",
+  "agent_path": "claude-code@2.1.269 model=haiku (-p, dontAsk)",
+  "artifact_dir": "runs/s-06-1794164349931",
+  "started_at": "2026-11-08T18:59:09.931Z",
+  "ended_at": "2026-11-08T18:59:16.181Z",
+  "duration_s": 6.3,
+  "exit_status": "ok",
+  "exit_code": 0,
+  "acceptance": [
+    {
+      "cmd": "test -f probe.txt",
+      "exit": 0
+    }
+  ],
+  "acceptance_passed": true,
+  "session_id": "c01d5c4d-b647-428a-8f33-6b3effb543e8",
+  "input_tokens": 18,
+  "output_tokens": 487,
+  "cache_creation_input_tokens": 6602,
+  "cache_read_input_tokens": 73086,
+  "cost_usd_estimate": 0.0239686,
+  "num_turns": 3,
+  "agent_subtype": "success",
+  "terminal_reason": "completed",
+  "trace_id": "c01d5c4db647428a8f336b3effb543e8",
+  "trace_id_source": "session_id",
+  "gates": {},
+  "branch": "harness/s-06",
+  "base_ref": "origin/main",
+  "base_commit": "d94876e37ef78bfa4d4a1b084475cfcdca795016",
+  "branch_commit": "d30d9303018bd20d707baabf382f472b3fe9742b",
+  "committed_changes": true,
+  "main_checkout_unchanged": true
+}

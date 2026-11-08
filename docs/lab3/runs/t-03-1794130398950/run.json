@@ -1,0 +1,43 @@
+{
+  "task_id": "t-03",
+  "agent_path": "claude-code@2.1.269 model=sonnet (-p, dontAsk)",
+  "artifact_dir": "runs/t-03-1794130398950",
+  "started_at": "2026-11-08T09:33:18.950Z",
+  "ended_at": "2026-11-08T09:33:57.833Z",
+  "duration_s": 38.9,
+  "exit_status": "ok",
+  "exit_code": 0,
+  "acceptance": [
+    {
+      "cmd": "npx vitest run tests/lab2/cite.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    }
+  ],
+  "acceptance_passed": true,
+  "session_id": "546a3d2d-0488-4d27-83b3-b4a7471c3cff",
+  "input_tokens": 14,
+  "output_tokens": 2837,
+  "cache_creation_input_tokens": 17744,
+  "cache_read_input_tokens": 393271,
+  "cost_usd_estimate": 0.17917020000000003,
+  "num_turns": 9,
+  "agent_subtype": "success",
+  "terminal_reason": "completed",
+  "trace_id": "546a3d2d04884d2783b3b4a7471c3cff",
+  "gates": {},
+  "branch": "harness/t-03",
+  "base_ref": "origin/main",
+  "base_commit": "071ac814f645bd28a4f500d376db38ac5dfdc00a",
+  "branch_commit": "f0dd25856802e5e8e6ac0814c5ea7122a163e611",
+  "committed_changes": true,
+  "main_checkout_unchanged": true,
+  "trace_id_source": "session_id (backfill 2026-11-08)"
+}

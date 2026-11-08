@@ -1,0 +1,57 @@
+{
+  "task_id": "t-04",
+  "agent_path": "claude-code@2.1.269 model=haiku (-p, dontAsk)",
+  "artifact_dir": "runs/t-04-1794161082667",
+  "started_at": "2026-11-08T18:04:42.667Z",
+  "ended_at": "2026-11-08T18:05:19.271Z",
+  "duration_s": 36.6,
+  "exit_status": "ok",
+  "exit_code": 0,
+  "acceptance": [
+    {
+      "cmd": "grep -q 'query повторюється' scripts/validate-golden.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "grep -q 'тег повторюється' scripts/validate-golden.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "grep -q 'query повторюється' tests/validate-golden.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "npx vitest run tests/validate-golden.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "npx tsx scripts/validate-golden.ts docs/lab2/golden/queries.jsonl",
+      "exit": 0
+    },
+    {
+      "cmd": "git diff --quiet HEAD -- docs/lab2/golden/queries.jsonl",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    }
+  ],
+  "acceptance_passed": true,
+  "session_id": "fbf08f3a-4865-4a2a-8e95-6ed61184cd99",
+  "input_tokens": 66,
+  "output_tokens": 3659,
+  "cache_creation_input_tokens": 16352,
+  "cache_read_input_tokens": 359344,
+  "cost_usd_estimate": 0.08815540000000001,
+  "num_turns": 12,
+  "agent_subtype": "success",
+  "terminal_reason": "completed",
+  "trace_id": "fbf08f3a48654a2a8e956ed61184cd99",
+  "gates": {},
+  "trace_id_source": "session_id (backfill 2026-11-08)"
+}

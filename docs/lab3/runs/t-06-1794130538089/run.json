@@ -1,0 +1,59 @@
+{
+  "task_id": "t-06",
+  "agent_path": "claude-code@2.1.269 model=sonnet (-p, dontAsk)",
+  "artifact_dir": "runs/t-06-1794130538089",
+  "started_at": "2026-11-08T09:35:38.089Z",
+  "ended_at": "2026-11-08T09:36:20.014Z",
+  "duration_s": 41.9,
+  "exit_status": "ok",
+  "exit_code": 0,
+  "acceptance": [
+    {
+      "cmd": "grep -q 'export function rankOfDocs' src/rag/search.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "grep -q 'export function docOfChunk' src/rag/search.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "! grep -q 'function rankOf' scripts/search.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "grep -q 'rankOfDocs' tests/lab2/retrieval.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "npx vitest run tests/lab2/retrieval.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    }
+  ],
+  "acceptance_passed": true,
+  "session_id": "f05efb88-cd70-434c-bb89-48369891d2cb",
+  "input_tokens": 20,
+  "output_tokens": 2651,
+  "cache_creation_input_tokens": 20515,
+  "cache_read_input_tokens": 469497,
+  "cost_usd_estimate": 0.20365539999999996,
+  "num_turns": 10,
+  "agent_subtype": "success",
+  "terminal_reason": "completed",
+  "trace_id": "f05efb88cd70434cbb8948369891d2cb",
+  "gates": {},
+  "branch": "harness/t-06",
+  "base_ref": "origin/main",
+  "base_commit": "071ac814f645bd28a4f500d376db38ac5dfdc00a",
+  "branch_commit": "fb05543237ce58db77405652a58f5a528f459031",
+  "committed_changes": true,
+  "main_checkout_unchanged": true,
+  "trace_id_source": "session_id (backfill 2026-11-08)"
+}

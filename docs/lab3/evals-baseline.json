@@ -1,0 +1,122 @@
+{
+  "t-01": {
+    "bucket": "regression",
+    "pow_k": 0.3333333333333333,
+    "k": 3,
+    "frozen_at": "2026-11-08"
+  },
+  "t-02": {
+    "bucket": "regression",
+    "pow_k": 0.6666666666666666,
+    "k": 3,
+    "frozen_at": "2026-11-08"
+  },
+  "t-03": {
+    "bucket": "regression",
+    "pow_k": 0.6666666666666666,
+    "k": 3,
+    "frozen_at": "2026-11-08"
+  },
+  "t-04": {
+    "bucket": "regression",
+    "pow_k": 1,
+    "k": 3,
+    "frozen_at": "2026-11-08"
+  },
+  "t-05": {
+    "bucket": "regression",
+    "pow_k": 0.6666666666666666,
+    "k": 3,
+    "frozen_at": "2026-11-08"
+  },
+  "t-06": {
+    "bucket": "new",
+    "pow_k": 1,
+    "k": 3,
+    "frozen_at": "2026-11-08"
+  },
+  "t-07": {
+    "bucket": "regression",
+    "pow_k": 1,
+    "k": 3,
+    "frozen_at": "2026-11-08"
+  },
+  "t-08": {
+    "bucket": "regression",
+    "pow_k": 1,
+    "k": 3,
+    "frozen_at": "2026-11-08"
+  },
+  "e-01": {
+    "bucket": "edge",
+    "pow_k": 1,
+    "k": 1,
+    "frozen_at": "2026-11-08"
+  },
+  "e-02": {
+    "bucket": "edge",
+    "pow_k": 1,
+    "k": 1,
+    "frozen_at": "2026-11-08"
+  },
+  "e-03": {
+    "bucket": "edge",
+    "pow_k": 1,
+    "k": 1,
+    "frozen_at": "2026-11-08"
+  },
+  "e-04": {
+    "bucket": "edge",
+    "pow_k": 1,
+    "k": 1,
+    "frozen_at": "2026-11-08"
+  },
+  "e-05": {
+    "bucket": "edge",
+    "pow_k": 1,
+    "k": 1,
+    "frozen_at": "2026-11-08"
+  },
+  "e-06": {
+    "bucket": "edge",
+    "pow_k": 1,
+    "k": 1,
+    "frozen_at": "2026-11-08"
+  },
+  "e-07": {
+    "bucket": "edge",
+    "pow_k": 1,
+    "k": 1,
+    "frozen_at": "2026-11-08"
+  },
+  "e-08": {
+    "bucket": "edge",
+    "pow_k": 1,
+    "k": 1,
+    "frozen_at": "2026-11-08"
+  },
+  "e-09": {
+    "bucket": "edge",
+    "pow_k": 1,
+    "k": 1,
+    "frozen_at": "2026-11-08"
+  },
+  "e-10": {
+    "bucket": "edge",
+    "pow_k": 1,
+    "k": 1,
+    "frozen_at": "2026-11-08"
+  },
+  "e-11": {
+    "bucket": "edge",
+    "pow_k": 1,
+    "k": 1,
+    "frozen_at": "2026-11-08"
+  },
+  "e-12": {
+    "bucket": "edge",
+    "pow_k": 1,
+    "k": 1,
+    "frozen_at": "2026-11-08"
+  }
+}

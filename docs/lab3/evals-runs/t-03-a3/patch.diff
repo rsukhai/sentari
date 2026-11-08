@@ -1,0 +1,210 @@
+diff --git a/tests/lab2/cite.test.ts b/tests/lab2/cite.test.ts
+new file mode 100644
+index 00000000..a157ecf5
+--- /dev/null
++++ b/tests/lab2/cite.test.ts
+@@ -0,0 +1,204 @@
++import { describe, it, expect } from 'vitest';
++import {
++  toCitation,
++  renderCitation,
++  renderContext,
++  validateAnswer,
++  citedIds,
++} from '../../src/rag/cite';
++import type { IndexedChunk } from '../../src/rag/store';
++
++describe('cite', () => {
++  const mockChunk: IndexedChunk = {
++    id: 'obd#0001',
++    docId: 'obd-engines',
++    heading: 'EGR › Diesel',
++    start: 100,
++    end: 250,
++    text: 'Some engine text content here',
++    vector: [0.1, 0.2, 0.3],
++  };
++
++  describe('toCitation', () => {
++    it('копіює chunkId, docId, heading, start, end', () => {
++      const citation = toCitation(mockChunk, 'test quote');
++      expect(citation.chunkId).toBe('obd#0001');
++      expect(citation.docId).toBe('obd-engines');
++      expect(citation.heading).toBe('EGR › Diesel');
++      expect(citation.start).toBe(100);
++      expect(citation.end).toBe(250);
++    });
++
++    it('додає quote', () => {
++      const quote = 'Some engine text content';
++      const citation = toCitation(mockChunk, quote);
++      expect(citation.quote).toBe(quote);
++    });
++
++    it('работает с пустым heading', () => {
++      const chunk: IndexedChunk = { ...mockChunk, heading: '' };
++      const citation = toCitation(chunk, 'quote');
++      expect(citation.heading).toBe('');
++    });
++  });
++
++  describe('renderCitation', () => {
++    it('дає формат [id] docId › heading · символи start–end', () => {
++      const citation = toCitation(mockChunk, 'quote');
++      const rendered = renderCitation(citation);
++      expect(rendered).toBe('[obd#0001] obd-engines › EGR › Diesel · символи 100–250');
++    });
++
++    it('не додає « › », коли heading порожній', () => {
++      const chunk: IndexedChunk = { ...mockChunk, heading: '' };
++      const citation = toCitation(chunk, 'quote');
++      const rendered = renderCitation(citation);
++      expect(rendered).toBe('[obd#0001] obd-engines · символи 100–250');
++      expect(rendered).not.toMatch(/›/);
++    });
++
++    it('корректно форматує різні id', () => {
++      const citation = toCitation(
++        { ...mockChunk, id: 'obd#9999' },
++        'quote'
++      );
++      const rendered = renderCitation(citation);
++      expect(rendered).toMatch(/\[obd#9999\]/);
++    });
++  });
++
++  describe('renderContext', () => {
++    it('розділяє фрагменти рядком «---»', () => {
++      const chunks = [
++        { id: 'obd#0001', docId: 'doc1', heading: 'Section A', text: 'Text 1' },
++        { id: 'obd#0002', docId: 'doc2', heading: 'Section B', text: 'Text 2' },
++      ];
++      const rendered = renderContext(chunks);
++      expect(rendered).toContain('\n\n---\n\n');
++      const parts = rendered.split('\n\n---\n\n');
++      expect(parts).toHaveLength(2);
++    });
++
++    it('підписує кожен фрагмент [id] docId › heading', () => {
++      const chunks = [
++        { id: 'obd#0001', docId: 'doc1', heading: 'Section A', text: 'Text 1' },
++      ];
++      const rendered = renderContext(chunks);
++      expect(rendered).toContain('[obd#0001] doc1 › Section A');
++      expect(rendered).toContain('Text 1');
++    });
++
++    it('не додає « › », коли heading порожній', () => {
++      const chunks = [
++        { id: 'obd#0001', docId: 'doc1', heading: '', text: 'Text 1' },
++      ];
++      const rendered = renderContext(chunks);
++      expect(rendered).toContain('[obd#0001] doc1');
++      expect(rendered).not.toMatch(/›/);
++      expect(rendered).toContain('Text 1');
++    });
++
++    it('обробляє множинні фрагменти з різними heading', () => {
++      const chunks = [
++        { id: 'obd#0001', docId: 'doc1', heading: 'A', text: 'Text A' },
++        { id: 'obd#0002', docId: 'doc1', heading: '', text: 'Text B' },
++        { id: 'obd#0003', docId: 'doc2', heading: 'C', text: 'Text C' },
++      ];
++      const rendered = renderContext(chunks);
++      expect(rendered).toContain('[obd#0001] doc1 › A');
++      expect(rendered).toContain('[obd#0002] doc1\n');
++      expect(rendered).toContain('[obd#0003] doc2 › C');
++    });
++  });
++
++  describe('validateAnswer', () => {
++    const served = [
++      { id: 'obd#0001', text: 'This is a test fragment with some content' },
++      { id: 'obd#0002', text: 'Another fragment here' },
++    ];
++
++    it('ловить відповідь без цитат', () => {
++      const answer = 'This is a plain answer without citations';
++      const problems = validateAnswer(answer, served);
++      expect(problems).toContain('у відповіді немає жодної цитати');
++    });
++
++    it('ловить цитату на невідоме id', () => {
++      const answer = 'This is cited [obd#9999]';
++      const problems = validateAnswer(answer, served);
++      expect(problems).toContain(
++        'цитата [obd#9999]: такого фрагмента асистентові не давали'
++      );
++    });
++
++    it('ловить дослівну цитату, якої немає у фрагменті', () => {
++      const answer = 'This «non-existent quote text» [obd#0001] is wrong';
++      const problems = validateAnswer(answer, served);
++      const hasError = problems.some((p) =>
++        p.includes('цитата [obd#0001]: уривка')
++      );
++      expect(hasError).toBe(true);
++    });
++
++    it('приймає коректну дослівну цитату', () => {
++      const answer = 'This «test fragment» [obd#0001] is correct';
++      const problems = validateAnswer(answer, served);
++      expect(problems).not.toContain(
++        'цитата [obd#0001]: уривка'
++      );
++    });
++
++    it('приймає цитату без дослівного уривка', () => {
++      const answer = 'Some statement here [obd#0001]';
++      const problems = validateAnswer(answer, served);
++      expect(problems.length).toBe(0);
++    });
++
++    it('повертає порожній масив для коректної відповіді', () => {
++      const answer = 'This is «a test fragment» [obd#0001] and «Another fragment» [obd#0002]';
++      const problems = validateAnswer(answer, served);
++      expect(problems).toEqual([]);
++    });
++
++    it('обробляє множинні проблеми', () => {
++      const answer = 'This «non-existent quote» [obd#0001] and «another bad» [obd#9999]';
++      const problems = validateAnswer(answer, served);
++      expect(problems.length).toBeGreaterThan(1);
++      const hasQuoteError = problems.some((p) => p.includes('цитата [obd#0001]: уривка'));
++      const hasIdError = problems.some((p) => p.includes('obd#9999'));
++      expect(hasQuoteError).toBe(true);
++      expect(hasIdError).toBe(true);
++    });
++
++    it('розрізняє кирилицю та англійські лапки', () => {
++      const served2 = [
++        { id: 'obd#0001', text: 'This is a test fragment with some content' },
++      ];
++      const answerWithUkrainianQuotes = 'This «test fragment» [obd#0001] is correct';
++      const problems = validateAnswer(answerWithUkrainianQuotes, served2);
++      expect(problems).not.toContain(
++        'цитата [obd#0001]: уривка'
++      );
++    });
++  });
++
++  describe('citedIds', () => {
++    it('витягує id в порядку появи', () => {
++      const answer = 'First [obd#0001] then [obd#0002]';
++      const ids = citedIds(answer);
++      expect(ids).toEqual(['obd#0001', 'obd#0002']);
++    });
++
++    it('видаляє дублікати', () => {
++      const answer = 'First [obd#0001] then [obd#0001] again';
++      const ids = citedIds(answer);
++      expect(ids).toEqual(['obd#0001']);
++    });
++
++    it('повертає порожній масив коли немає цитат', () => {
++      const answer = 'No citations here';
++      const ids = citedIds(answer);
++      expect(ids).toEqual([]);
++    });
++  });
++});

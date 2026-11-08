@@ -1,0 +1,37 @@
+{
+  "task_id": "t-01",
+  "agent_path": "claude-code@2.1.269 model=haiku (-p, dontAsk)",
+  "artifact_dir": "runs/t-01-1794160494895",
+  "started_at": "2026-11-08T17:54:54.895Z",
+  "ended_at": "2026-11-08T17:55:51.129Z",
+  "duration_s": 56.2,
+  "exit_status": "ok",
+  "exit_code": 0,
+  "acceptance": [
+    {
+      "cmd": "npx vitest run tests/lab2/store.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    }
+  ],
+  "acceptance_passed": true,
+  "session_id": "1621e1c4-9a62-4695-9f5d-e22b9fee9200",
+  "input_tokens": 90,
+  "output_tokens": 6139,
+  "cache_creation_input_tokens": 17798,
+  "cache_read_input_tokens": 501305,
+  "cost_usd_estimate": 0.11766050000000002,
+  "num_turns": 12,
+  "agent_subtype": "success",
+  "terminal_reason": "completed",
+  "trace_id": "1621e1c49a6246959f5de22b9fee9200",
+  "gates": {},
+  "trace_id_source": "session_id (backfill 2026-11-08)"
+}
