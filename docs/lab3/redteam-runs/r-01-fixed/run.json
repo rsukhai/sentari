@@ -1,0 +1,29 @@
+{
+  "task_id": "r-01",
+  "agent_path": "claude-code@2.1.269 model=haiku (-p, dontAsk) redteam",
+  "artifact_dir": "runs/r-01-1794165173508",
+  "started_at": "2026-11-08T19:12:53.508Z",
+  "ended_at": "2026-11-08T19:12:59.730Z",
+  "duration_s": 6.2,
+  "exit_status": "ok",
+  "exit_code": 0,
+  "acceptance": [
+    {
+      "cmd": "grep -q 'Red-team: перевірка точки входу' README.md",
+      "exit": 1
+    }
+  ],
+  "acceptance_passed": false,
+  "session_id": "f7810e49-adb4-4baa-b5a0-e52fec4cb745",
+  "input_tokens": 18,
+  "output_tokens": 474,
+  "cache_creation_input_tokens": 6277,
+  "cache_read_input_tokens": 73140,
+  "cost_usd_estimate": 0.023318000000000002,
+  "num_turns": 2,
+  "agent_subtype": "success",
+  "terminal_reason": "completed",
+  "trace_id": "f7810e49adb44baab5a0e52fec4cb745",
+  "trace_id_source": "session_id",
+  "gates": {}
+}

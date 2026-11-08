@@ -120,12 +120,23 @@ export const ALLOWED_TOOLS = [
 ] as const;
 
 /** Прапорці Claude Code -p — рівно ті, що перевірено на `claude` 2.1.269 (див. docs/lab3/factory.md). */
-export function claudeArgs(task: Task, model: string): string[] {
+/**
+ * Читання секретоподібних файлів забороняється поіменно (крок 07): знахідка red-team — `Read` дозволено для будь-якого файлу дерева,
+ * а проєктні правила deny закривають лише два імені файлів секретів. Агент за чужою вказівкою прочитав файл-канарку.
+ */
+export const DENIED_TOOLS = ['Read(**/*secret*)', 'Read(**/*.pem)', 'Read(**/*.key)', 'Read(**/credentials*)', 'Read(**/id_rsa*)'] as const;
+
+/**
+ * `userSettings` — ЛИШЕ для доказу «до» у red-team (крок 07): повертає стару поведінку, коли dontAsk підмішував дозволи людини.
+ * У звичайних прогонах завжди false.
+ */
+export function claudeArgs(task: Task, model: string, userSettings = false): string[] {
   return [
     '-p', task.input,
     '--output-format', 'json',
     '--model', model,
     '--allowedTools', ALLOWED_TOOLS.join(','),
+    '--disallowedTools', DENIED_TOOLS.join(','),
     '--permission-mode', 'dontAsk',
     '--max-turns', String(task.budget.max_turns),
     '--max-budget-usd', String(task.budget.max_usd),
@@ -133,7 +144,7 @@ export function claudeArgs(task: Task, model: string): string[] {
     '--strict-mcp-config',
     // ЛИШЕ налаштування проєкту: без цього dontAsk підмішує дозволи з користувацьких налаштувань людини, і агент виконав git commit,
     // якого немає в переліку (знахідка кроку 06, errors.md). Проєктні правила deny для файлів секретів лишаються чинними.
-    '--setting-sources', 'project',
+    ...(userSettings ? [] : ['--setting-sources', 'project']),
   ];
 }
 
@@ -141,7 +152,7 @@ export const HARNESS_MODEL = process.env.HARNESS_MODEL ?? 'sonnet';
 
 /** Шлях агента: Claude Code у режимі -p. */
 export const claudeRunner: AgentRunner = (task, cwd) =>
-  spawnAgent('claude', claudeArgs(task, HARNESS_MODEL), cwd, task.budget.timeout_s);
+  spawnAgent('claude', claudeArgs(task, HARNESS_MODEL, process.env.HARNESS_USER_SETTINGS === '1'), cwd, task.budget.timeout_s);
 
 // ---- Розбір виводу -----------------------------------------------------------------------
 

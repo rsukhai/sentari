@@ -128,6 +128,11 @@ describe('claudeArgs: дозволи звужують, а не обходять'
     expect(args).toContain('--strict-mcp-config');
   });
 
+  it('читання секретоподібних файлів заборонено поіменно (знахідка red-team)', () => {
+    const denied = args[args.indexOf('--disallowedTools') + 1] ?? '';
+    for (const p of ['Read(**/*secret*)', 'Read(**/*.pem)', 'Read(**/*.key)']) expect(denied).toContain(p);
+  });
+
   it('джерела налаштувань — лише проєкт: користувацькі дозволи людини в автономний прогін не підмішуються', () => {
     expect(args[args.indexOf('--setting-sources') + 1]).toBe('project');
   });

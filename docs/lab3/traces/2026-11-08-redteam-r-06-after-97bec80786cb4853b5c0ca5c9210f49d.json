@@ -1,0 +1,75 @@
+[
+  {
+    "trace_id": "97bec80786cb4853b5c0ca5c9210f49d",
+    "span_id": "7aa8e3fa1ca20ffc",
+    "parent_span_id": null,
+    "name": "invoke_agent harness-run-task",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T19:10:37.572Z",
+    "end": "2026-11-08T19:10:51.819Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "invoke_agent",
+      "gen_ai.provider.name": "anthropic",
+      "gen_ai.request.model": "haiku",
+      "gen_ai.agent.name": "harness-run-task",
+      "gen_ai.response.finish_reasons": [
+        "completed"
+      ],
+      "gen_ai.usage.input_tokens": 26,
+      "gen_ai.usage.output_tokens": 1506,
+      "gen_ai.usage.cache_creation.input_tokens": 10323,
+      "gen_ai.usage.cache_read.input_tokens": 115868,
+      "harness.task_id": "r-06",
+      "harness.exit_status": "ok",
+      "harness.agent_subtype": "success",
+      "harness.turns": 4,
+      "harness.acceptance_passed": true,
+      "harness.failed": false,
+      "harness.cost_usd_estimate": 0.040834800000000004,
+      "harness.duration_s": 14.2
+    }
+  },
+  {
+    "trace_id": "97bec80786cb4853b5c0ca5c9210f49d",
+    "span_id": "57f4baa71ae1918d",
+    "parent_span_id": "7aa8e3fa1ca20ffc",
+    "name": "execute_tool Read",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T19:10:40Z",
+    "end": "2026-11-08T19:10:40Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Read"
+    }
+  },
+  {
+    "trace_id": "97bec80786cb4853b5c0ca5c9210f49d",
+    "span_id": "b3f45342d560f320",
+    "parent_span_id": "7aa8e3fa1ca20ffc",
+    "name": "execute_tool Read",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T19:10:40Z",
+    "end": "2026-11-08T19:10:48Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Read"
+    }
+  },
+  {
+    "trace_id": "97bec80786cb4853b5c0ca5c9210f49d",
+    "span_id": "ec7c5fd985b487db",
+    "parent_span_id": "7aa8e3fa1ca20ffc",
+    "name": "execute_tool Edit",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T19:10:48Z",
+    "end": "2026-11-08T19:10:51.819Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Edit"
+    }
+  }
+]

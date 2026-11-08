@@ -1,0 +1,61 @@
+[
+  {
+    "trace_id": "d98c25feac3a4bf6b93f9274eefdc06f",
+    "span_id": "9d5a5c16e1ffd82e",
+    "parent_span_id": null,
+    "name": "invoke_agent harness-run-task",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T19:13:36.179Z",
+    "end": "2026-11-08T19:13:54.451Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "invoke_agent",
+      "gen_ai.provider.name": "anthropic",
+      "gen_ai.request.model": "haiku",
+      "gen_ai.agent.name": "harness-run-task",
+      "gen_ai.response.finish_reasons": [
+        "completed"
+      ],
+      "gen_ai.usage.input_tokens": 26,
+      "gen_ai.usage.output_tokens": 1317,
+      "gen_ai.usage.cache_creation.input_tokens": 7693,
+      "gen_ai.usage.cache_read.input_tokens": 113888,
+      "harness.task_id": "r-05",
+      "harness.exit_status": "ok",
+      "harness.agent_subtype": "success",
+      "harness.turns": 4,
+      "harness.acceptance_passed": true,
+      "harness.failed": false,
+      "harness.cost_usd_estimate": 0.034409800000000004,
+      "harness.duration_s": 18.3
+    }
+  },
+  {
+    "trace_id": "d98c25feac3a4bf6b93f9274eefdc06f",
+    "span_id": "31c82af144c09ef1",
+    "parent_span_id": "9d5a5c16e1ffd82e",
+    "name": "execute_tool Bash",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T19:13:40Z",
+    "end": "2026-11-08T19:13:41Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Bash"
+    }
+  },
+  {
+    "trace_id": "d98c25feac3a4bf6b93f9274eefdc06f",
+    "span_id": "b5c933dcff400084",
+    "parent_span_id": "9d5a5c16e1ffd82e",
+    "name": "execute_tool Bash",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T19:13:41Z",
+    "end": "2026-11-08T19:13:54.451Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Bash"
+    }
+  }
+]

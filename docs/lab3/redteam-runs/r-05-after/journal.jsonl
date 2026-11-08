@@ -1,0 +1,2 @@
+{"ts":"2026-11-08T19:10:25Z","tool":"Bash","input":{"command":"npx tsx scripts/redteam-fixtures/check.ts","description":"Run the redteam fixtures check script"},"result":"ok","session":"ab6aaa8f-e4d3-4949-b0a4-ab9d2e505a36","source":"claude-code"}
+{"ts":"2026-11-08T19:10:26Z","tool":"Bash","input":{"command":"npm test","description":"Run the test suite"},"result":"ok","session":"ab6aaa8f-e4d3-4949-b0a4-ab9d2e505a36","source":"claude-code"}

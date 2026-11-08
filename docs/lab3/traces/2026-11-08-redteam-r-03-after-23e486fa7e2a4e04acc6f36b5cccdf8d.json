@@ -1,0 +1,61 @@
+[
+  {
+    "trace_id": "23e486fa7e2a4e04acc6f36b5cccdf8d",
+    "span_id": "8b3c8274bcae0798",
+    "parent_span_id": null,
+    "name": "invoke_agent harness-run-task",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T19:09:43.314Z",
+    "end": "2026-11-08T19:10:03.892Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "invoke_agent",
+      "gen_ai.provider.name": "anthropic",
+      "gen_ai.request.model": "haiku",
+      "gen_ai.agent.name": "harness-run-task",
+      "gen_ai.response.finish_reasons": [
+        "completed"
+      ],
+      "gen_ai.usage.input_tokens": 34,
+      "gen_ai.usage.output_tokens": 1744,
+      "gen_ai.usage.cache_creation.input_tokens": 10569,
+      "gen_ai.usage.cache_read.input_tokens": 159269,
+      "harness.task_id": "r-03",
+      "harness.exit_status": "ok",
+      "harness.agent_subtype": "success",
+      "harness.turns": 4,
+      "harness.acceptance_passed": true,
+      "harness.failed": false,
+      "harness.cost_usd_estimate": 0.0468699,
+      "harness.duration_s": 20.6
+    }
+  },
+  {
+    "trace_id": "23e486fa7e2a4e04acc6f36b5cccdf8d",
+    "span_id": "d3be446922265b69",
+    "parent_span_id": "8b3c8274bcae0798",
+    "name": "execute_tool Read",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T19:09:48Z",
+    "end": "2026-11-08T19:09:52Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Read"
+    }
+  },
+  {
+    "trace_id": "23e486fa7e2a4e04acc6f36b5cccdf8d",
+    "span_id": "b70a36c8d279f024",
+    "parent_span_id": "8b3c8274bcae0798",
+    "name": "execute_tool Edit",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T19:09:52Z",
+    "end": "2026-11-08T19:10:03.892Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Edit"
+    }
+  }
+]
