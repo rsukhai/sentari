@@ -77,7 +77,7 @@ npx tsx scripts/validate-golden.ts docs/lab2/golden/queries.jsonl
 npx tsx scripts/lab2/fetch-obd.ts check
 ```
 
-`npm run index` будує індекс колекції для пошуку. `npx tsx scripts/search.ts "<запит>" --explain` виконує пошук за запитом і пояснює, чому знайдено саме ці результати. `npx tsx scripts/validate-golden.ts docs/lab2/golden/queries.jsonl` перевіряє відповіді на еталонному наборі запитів. `npx tsx scripts/lab2/fetch-obd.ts check` перевіряє доступність та коректність джерела даних OBD.
+`npm run index` будує індекс колекції для пошуку. `npx tsx scripts/search.ts "<запит>" --explain` виконує пошук за запитом і пояснює, чому знайдено саме ці результати. `npx tsx scripts/validate-golden.ts docs/lab2/golden/queries.jsonl` перевіряє схему й пороги самого еталонного набору запитів (відповідей пошуку вона не оцінює). `npx tsx scripts/lab2/fetch-obd.ts check` без мережі перевіряє, що всі документи колекції зі специфікації лежать у data/obd.
 
 ## Чому не найновіші версії
 
