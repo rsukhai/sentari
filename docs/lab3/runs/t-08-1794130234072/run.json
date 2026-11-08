@@ -48,11 +48,18 @@
   "agent_subtype": "success",
   "terminal_reason": "completed",
   "trace_id": null,
-  "gates": {},
+  "gates": {
+    "types": "pass",
+    "lint": "pass",
+    "tests": "pass",
+    "build": "pass",
+    "verify": "fail"
+  },
   "branch": "harness/t-08-r2",
   "base_ref": "origin/main",
   "base_commit": "071ac814f645bd28a4f500d376db38ac5dfdc00a",
   "branch_commit": "1c7e036c80ce0a86379a41bc1a65d572115b937e",
   "committed_changes": true,
-  "main_checkout_unchanged": true
+  "main_checkout_unchanged": true,
+  "ci_run_url": "https://github.com/rsukhai/sentari/actions/runs/42502238475"
 }

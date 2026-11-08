@@ -1,0 +1,57 @@
+{
+  "model": "gpt-5.6-terra",
+  "task": "t-08",
+  "source": "c5da034d (harness-комміт 1c7e036c)",
+  "blocked": false,
+  "cost_usd": 0.051086000000000006,
+  "results": [
+    {
+      "id": "c1",
+      "verdict": "pass",
+      "reason": "У diff до README.md прямо додано розділ із заголовком, що буквально збігається з вимогою критерію.",
+      "evidence": "README.md: `+## Лаб. 2: колекція і пошук`"
+    },
+    {
+      "id": "c2",
+      "verdict": "pass",
+      "reason": "Блок коду нового розділу містить усі чотири задані команди дослівно.",
+      "evidence": "README.md diff: `npm run index`; `npx tsx scripts/search.ts \"<запит>\" --explain`; `npx tsx scripts/validate-golden.ts docs/lab2/golden/queries.jsonl`; `npx tsx scripts/lab2/fetch-obd.ts check`."
+    },
+    {
+      "id": "c3",
+      "verdict": "pass",
+      "reason": "Після блоку коду додано одне речення, що окремо описує призначення кожної з чотирьох наведених команд.",
+      "evidence": "README.md diff: після закриття ``` наведено: \"`npm run index` будує...\"; \"`npx tsx scripts/search.ts ...` виконує...\"; \"`npx tsx scripts/validate-golden.ts ...` перевіряє...\"; \"`npx tsx scripts/lab2/fetch-obd.ts check` ... перевіряє...\"."
+    },
+    {
+      "id": "c4",
+      "verdict": "pass",
+      "reason": "Речення коректно описує команду як побудову індексу колекції, що відповідає призначенню scripts/build-index.ts.",
+      "evidence": "README.md diff: \"`npm run index` будує індекс колекції для пошуку.\"; scripts/build-index.ts: \"Побудова індексу\" і \"Колекція — data/obd/\"."
+    },
+    {
+      "id": "c5",
+      "verdict": "pass",
+      "reason": "Речення коректно описує режим --explain як пошук за запитом із поясненням результатів; довідка конкретизує це трьома списками (вектор, слова, RRF).",
+      "evidence": "README.md у diff: \"... --explain` виконує пошук за запитом і пояснює, чому знайдено саме ці результати.\"; scripts/search.ts: \"--explain    три списки: вектор, слова, RRF\"."
+    },
+    {
+      "id": "c6",
+      "verdict": "pass",
+      "reason": "Речення точно описує валідатор: він перевіряє JSONL-набір на відповідність схемі й порогам, а не виконує чи оцінює результати пошуку.",
+      "evidence": "README.md (diff): «перевіряє схему й пороги самого еталонного набору запитів (відповідей пошуку вона не оцінює)»; scripts/validate-golden.ts: «Читає JSONL, перевіряє схему й пороги»."
+    },
+    {
+      "id": "c7",
+      "verdict": "pass",
+      "reason": "Речення точно вказує, що режим check не використовує мережу та перевіряє наявність усіх документів колекції зі специфікації в data/obd, що відповідає довідці.",
+      "evidence": "README.md: \"`npx tsx scripts/lab2/fetch-obd.ts check` без мережі перевіряє, що всі документи колекції зі специфікації лежать у data/obd.\"; довідка scripts/lab2/fetch-obd.ts: \"check   критерій A4, без мережі: усі документи на місці → exit 0\""
+    },
+    {
+      "id": "c8",
+      "verdict": "pass",
+      "reason": "Diff містить лише додавання нового розділу в README.md; інших файлів або змін наявних розділів не показано.",
+      "evidence": "Diff: єдиний блок `diff --git a/README.md b/README.md`; додано рядки між завершенням попереднього розділу та `## Чому не найновіші версії`."
+    }
+  ]
+}
