@@ -30,3 +30,6 @@ Thumbs.db
 
 # Лаб. 3: сирі робочі теки прогонів фабрики (відібраний артефакт іде в docs/lab3/runs/)
 /runs/
+
+# Стан circuit breaker фабрики (крок 03): локальний стан між запусками, доказ — docs/lab3/stop-log.jsonl
+/.harness/
