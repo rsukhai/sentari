@@ -47,12 +47,13 @@
   "num_turns": 3,
   "agent_subtype": "success",
   "terminal_reason": "completed",
-  "trace_id": null,
+  "trace_id": "b6d96eb02cea4fa0ad31baf6656dc880",
   "gates": {},
   "branch": "harness/t-08",
   "base_ref": "main",
   "base_commit": "3456d6fe9737439fa00809924f9cf6246df2a547",
   "branch_commit": "f0ede515e2780e3a1a415112fcbb32de67219721",
   "committed_changes": true,
-  "main_checkout_unchanged": true
+  "main_checkout_unchanged": true,
+  "trace_id_source": "session_id (backfill 2026-11-08)"
 }

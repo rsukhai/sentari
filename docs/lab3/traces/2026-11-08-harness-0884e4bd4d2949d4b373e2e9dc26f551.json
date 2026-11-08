@@ -1,0 +1,118 @@
+[
+  {
+    "trace_id": "0884e4bd4d2949d4b373e2e9dc26f551",
+    "span_id": "9fb7000e4403a774",
+    "parent_span_id": null,
+    "name": "invoke_agent harness-run-task",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:16:55.719Z",
+    "end": "2026-11-08T18:17:12.028Z",
+    "status": "ERROR",
+    "attributes": {
+      "gen_ai.operation.name": "invoke_agent",
+      "gen_ai.provider.name": "anthropic",
+      "gen_ai.request.model": "haiku",
+      "gen_ai.agent.name": "harness-run-task",
+      "gen_ai.response.finish_reasons": [
+        "max_turns"
+      ],
+      "gen_ai.usage.input_tokens": 51,
+      "gen_ai.usage.output_tokens": 1107,
+      "gen_ai.usage.cache_creation.input_tokens": 11851,
+      "gen_ai.usage.cache_read.input_tokens": 239588,
+      "error.type": "budget_or_turns",
+      "harness.task_id": "e-10",
+      "harness.exit_status": "budget_or_turns",
+      "harness.agent_subtype": "error_max_turns",
+      "harness.turns": 7,
+      "harness.acceptance_passed": true,
+      "harness.failed": true,
+      "harness.cost_usd_estimate": 0.0542078,
+      "harness.duration_s": 16.3
+    }
+  },
+  {
+    "trace_id": "0884e4bd4d2949d4b373e2e9dc26f551",
+    "span_id": "196ab7894de577d7",
+    "parent_span_id": "9fb7000e4403a774",
+    "name": "execute_tool Bash",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:17:00Z",
+    "end": "2026-11-08T18:17:01Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Bash"
+    }
+  },
+  {
+    "trace_id": "0884e4bd4d2949d4b373e2e9dc26f551",
+    "span_id": "521de7f40864d96a",
+    "parent_span_id": "9fb7000e4403a774",
+    "name": "execute_tool Bash",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:17:01Z",
+    "end": "2026-11-08T18:17:02Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Bash"
+    }
+  },
+  {
+    "trace_id": "0884e4bd4d2949d4b373e2e9dc26f551",
+    "span_id": "c85ac9b70f799e9d",
+    "parent_span_id": "9fb7000e4403a774",
+    "name": "execute_tool Glob",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:17:02Z",
+    "end": "2026-11-08T18:17:05Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Glob"
+    }
+  },
+  {
+    "trace_id": "0884e4bd4d2949d4b373e2e9dc26f551",
+    "span_id": "7987ec7d2a09a28f",
+    "parent_span_id": "9fb7000e4403a774",
+    "name": "execute_tool Skill",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:17:05Z",
+    "end": "2026-11-08T18:17:07Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Skill"
+    }
+  },
+  {
+    "trace_id": "0884e4bd4d2949d4b373e2e9dc26f551",
+    "span_id": "16063df537e2fe23",
+    "parent_span_id": "9fb7000e4403a774",
+    "name": "execute_tool Bash",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:17:07Z",
+    "end": "2026-11-08T18:17:10Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Bash"
+    }
+  },
+  {
+    "trace_id": "0884e4bd4d2949d4b373e2e9dc26f551",
+    "span_id": "53894a10f2625fb6",
+    "parent_span_id": "9fb7000e4403a774",
+    "name": "execute_tool Bash",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:17:10Z",
+    "end": "2026-11-08T18:17:12.028Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Bash"
+    }
+  }
+]

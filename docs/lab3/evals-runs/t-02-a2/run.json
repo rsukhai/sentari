@@ -31,6 +31,7 @@
   "num_turns": 15,
   "agent_subtype": "error_max_turns",
   "terminal_reason": "max_turns",
-  "trace_id": null,
-  "gates": {}
+  "trace_id": "92a9809488c442579eeaebf53c2adc8f",
+  "gates": {},
+  "trace_id_source": "session_id (backfill 2026-11-08)"
 }

@@ -1,0 +1,315 @@
+[
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "3d3f4496ffa820f0",
+    "parent_span_id": null,
+    "name": "invoke_agent harness-run-task",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:10:15.984Z",
+    "end": "2026-11-08T18:11:23.305Z",
+    "status": "ERROR",
+    "attributes": {
+      "gen_ai.operation.name": "invoke_agent",
+      "gen_ai.provider.name": "anthropic",
+      "gen_ai.request.model": "haiku",
+      "gen_ai.agent.name": "harness-run-task",
+      "gen_ai.response.finish_reasons": [
+        "max_turns"
+      ],
+      "gen_ai.usage.input_tokens": 130,
+      "gen_ai.usage.output_tokens": 7278,
+      "gen_ai.usage.cache_creation.input_tokens": 49023,
+      "gen_ai.usage.cache_read.input_tokens": 603563,
+      "error.type": "budget_or_turns",
+      "harness.task_id": "t-06",
+      "harness.exit_status": "budget_or_turns",
+      "harness.agent_subtype": "error_max_turns",
+      "harness.turns": 17,
+      "harness.acceptance_passed": true,
+      "harness.failed": true,
+      "harness.cost_usd_estimate": 0.1960533,
+      "harness.duration_s": 67.3
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "9d80cbb3d7c01741",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Read",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:10:19Z",
+    "end": "2026-11-08T18:10:20Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Read"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "cd7557ee923f78d4",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Read",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:10:20Z",
+    "end": "2026-11-08T18:10:20Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Read"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "65e565ef0d1a2c59",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Glob",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:10:20Z",
+    "end": "2026-11-08T18:10:23Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Glob"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "db732e8c073e3bfa",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Read",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:10:23Z",
+    "end": "2026-11-08T18:10:29Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Read"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "d9ced287b791d0b5",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Edit",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:10:29Z",
+    "end": "2026-11-08T18:10:33Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Edit"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "abb6278e72113248",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Edit",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:10:33Z",
+    "end": "2026-11-08T18:10:36Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Edit"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "872094712c9093db",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Edit",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:10:36Z",
+    "end": "2026-11-08T18:10:39Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Edit"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "b60855d0e70ff56e",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Edit",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:10:39Z",
+    "end": "2026-11-08T18:10:48Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Edit"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "527c779ba18f5701",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Edit",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:10:48Z",
+    "end": "2026-11-08T18:10:52Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Edit"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "0d6cdf536b3a58cd",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Bash",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:10:52Z",
+    "end": "2026-11-08T18:10:52Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Bash"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "2d1664fc25b9ba60",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Bash",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:10:52Z",
+    "end": "2026-11-08T18:10:59Z",
+    "status": "ERROR",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Bash",
+      "error.type": "tool_error"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "f91c01c3624760c9",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Edit",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:10:59Z",
+    "end": "2026-11-08T18:11:01Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Edit"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "7fff3d8a9ab87d86",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Bash",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:11:01Z",
+    "end": "2026-11-08T18:11:04Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Bash"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "8416ec9f5537df19",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Bash",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:11:04Z",
+    "end": "2026-11-08T18:11:04Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Bash"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "fb933a780fb740ac",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Bash",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:11:04Z",
+    "end": "2026-11-08T18:11:07Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Bash"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "79f1d2cf5670b3ed",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Read",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:11:07Z",
+    "end": "2026-11-08T18:11:10Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Read"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "d701de2c10f01580",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Read",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:11:10Z",
+    "end": "2026-11-08T18:11:11Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Read"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "2b3a1d81cb6f7713",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Read",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:11:11Z",
+    "end": "2026-11-08T18:11:18Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Read"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "101d4ab4f9b4c6f8",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Bash",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:11:18Z",
+    "end": "2026-11-08T18:11:20Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Bash"
+    }
+  },
+  {
+    "trace_id": "17f45aa6679a4b96bec44c2b3bf377d9",
+    "span_id": "316e0264d2671f3e",
+    "parent_span_id": "3d3f4496ffa820f0",
+    "name": "execute_tool Bash",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T18:11:20Z",
+    "end": "2026-11-08T18:11:23.305Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "execute_tool",
+      "gen_ai.tool.name": "Bash"
+    }
+  }
+]

@@ -128,6 +128,10 @@ describe('claudeArgs: дозволи звужують, а не обходять'
     expect(args).toContain('--strict-mcp-config');
   });
 
+  it('джерела налаштувань — лише проєкт: користувацькі дозволи людини в автономний прогін не підмішуються', () => {
+    expect(args[args.indexOf('--setting-sources') + 1]).toBe('project');
+  });
+
   it('жодного обходу дозволів', () => {
     const joined = args.join(' ');
     expect(joined).not.toContain('bypassPermissions');
@@ -179,5 +183,30 @@ describe('база прогону', () => {
     const cmds = tasks.flatMap((t) => t.acceptance);
     expect(cmds.filter((c) => c.startsWith('git diff --quiet main')).length).toBe(0);
     expect(cmds.some((c) => c.startsWith('git diff --quiet HEAD'))).toBe(true);
+  });
+});
+
+describe('патч рахується від стартового коміту (знахідка кроку 06)', () => {
+  it('агент сам зробив git commit: патч усе одно містить його зміни', async () => {
+    const { execFileSync } = await import('node:child_process');
+    const { writeFileSync: write, mkdtempSync: mk } = await import('node:fs');
+    const { tmpdir: tmp2 } = await import('node:os');
+    const { join: j } = await import('node:path');
+    const repo = mk(j(tmp2(), 'startrev-'));
+    const git = (...a: string[]) => execFileSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@t', ...a], { cwd: repo, encoding: 'utf8' });
+    git('init', '-q');
+    write(j(repo, 'a.txt'), 'база\n');
+    git('add', '.');
+    git('commit', '-q', '-m', 'base');
+    const runner: AgentRunner = () => {
+      write(j(repo, 'new.txt'), 'зроблено агентом\n');
+      git('add', '.');
+      git('commit', '-q', '-m', 'агент закомітив сам');
+      return { exitCode: 0, stdout: '', stderr: '' };
+    };
+    const rec = runTask(task, { runner, agentPath: 'fake', worktree: repo, outDir: mk(j(tmp2(), 'out-')), check: () => [{ cmd: 'x', exit: 0 }] });
+    const patch = (await import('node:fs')).readFileSync(j(rec.artifact_dir, 'patch.diff'), 'utf8');
+    expect(patch).toContain('+++ b/new.txt');
+    expect(patch).toContain('зроблено агентом');
   });
 });

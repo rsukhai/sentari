@@ -7,6 +7,7 @@
 import { execFileSync, spawnSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { traceIdFromSession } from '../../src/telemetry/spans';
 
 export interface Task {
   readonly id: string;
@@ -73,6 +74,8 @@ export interface RunRecord {
   /** terminal_reason з agent.json: completed | budget_exhausted | … */
   readonly terminal_reason: string | null;
   readonly trace_id: string | null; // крок 06
+  /** Звідки trace_id: `session_id` (прогін після кроку 06) або `session_id (backfill …)` для прогонів, зроблених раніше. */
+  readonly trace_id_source?: string;
   readonly gates: Record<string, 'pass' | 'fail' | 'skipped'>; // крок 01
 }
 
@@ -128,6 +131,9 @@ export function claudeArgs(task: Task, model: string): string[] {
     '--max-budget-usd', String(task.budget.max_usd),
     // жодних MCP-серверів: сервер колекції потребує Ollama, а context7 — мережі; харнесу вони не потрібні
     '--strict-mcp-config',
+    // ЛИШЕ налаштування проєкту: без цього dontAsk підмішує дозволи з користувацьких налаштувань людини, і агент виконав git commit,
+    // якого немає в переліку (знахідка кроку 06, errors.md). Проєктні правила deny для файлів секретів лишаються чинними.
+    '--setting-sources', 'project',
   ];
 }
 
@@ -221,11 +227,21 @@ export function checkAcceptance(task: Task, cwd: string): AcceptanceResult[] {
 /** Те, що не належить до роботи агента: його журнал дій і symlink на node_modules. */
 export const NOT_PART_OF_PATCH = [':(exclude).agent-log', ':(exclude)node_modules'] as const;
 
-function collectPatch(worktree: string): string {
+/** Коміт, з якого агент стартував: патч рахується від нього, а не від поточного HEAD (агент міг закомітити сам, див. крок 06). */
+function startRevision(worktree: string): string | null {
+  try {
+    return execFileSync('git', ['rev-parse', 'HEAD'], { cwd: worktree, encoding: 'utf8' }).trim();
+  } catch {
+    return null;
+  }
+}
+
+function collectPatch(worktree: string, startRev: string | null): string {
   try {
     // спершу add -A: `git diff` без індексу НЕ показує нових файлів, а «дописати тест» саме новий файл і створює
     execFileSync('git', ['add', '-A', '--', '.', ...NOT_PART_OF_PATCH], { cwd: worktree, stdio: 'ignore' });
-    return execFileSync('git', ['diff', '--cached', '--', '.', ...NOT_PART_OF_PATCH], { cwd: worktree, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+    // від стартового коміту: якщо агент сам зробив git commit, `--cached` без бази віддав би порожній патч (t-05, спроба 2 кроку 04)
+    return execFileSync('git', ['diff', '--cached', ...(startRev ? [startRev] : []), '--', '.', ...NOT_PART_OF_PATCH], { cwd: worktree, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
   } catch {
     return '';
   }
@@ -261,6 +277,7 @@ export function runTask(task: Task, opts: RunOptions): RunRecord {
   const dir = join(opts.outDir, `${task.id}-${started.getTime()}`);
   mkdirSync(dir, { recursive: true });
 
+  const startRev = startRevision(opts.worktree);
   // runner не має права «вбити» журнал: будь-який виняток всередині — теж результат прогону
   let res: AgentResult;
   try {
@@ -269,7 +286,7 @@ export function runTask(task: Task, opts: RunOptions): RunRecord {
     res = { exitCode: 1, stdout: '', stderr: error instanceof Error ? error.message : String(error) };
   }
 
-  writeFileSync(join(dir, 'patch.diff'), collectPatch(opts.worktree), 'utf8');
+  writeFileSync(join(dir, 'patch.diff'), collectPatch(opts.worktree, startRev), 'utf8');
   writeFileSync(join(dir, 'output.txt'), res.stdout, 'utf8');
   writeFileSync(join(dir, 'agent.log'), res.stderr, 'utf8');
   writeFileSync(join(dir, 'journal.jsonl'), collectJournal(opts.worktree), 'utf8');
@@ -296,7 +313,9 @@ export function runTask(task: Task, opts: RunOptions): RunRecord {
     acceptance,
     acceptance_passed: acceptance.length > 0 && acceptance.every((a) => a.exit === 0),
     ...metaFields,
-    trace_id: null, // крок 06
+    // крок 06: trace_id = сесія Claude Code без дефісів; журнал і спани звʼязуються цим ключем (src/telemetry/spans.ts)
+    trace_id: traceIdFromSession(meta.session_id),
+    ...(meta.session_id ? { trace_id_source: 'session_id' } : {}),
     gates: {}, // крок 01
   };
   writeFileSync(join(dir, 'run.json'), `${JSON.stringify(record, null, 2)}\n`, 'utf8');

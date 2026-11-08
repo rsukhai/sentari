@@ -1,0 +1,39 @@
+# 2026-11-08 · харнес · trace_id 4996391f11a548b5915358254e4940fd
+прогін: docs/lab3/evals-runs/t-03-a2 · задача t-03
+доказ класу: exit_status=budget_or_turns, subtype=error_max_turns, terminal_reason=max_turns: зупинив ліміт харнеса (stop.md), приймання червоне
+
+кореневий спан: invoke_agent harness-run-task  (2026-11-08T18:02:04.043Z → 2026-11-08T18:03:39.287Z)  status=ERROR
+  gen_ai.operation.name = invoke_agent
+  gen_ai.provider.name = anthropic
+  gen_ai.request.model = haiku
+  gen_ai.agent.name = harness-run-task
+  gen_ai.response.finish_reasons = ["max_turns"]
+  gen_ai.usage.input_tokens = 114
+  gen_ai.usage.output_tokens = 11761
+  gen_ai.usage.cache_creation.input_tokens = 26620
+  gen_ai.usage.cache_read.input_tokens = 699822
+  error.type = budget_or_turns
+  harness.task_id = t-03
+  harness.exit_status = budget_or_turns
+  harness.agent_subtype = error_max_turns
+  harness.turns = 15
+  harness.acceptance_passed = false
+  harness.failed = true
+  harness.cost_usd_estimate = 0.1832882
+  harness.duration_s = 95.2
+
+спани інструментів (14; вміст і аргументи не записуються):
+  2026-11-08T18:02:07Z  execute_tool Read  OK
+  2026-11-08T18:02:11Z  execute_tool Read  OK
+  2026-11-08T18:02:13Z  execute_tool Read  OK
+  2026-11-08T18:02:42Z  execute_tool Write  OK
+  2026-11-08T18:02:43Z  execute_tool Bash  ERROR  error.type=tool_error
+  2026-11-08T18:02:50Z  execute_tool Edit  OK
+  2026-11-08T18:02:59Z  execute_tool Edit  OK
+  2026-11-08T18:03:07Z  execute_tool Edit  OK
+  2026-11-08T18:03:11Z  execute_tool Edit  OK
+  2026-11-08T18:03:13Z  execute_tool Bash  OK
+  2026-11-08T18:03:26Z  execute_tool Edit  OK
+  2026-11-08T18:03:30Z  execute_tool Edit  OK
+  2026-11-08T18:03:32Z  execute_tool Bash  OK
+  2026-11-08T18:03:36Z  execute_tool Bash  ERROR  error.type=tool_error

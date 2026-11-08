@@ -23,6 +23,7 @@
   "num_turns": 1,
   "agent_subtype": "success",
   "terminal_reason": "completed",
-  "trace_id": null,
-  "gates": {}
+  "trace_id": "dca12b1fceea41d5b866e0f6fcd85af4",
+  "gates": {},
+  "trace_id_source": "session_id (backfill 2026-11-08)"
 }

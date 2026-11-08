@@ -47,7 +47,7 @@
   "num_turns": 3,
   "agent_subtype": "success",
   "terminal_reason": "completed",
-  "trace_id": null,
+  "trace_id": "e60131116bce48bd8c5041d7202648ad",
   "gates": {
     "types": "pass",
     "lint": "pass",
@@ -61,5 +61,6 @@
   "branch_commit": "1c7e036c80ce0a86379a41bc1a65d572115b937e",
   "committed_changes": true,
   "main_checkout_unchanged": true,
-  "ci_run_url": "https://github.com/rsukhai/sentari/actions/runs/42502238475"
+  "ci_run_url": "https://github.com/rsukhai/sentari/actions/runs/42502238475",
+  "trace_id_source": "session_id (backfill 2026-11-08)"
 }
