@@ -15,6 +15,10 @@ export interface Task {
   readonly acceptance: readonly string[];
   readonly budget: { readonly max_turns: number; readonly max_usd: number; readonly timeout_s: number };
   readonly files?: readonly string[];
+  /** Семантичні критерії приймання для верифікатора (крок 02): по одному запиту судді на критерій. Команди з acceptance їх не замінюють. */
+  readonly criteria?: readonly { readonly id: string; readonly statement: string }[];
+  /** Файли, початок яких верифікатор бачить як довідку (щоб звіряти твердження в diff з реальністю). */
+  readonly context?: readonly string[];
 }
 
 export interface AgentResult {

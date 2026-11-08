@@ -1,0 +1,42 @@
+{"case": "k01", "task": "t-01", "run_dir": "t-01-1794130265135", "criterion": "c1", "mine": "pass", "why": "round6(1/3) → 0.333333 і round6(0.1234565) → 0.123457"}
+{"case": "k02", "task": "t-01", "run_dir": "t-01-1794130265135", "criterion": "c2", "mine": "pass", "why": "три окремі it: регулярка /^[0-9a-f]{16}$/, toBe для однакових, not.toBe для різних"}
+{"case": "k03", "task": "t-01", "run_dir": "t-01-1794130265135", "criterion": "c3", "mine": "pass", "why": "mkdtempSync(tmpdir()), saveIndex → loadIndex → toEqual(index), embedder = fakeEmbedder()"}
+{"case": "k04", "task": "t-01", "run_dir": "t-01-1794130265135", "criterion": "c4", "mine": "pass", "why": "fakeEmbedder(32) → toThrow(/перебудуйте/)"}
+{"case": "k05", "task": "t-01", "run_dir": "t-01-1794130265135", "criterion": "c5", "mine": "pass", "why": "diff містить лише новий tests/lab2/store.test.ts"}
+{"case": "k06", "task": "t-02", "run_dir": "t-02-1794130312732", "criterion": "c1", "mine": "pass", "why": "три it рівно за цими трьома випадками"}
+{"case": "k07", "task": "t-02", "run_dir": "t-02-1794130312732", "criterion": "c2", "mine": "pass", "why": "два it: фраза в довшому тексті → true, звичайна відповідь → false"}
+{"case": "k08", "task": "t-02", "run_dir": "t-02-1794130312732", "criterion": "c3", "mine": "pass", "why": "toContain([egr#0003]) і [maf#0001] (через answerPrompt, який будує блок)"}
+{"case": "k09", "task": "t-02", "run_dir": "t-02-1794130312732", "criterion": "c4", "mine": "fail", "why": "фразу REFUSAL агент сам вклав у текст фрагмента egr#0003, тож toContain(REFUSAL) проходить і без REFUSAL у блоці: перевірка порожня"}
+{"case": "k10", "task": "t-02", "run_dir": "t-02-1794130312732", "criterion": "c5", "mine": "pass", "why": "answerPrompt('', hits).endsWith('Question: ')"}
+{"case": "k11", "task": "t-02", "run_dir": "t-02-1794130312732", "criterion": "c6", "mine": "pass", "why": "toContain('Чому блимає Check Engine?')"}
+{"case": "k12", "task": "t-02", "run_dir": "t-02-1794130312732", "criterion": "c7", "mine": "pass", "why": "diff містить лише новий tests/lab2/answer.test.ts"}
+{"case": "k13", "task": "t-03", "run_dir": "t-03-1794130398950", "criterion": "c1", "mine": "pass", "why": "toEqual з усіма шістьма полями"}
+{"case": "k14", "task": "t-03", "run_dir": "t-03-1794130398950", "criterion": "c2", "mine": "pass", "why": "два toBe з точними рядками"}
+{"case": "k15", "task": "t-03", "run_dir": "t-03-1794130398950", "criterion": "c3", "mine": "pass", "why": "toBe з \\n\\n---\\n\\n між двома фрагментами і підписами"}
+{"case": "k16", "task": "t-03", "run_dir": "t-03-1794130398950", "criterion": "c4", "mine": "pass", "why": "відповідь із «зовсім інший текст тут» → problems містить [egr#0000] і «уривка»"}
+{"case": "k17", "task": "t-03", "run_dir": "t-03-1794130398950", "criterion": "c5", "mine": "pass", "why": "diff містить лише новий tests/lab2/cite.test.ts"}
+{"case": "k18", "task": "t-04", "run_dir": "t-04-1794130438295", "criterion": "c1", "mine": "pass", "why": "trim().toLowerCase() у seenQueries, повідомлення «query повторюється»"}
+{"case": "k19", "task": "t-04", "run_dir": "t-04-1794130438295", "criterion": "c2", "mine": "pass", "why": "seenTags у циклі по entry.tags, повідомлення «тег повторюється»"}
+{"case": "k20", "task": "t-04", "run_dir": "t-04-1794130438295", "criterion": "c3", "mine": "pass", "why": "два нові it у цьому файлі"}
+{"case": "k21", "task": "t-04", "run_dir": "t-04-1794130438295", "criterion": "c4", "mine": "pass", "why": "у diff лише scripts/validate-golden.ts і тест"}
+{"case": "k22", "task": "t-05", "run_dir": "t-05-1794130471821", "criterion": "c1", "mine": "pass", "why": "fmId !== doc.id → problems.push(... id у шапці не збігається ...)"}
+{"case": "k23", "task": "t-05", "run_dir": "t-05-1794130471821", "criterion": "c2", "mine": "pass", "why": "frontmatterId → undefined без шапки; тест «файл без шапки — перевірку id пропускає»"}
+{"case": "k24", "task": "t-05", "run_dir": "t-05-1794130471821", "criterion": "c3", "mine": "pass", "why": "тест із id: afr у файлі obd.md і toContain('id у шапці не збігається')"}
+{"case": "k25", "task": "t-05", "run_dir": "t-05-1794130471821", "criterion": "c4", "mine": "unknown", "why": "diff не торкається data/obd, але валідність під новою перевіркою показує лише запуск команди"}
+{"case": "k26", "task": "t-06", "run_dir": "t-06-1794130538089", "criterion": "c1", "mine": "pass", "why": "тіла перенесено дослівно"}
+{"case": "k27", "task": "t-06", "run_dir": "t-06-1794130538089", "criterion": "c2", "mine": "fail", "why": "імпорт лише rankOfDocs, docOfChunk у scripts/search.ts не імпортовано (за буквою критерію)"}
+{"case": "k28", "task": "t-06", "run_dir": "t-06-1794130538089", "criterion": "c3", "mine": "pass", "why": "обидва оголошення видалено у diff"}
+{"case": "k29", "task": "t-06", "run_dir": "t-06-1794130538089", "criterion": "c4", "mine": "pass", "why": "describe docOfChunk (2 it) і describe rankOfDocs (2 it)"}
+{"case": "k30", "task": "t-06", "run_dir": "t-06-1794130538089", "criterion": "c5", "mine": "unknown", "why": "виклики замінено еквівалентно, але інших використань docOf у скрипті diff не показує"}
+{"case": "k31", "task": "t-07", "run_dir": "t-07-1794151744271", "criterion": "c1", "mine": "pass", "why": "!Number.isInteger || topK < 1 || topK > DEPTH → RangeError(`topK має бути ...`)"}
+{"case": "k32", "task": "t-07", "run_dir": "t-07-1794151744271", "criterion": "c2", "mine": "pass", "why": "it.each([0, 21, 2.5]) з rejects.toThrow(/topK/)"}
+{"case": "k33", "task": "t-07", "run_dir": "t-07-1794151744271", "criterion": "c3", "mine": "pass", "why": "it('приймає допустиме topK (5)')"}
+{"case": "k34", "task": "t-07", "run_dir": "t-07-1794151744271", "criterion": "c4", "mine": "unknown", "why": "змінні embedder і texts видно, але що embedder — це fakeEmbedder, diff не показує"}
+{"case": "k35", "task": "t-08", "run_dir": "t-08-1794130234072", "criterion": "c1", "mine": "pass", "why": "заголовок додано"}
+{"case": "k36", "task": "t-08", "run_dir": "t-08-1794130234072", "criterion": "c2", "mine": "pass", "why": "npm run index; search.ts \"<запит>\" --explain; validate-golden.ts ...; fetch-obd.ts check"}
+{"case": "k37", "task": "t-08", "run_dir": "t-08-1794130234072", "criterion": "c3", "mine": "pass", "why": "чотири речення одним абзацом"}
+{"case": "k38", "task": "t-08", "run_dir": "t-08-1794130234072", "criterion": "c4", "mine": "pass", "why": "«будує індекс колекції для пошуку» збігається з шапкою scripts/build-index.ts"}
+{"case": "k39", "task": "t-08", "run_dir": "t-08-1794130234072", "criterion": "c5", "mine": "pass", "why": "«виконує пошук за запитом і пояснює...» збігається з шапкою: три списки"}
+{"case": "k40", "task": "t-08", "run_dir": "t-08-1794130234072", "criterion": "c6", "mine": "fail", "why": "README: «перевіряє відповіді на еталонному наборі»; шапка скрипта: перевіряє схему й пороги самого набору, відповідей не перевіряє"}
+{"case": "k41", "task": "t-08", "run_dir": "t-08-1794130234072", "criterion": "c7", "mine": "fail", "why": "README: «доступність та коректність джерела даних»; шапка: критерій A4, без мережі, усі документи на місці"}
+{"case": "k42", "task": "t-08", "run_dir": "t-08-1794130234072", "criterion": "c8", "mine": "pass", "why": "diff — один hunk у README.md, лише додані рядки"}

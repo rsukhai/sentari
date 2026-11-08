@@ -1,4 +1,4 @@
-// Свідок ланцюга брам (Лаб. 3, крок 01): бере вердикти чотирьох брам і складає gate-record.json.
+// Свідок ланцюга брам (Лаб. 3, кроки 01–02): бере вердикти брам (types, lint, tests, build, verify) і складає gate-record.json.
 // Запускається в задачі `record` workflow gates.yml; без залежностей (лише node).
 //
 // Два джерела вердикту, і обидва потрібні:
@@ -31,7 +31,7 @@ export function taskIdFromBranch(branch) {
   return m ? m[1] : null;
 }
 
-const NAMES = ['types', 'lint', 'tests', 'build'];
+const NAMES = ['types', 'lint', 'tests', 'build', 'verify'];
 
 /**
  * results/outputs: { types, lint, tests, build } → запис свідка.

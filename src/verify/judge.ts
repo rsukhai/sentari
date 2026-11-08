@@ -111,12 +111,18 @@ function parseVerdict(text: string, id: string): CriterionVerdict | string {
 }
 
 /** Суддя по одному критерію: невалідну відповідь перепитує один раз, потім падає. */
-export async function judgeCriterion(ask: Ask, c: Criterion, diff: string, context = ''): Promise<CriterionVerdict> {
+export async function judgeCriterion(
+  ask: Ask,
+  c: Criterion,
+  diff: string,
+  context = '',
+  system: string = JUDGE_SYSTEM,
+): Promise<CriterionVerdict> {
   const prompt = judgePrompt(c, diff, context);
-  const first = parseVerdict(await ask(JUDGE_SYSTEM, prompt), c.id);
+  const first = parseVerdict(await ask(system, prompt), c.id);
   if (typeof first !== 'string') return first;
   const retry = `${prompt}\n\nТвоя попередня відповідь не пройшла схему (${first}). Поверни лише JSON-обʼєкт за схемою.`;
-  const second = parseVerdict(await ask(JUDGE_SYSTEM, retry), c.id);
+  const second = parseVerdict(await ask(system, retry), c.id);
   if (typeof second !== 'string') return second;
   throw new Error(`${c.id}: відповідь судді двічі не пройшла схему — ${second}`);
 }

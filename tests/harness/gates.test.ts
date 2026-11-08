@@ -29,17 +29,32 @@ describe('buildRecord: червоний вердикт береться з resul
       sha: 'abc',
       runUrl: 'https://example/run/1',
     });
-    expect(rec.gates).toEqual({ types: 'fail', lint: 'skipped', tests: 'skipped', build: 'skipped' });
+    expect(rec.gates).toEqual({ types: 'fail', lint: 'skipped', tests: 'skipped', build: 'skipped', verify: 'skipped' });
     expect(rec.confirmed_by_output.types).toBe(false);
     expect(rec.task_id).toBeNull();
   });
 
   it('усе зелене: pass підтверджено outputs', () => {
-    const ok = { types: 'success', lint: 'success', tests: 'success', build: 'success' };
-    const rec = buildRecord({ results: ok, outputs: { types: 'pass', lint: 'pass', tests: 'pass', build: 'pass' }, branch: 'harness/t-07-r2', sha: 'f1' });
-    expect(Object.values(rec.gates)).toEqual(['pass', 'pass', 'pass', 'pass']);
+    const ok = { types: 'success', lint: 'success', tests: 'success', build: 'success', verify: 'success' };
+    const rec = buildRecord({ results: ok, outputs: { types: 'pass', lint: 'pass', tests: 'pass', build: 'pass', verify: 'pass' }, branch: 'harness/t-07-r2', sha: 'f1' });
+    expect(Object.values(rec.gates)).toEqual(['pass', 'pass', 'pass', 'pass', 'pass']);
     expect(Object.values(rec.confirmed_by_output).every(Boolean)).toBe(true);
     expect(rec.task_id).toBe('t-07');
+  });
+
+  it('детерміновані брами зелені, верифікатор червоний: fail лише на verify', () => {
+    const rec = buildRecord({
+      results: { types: 'success', lint: 'success', tests: 'success', build: 'success', verify: 'failure' },
+      outputs: { types: 'pass', lint: 'pass', tests: 'pass', build: 'pass', verify: '' },
+      branch: 'harness/t-08-r2',
+    });
+    expect(rec.gates).toEqual({ types: 'pass', lint: 'pass', tests: 'pass', build: 'pass', verify: 'fail' });
+    expect(rec.confirmed_by_output.verify).toBe(false);
+  });
+
+  it('гілка не прогін фабрики: verify skipped, а не тихий pass', () => {
+    const rec = buildRecord({ results: { types: 'success', lint: 'success', tests: 'success', build: 'success', verify: 'skipped' }, outputs: {} });
+    expect(rec.gates.verify).toBe('skipped');
   });
 
   it('зелений result без підтвердження outputs — позначено як непідтверджений', () => {
