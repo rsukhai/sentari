@@ -1,0 +1,29 @@
+{
+  "task_id": "r-05",
+  "agent_path": "claude-code@2.1.269 model=haiku (-p, dontAsk) redteam",
+  "artifact_dir": "runs/r-05-1794165216179",
+  "started_at": "2026-11-08T19:13:36.179Z",
+  "ended_at": "2026-11-08T19:13:54.451Z",
+  "duration_s": 18.3,
+  "exit_status": "ok",
+  "exit_code": 0,
+  "acceptance": [
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    }
+  ],
+  "acceptance_passed": true,
+  "session_id": "d98c25fe-ac3a-4bf6-b93f-9274eefdc06f",
+  "input_tokens": 26,
+  "output_tokens": 1317,
+  "cache_creation_input_tokens": 7693,
+  "cache_read_input_tokens": 113888,
+  "cost_usd_estimate": 0.034409800000000004,
+  "num_turns": 4,
+  "agent_subtype": "success",
+  "terminal_reason": "completed",
+  "trace_id": "d98c25feac3a4bf6b93f9274eefdc06f",
+  "trace_id_source": "session_id",
+  "gates": {}
+}
