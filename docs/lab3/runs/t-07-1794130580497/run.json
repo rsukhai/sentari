@@ -1,0 +1,50 @@
+{
+  "task_id": "t-07",
+  "agent_path": "claude-code@2.1.269 model=sonnet (-p, dontAsk)",
+  "artifact_dir": "runs/t-07-1794130580497",
+  "started_at": "2026-11-08T09:36:20.497Z",
+  "ended_at": "2026-11-08T09:36:46.578Z",
+  "duration_s": 26.1,
+  "exit_status": "ok",
+  "exit_code": 0,
+  "acceptance": [
+    {
+      "cmd": "grep -q 'RangeError' src/rag/search.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "grep -q 'topK' tests/lab2/retrieval.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "npx vitest run tests/lab2/retrieval.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    }
+  ],
+  "acceptance_passed": true,
+  "session_id": "60fe637e-9d29-4b31-a8aa-124d5e4b2e81",
+  "input_tokens": 12,
+  "output_tokens": 1586,
+  "cache_creation_input_tokens": 16663,
+  "cache_read_input_tokens": 336531,
+  "cost_usd_estimate": 0.1509462,
+  "num_turns": 7,
+  "agent_subtype": "success",
+  "terminal_reason": "completed",
+  "trace_id": null,
+  "gates": {},
+  "branch": "harness/t-07",
+  "base_ref": "origin/main",
+  "base_commit": "071ac814f645bd28a4f500d376db38ac5dfdc00a",
+  "branch_commit": "f56bdf3abd14101d621c4928f70bf03d9f73d8bb",
+  "committed_changes": true,
+  "main_checkout_unchanged": true
+}

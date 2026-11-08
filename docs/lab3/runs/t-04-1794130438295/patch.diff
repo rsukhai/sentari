@@ -1,0 +1,50 @@
+diff --git a/scripts/validate-golden.ts b/scripts/validate-golden.ts
+index 5bb0a292..af36c9b3 100644
+--- a/scripts/validate-golden.ts
++++ b/scripts/validate-golden.ts
+@@ -46,6 +46,7 @@ export function validateGolden(
+   const problems: string[] = [];
+   const entries: Entry[] = [];
+   const seen = new Set<string>();
++  const seenQueries = new Set<string>();
+ 
+   // BOM і CRLF: файл міг бути створений у Windows-редакторі
+   const lines = text.replace(/^﻿/, '').split(/\r?\n/);
+@@ -70,6 +71,16 @@ export function validateGolden(
+     if (seen.has(entry.id)) problems.push(`рядок ${n}: id "${entry.id}" повторюється`);
+     seen.add(entry.id);
+ 
++    const normQuery = entry.query.trim().toLowerCase();
++    if (seenQueries.has(normQuery)) problems.push(`рядок ${n}: query повторюється`);
++    seenQueries.add(normQuery);
++
++    const seenTags = new Set<string>();
++    for (const tag of entry.tags) {
++      if (seenTags.has(tag)) problems.push(`${entry.id}: тег повторюється`);
++      seenTags.add(tag);
++    }
++
+     const unanswerable = entry.tags.includes('unanswerable');
+     if (unanswerable && entry.must_cite.length > 0) {
+       problems.push(`${entry.id}: unanswerable не може мати must_cite`);
+diff --git a/tests/validate-golden.test.ts b/tests/validate-golden.test.ts
+index 204e02dd..9b0b4b15 100644
+--- a/tests/validate-golden.test.ts
++++ b/tests/validate-golden.test.ts
+@@ -31,6 +31,16 @@ describe('validateGolden', () => {
+     expect(validateGolden(`${line(ok)}\n${line(ok)}`, LOOSE).join(' ')).toContain('повторюється');
+   });
+ 
++  it('ловить повтор query без урахування регістру й крайніх пробілів', () => {
++    const other = { ...ok, id: 'q-02', query: `  ${ok.query.toUpperCase()}  ` };
++    expect(validateGolden(`${line(ok)}\n${line(other)}`, LOOSE).join(' ')).toContain('query повторюється');
++  });
++
++  it('ловить повтор тегу всередині одного запису', () => {
++    const entry = { ...ok, tags: ['easy', 'easy'] };
++    expect(validateGolden(line(entry), LOOSE).join(' ')).toContain('тег повторюється');
++  });
++
+   it('ловить витік відповіді в текст запиту', () => {
+     const leaky = {
+       ...ok,

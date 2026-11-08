@@ -1,0 +1,117 @@
+# Фабрика задач
+
+- Дата: 2026-11-08 · репозиторій: https://github.com/rsukhai/sentari
+- Шлях агента: **Claude Code** (`claude` 2.1.269), режим `-p`, модель за замовчуванням `sonnet` (Claude Sonnet 5.5; змінюється `HARNESS_MODEL`), ключ API Anthropic власника репозиторію.
+- Чому саме цей: у мене є платний ключ Anthropic (Лаб. 1–2), а Claude Code — єдиний із чотирьох шляхів, де в джерелах курсу задокументовано **обидва** бюджетні прапорці `--max-turns` і `--max-budget-usd`, і де `--output-format json` повертає `session_id` та `total_cost_usd`. Gemini CLI відпав через квоту безкоштовного рівня (20 запитів на добу вичерпувалась ще в Лаб. 1; агентний прогін — це десятки запитів), opencode + Ollama — через швидкість локальної `qwen3:4b` (≈ 85 с на одну відповідь у Лаб. 1) і те, що неінтерактивний синтаксис opencode в курсі не перевірено. Ціна шляху — гроші: ліміт на всі прогони цього кроку, який я встановив, — **до $4**.
+- Режим дозволів: `--permission-mode dontAsk` + явний `--allowedTools` (перелік нижче дослівно). Обходу дозволів немає.
+- Ізоляція: **git worktree**, окреме дерево й окрема гілка на кожен прогін; команда дослівно: `git worktree add -b harness/<id> ../harness-runs/<id>-<мітка> origin/main`.
+
+## 1. Форма задачі
+
+Черга — [`tasks.jsonl`](tasks.jsonl): **8 задач** однакової форми (форму заморожено; брами, evals і траси читають саме ці поля).
+
+| Поле | Тип | Що означає |
+|---|---|---|
+| `id` | рядок | `t-NN`; імʼя теки прогону, гілки `harness/<id>` і рядка в журналі; після створення не змінюється |
+| `input` | рядок | завдання агентові дослівно, одним абзацом: що зробити й у яких файлах |
+| `acceptance` | масив рядків | **команди**, які мають завершитися кодом 0 після роботи агента (`npx vitest run …`, `npm run typecheck`, `grep -q …`, `git diff --quiet HEAD -- …`). Побажань немає; порожній масив не проходить (`acceptance_passed = false`) |
+| `budget` | обʼєкт | `max_turns` → `--max-turns`; `max_usd` → `--max-budget-usd`; `timeout_s` → таймаут процесу (SIGINT) |
+| `files` | масив рядків | необовʼязково: файли, яких торкається задача (довідково; перелік інструментів `--allowedTools` для всіх задач однаковий) |
+
+Усі 8 задач — над власним кодом Лаб. 1–2 і мають машинну перевірку, яка **падає до роботи агента**: 3 тестові файли, яких ще немає (t-01…t-03), 4 зміни коду з `grep` на новий текст і новим тестом (t-04…t-07), 1 зміна README (t-08). `max_usd` — 0.30…0.50: порожній виклик Claude Code коштує $0.02–0.055 (системний контекст ≈ 36 тис. токенів), тому нижча стеля безглузда (перевірено: $0.05 вичерпується на «скажи ok», `exit 1`).
+
+## 2. Виклик агента
+
+Рівно ті прапорці, які прийняла моя версія CLI ([`claudeArgs` у run-task.ts](../../scripts/harness/run-task.ts)):
+
+```bash
+claude -p "<input задачі>" \
+  --output-format json \
+  --model sonnet \
+  --allowedTools "Read,Glob,Grep,Edit,Write,Bash(npm test *),Bash(npm run typecheck *),Bash(npm run lint *),Bash(npx vitest *),Bash(npx tsx *),Bash(git diff *),Bash(git status *)" \
+  --permission-mode dontAsk \
+  --max-turns <budget.max_turns> \
+  --max-budget-usd <budget.max_usd> \
+  --strict-mcp-config
+```
+
+- `--strict-mcp-config` без `--mcp-config` — жодних MCP-серверів: сервер колекції потребує Ollama, `context7` — мережі, харнесу вони зайві й дорожчають контекст.
+- `Bash(git push …)`, `Bash(rm …)` та інші небезпечні команди в переліку відсутні — у `dontAsk` вони відхиляються. Тест `claudeArgs` перевіряє відсутність `bypassPermissions`, `dangerously` і голого `Bash`.
+- **Що спостерігав у `--help`:** `--max-budget-usd`, `--permission-mode` (значення `dontAsk` є), `--allowedTools`, `--output-format`, `--strict-mcp-config` вказані; `--max-turns` у `--help` **не показаний**, але прийнятий без помилки (`stderr` порожній). Ліміт ходів на практиці ще не спрацьовував — розпізнавання `error_max_turns` у `classify` взято з документації SDK, не з власного спостереження (крок 03 це перевірить).
+- **Поля `agent.json`, зчитані з реального виводу** (а не вигадані): `session_id`, `total_cost_usd`, `num_turns`, `subtype`, `terminal_reason`, `is_error`, `usage.input_tokens`, `usage.output_tokens`, `usage.cache_creation_input_tokens`, `usage.cache_read_input_tokens`, `modelUsage.<модель>.costUSD`. Успіх: `subtype: "success"`, `terminal_reason: "completed"`. **Вичерпаний бюджет:** `exit 1`, `subtype: "error_max_budget_usd"`, `terminal_reason: "budget_exhausted"`, `is_error: true`; при цьому верхній `usage` нульовий, реальні токени лишаються в `modelUsage` (виконавець їх із нього не бере).
+
+## 3. Де лежать артефакти
+
+`runs/<id>-<мітка часу>/` — `patch.diff`, `output.txt`, `agent.log`, `run.json` і п'ятий файл `journal.jsonl` (рядки журналу дій агента — hook `PostToolUse` пише їх у `.agent-log/` **робочого дерева**, яке після прогону знімають; без цього копіювання вони б зникли).
+
+- `patch.diff` — `git add -A` + `git diff --cached` у дереві прогону, **без** `.agent-log/` і `node_modules` (ні журнал агента, ні symlink на залежності не є його роботою).
+- Що з цього йде в репозиторій: [`docs/lab3/runs/`](runs/) — копія кожної теки прогону; сира `/runs/` в `.gitignore`. У репозиторії всі прогони черги, бо їх мало і кожен потрібен кроку 01 (брами) та кроку 04 (evals), включно з прогоном-1 задачі t-08 на хибній базі (інцидент нижче).
+- `node_modules` у дереві — symlink на основний checkout (`npm ci` у кожному дереві задорого). Ризик: агент теоретично міг би писати крізь symlink; на практиці його інструменти — `Edit`/`Write` у межах дерева, а `Bash` обмежено перелічними командами.
+
+## 4. Журнал прогону
+
+Файл `run.json` лежить усередині теки артефакту й містить `artifact_dir` на неї саму. Поля:
+
+| поле | звідки значення |
+|---|---|
+| `task_id`, `agent_path` | з черги; `claude-code@<версія> model=<модель> (-p, dontAsk)` |
+| `artifact_dir` | шлях цієї ж теки — звʼязок журналу з артефактом |
+| `started_at` / `ended_at` / `duration_s` | виконавець |
+| `exit_status` | `ok` · `agent_failed` · `timeout` · `budget_or_turns`: код виходу + `subtype`/`terminal_reason` з `agent.json` + факт таймауту. Код виходу сам статус не визначає: вичерпаний бюджет теж `exit 1`, а `exit 0` з `is_error: true` — це `agent_failed` |
+| `exit_code` | код процесу агента |
+| `acceptance[]`, `acceptance_passed` | кожна команда з `acceptance` і її код виходу; пройшло, лише якщо команди є й усі дали 0 |
+| `session_id`, `num_turns`, `agent_subtype`, `terminal_reason` | `agent.json` (або `null`) |
+| `input_tokens`, `output_tokens` | `usage` з `agent.json` — **без кешу** |
+| `cache_creation_input_tokens`, `cache_read_input_tokens` | `usage` з `agent.json`; основна частина вхідного контексту живе тут |
+| `cost_usd_estimate` | `total_cost_usd` — **клієнтська оцінка**, не рахунок |
+| `trace_id` | `null` — крок 06 |
+| `gates` | `{}` — заповнюється на кроці 01 |
+| `branch`, `base_ref`, `base_commit`, `branch_commit`, `committed_changes` | черга: гілка прогону, база (`origin/main` + його SHA), коміт результату |
+| `main_checkout_unchanged` | черга: `git status` основного checkout до і після прогону збігається (крім `.agent-log/` і `docs/lab3/runs/`) |
+
+## 5. Як перезапустити одну задачу
+
+```bash
+npx tsx scripts/harness/run-queue.ts docs/lab3/tasks.jsonl --id t-01
+```
+
+Новий прогін дає **нову** теку `runs/t-01-<мітка>/` (стара не перезаписується) і нову гілку `harness/t-01-r2` (існуючі гілки не видаляються й не перезаписуються). Гілки створюються локально; `git push` виконавець **не робить** (правило AGENTS.md «пуш — лише з дозволу»), наприкінці він друкує одну команду push.
+
+## 6. Що перевірено без мережі
+
+[`tests/harness/run-task.test.ts`](../../tests/harness/run-task.test.ts), підставний агент, ні мережі, ні ключів: журнал і всі файли артефакту пишуться на успішному прогоні, коли агент упав, коли він кинув виняток, коли вивід порожній (нуль ходів), на вичерпаному бюджеті (форма — спостережена, дослівна), на таймауті; `acceptance_passed = false` при падінні команди й при порожньому `acceptance`; повторний прогін пише нову теку; `claudeArgs` — `dontAsk`, поіменний перелік, бюджетні прапорці з черги, жодного обходу дозволів; `readMeta` не падає на не-JSON; форма черги (≥ 6 задач, унікальні id, непорожні `acceptance`, `max_usd ≥ 0.10`); відмова від застарілої бази.
+
+## 7. Що зламалося з першого разу
+
+| Що | Причина | Виправлення |
+|---|---|---|
+| Прогін-1 t-08 створив дерево від локального `main`, відстаючого на 18 комітів від `origin/main` | у каркасі методички база — рядок `main`; мій локальний `main` я сам лишив позаду на кроці 02 Лаб. 2 | база за замовчуванням `origin/main`; `assertFreshBase` відмовляє, якщо `main` ≠ `origin/main`; прогін збережено як доказ |
+| Приймання `git diff --quiet main -- …` порівнювало зі застарілою гілкою | та сама причина | порівняння з `HEAD` дерева прогону |
+| `docs/lab3/runs/` не комітилась | `runs/` у `.gitignore` без `/` збігається з будь-якою текою `runs` | `/runs/` |
+| Дерево без залежностей: `npm run typecheck` у ньому не мав би чим працювати | worktree не містить `node_modules` | symlink на основний checkout |
+| Приймання пройшло, а текст у README неточний (прогін t-08: «`validate-golden.ts` перевіряє відповіді», насправді — файл набору) | `acceptance` у цій задачі — `grep` на наявність слів, а не на правдивість | не виправлено в цьому кроці: саме для цього існує верифікатор на іншій моделі (крок 02) |
+
+## 8. Прогони черги (2026-11-08)
+
+Усі 8 задач виконано; 9 прогонів, бо t-08 запускалась двічі. Числа — з `run.json` кожного прогону; вартість — **клієнтська оцінка** `total_cost_usd`, не рахунок.
+
+| задача | артефакт | гілка | exit_status | acceptance | с | ходів | оцінка | база | основний checkout не змінено |
+|---|---|---|---|---|---|---|---|---|---|
+| t-01 | [`t-01-1794130265135`](runs/t-01-1794130265135) | `harness/t-01` | ok | pass (3/3) | 47.1 | 14 | $0.248 | 071ac814 | **ні** |
+| t-02 | [`t-02-1794130312732`](runs/t-02-1794130312732) | `harness/t-02` | ok | pass (3/3) | 85.8 | 14 | $0.308 | 071ac814 | **ні** |
+| t-03 | [`t-03-1794130398950`](runs/t-03-1794130398950) | `harness/t-03` | ok | pass (3/3) | 38.9 | 9 | $0.179 | 071ac814 | так |
+| t-04 | [`t-04-1794130438295`](runs/t-04-1794130438295) | `harness/t-04` | ok | pass (8/8) | 33.1 | 9 | $0.191 | 071ac814 | так |
+| t-05 | [`t-05-1794130471821`](runs/t-05-1794130471821) | `harness/t-05` | ok | pass (7/7) | 65.8 | 18 | $0.314 | 071ac814 | так |
+| t-06 | [`t-06-1794130538089`](runs/t-06-1794130538089) | `harness/t-06` | ok | pass (7/7) | 41.9 | 10 | $0.204 | 071ac814 | так |
+| t-07 | [`t-07-1794130580497`](runs/t-07-1794130580497) | `harness/t-07` | ok | pass (5/5) | 26.1 | 7 | $0.151 | 071ac814 | так |
+| t-08 | [`t-08-1794130149040`](runs/t-08-1794130149040) | `harness/t-08` | ok | pass (7/7) | 17.9 | 3 | $0.217 | 3456d6fe | так |
+| t-08 | [`t-08-1794130234072`](runs/t-08-1794130234072) | `harness/t-08-r2` | ok | pass (7/7) | 16.8 | 3 | $0.266 | 071ac814 | так |
+
+Сума оцінки: **$2.08** + дві пробні виклики `claude -p` на haiku ($0.076) = **≈ $2.15** із ліміту $4.
+
+- **t-08, прогін 1** — база `3456d6fe` (застарілий локальний `main`): інцидент, див. розділ 7; лишається як доказ. Дійсний результат задачі — прогін 2 (`harness/t-08-r2`).
+- **«основний checkout не змінено: ні» у t-01 і t-02 — хибна тривога**, а не втручання агента: під час цих двох прогонів я створював `docs/lab3/factory.md` і `autonomy-log.md` в основному checkout, а перевірка порівнює `git status` до і після. Доказ, що агент нічого поза деревом не торкався: усі шляхи в `journal.jsonl` обох прогонів лежать у `../harness-runs/…` (жодного поза деревом), а патчі змінюють лише `tests/lab2/store.test.ts` і `tests/lab2/answer.test.ts`. Файли `run.json` цих двох прогонів не редагував (це були б правки доказу заднім числом); перевірку звужено — тепер вона виключає `docs/lab3/`.
+- Що змінив кожен патч: t-01 `tests/lab2/store.test.ts`; t-02 `tests/lab2/answer.test.ts`; t-03 `tests/lab2/cite.test.ts`; t-04 `scripts/validate-golden.ts`, `tests/validate-golden.test.ts`; t-05 `src/rag/corpus.ts`, `tests/lab2/corpus.test.ts`; t-06 `scripts/search.ts`, `src/rag/search.ts`, `tests/lab2/retrieval.test.ts`; t-07 `src/rag/search.ts`, `tests/lab2/retrieval.test.ts`; t-08 `README.md`. У жодному патчі немає `.agent-log` чи `node_modules`.
+- **Приймання падає до роботи агента** — доведено без агента: `npx tsx scripts/harness/check-tasks-fail.ts` на чистому `origin/main` (`071ac814`) дає для всіх 8 задач «падає (правильно)» (від 1 з 3 до 5 з 7 команд приймання).
+- **`acceptance_passed: true` ≠ «зміна правильна».** Приймання перевіряє, що тести проходять і слова на місці, але не правдивість тексту: у README (t-08) агент написав, що `validate-golden.ts` «перевіряє відповіді», хоча він перевіряє файл набору запитів. Це й є причина кроку 02 (верифікатор на іншій моделі).
+- Відправка гілок (`git push`) — за дозволом власника: `git push -u origin harness/t-01 harness/t-02 harness/t-03 harness/t-04 harness/t-05 harness/t-06 harness/t-07 harness/t-08 harness/t-08-r2`.

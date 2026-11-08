@@ -32,9 +32,9 @@ export function readTasks(path: string, only: string | null = null): Task[] {
 
 const git = (a: string[], cwd = '.') => execFileSync('git', a, { cwd, encoding: 'utf8' }).trim();
 
-/** Стан основного checkout без того, що змінюється штатно (журнал агента, відібрані артефакти). */
+/** Стан основного checkout без того, що змінюється штатно (журнал агента, документи й артефакти Лаб. 3, які пишу я сам). */
 function mainStatus(): string {
-  return git(['status', '--porcelain', '--', '.', ':(exclude).agent-log', ':(exclude)docs/lab3/runs']);
+  return git(['status', '--porcelain', '--', '.', ':(exclude).agent-log', ':(exclude)docs/lab3']);
 }
 
 /** Гілка harness/<id>; якщо вже існує — harness/<id>-r2, -r3 …: існуючу гілку не видаляємо і не перезаписуємо. */
