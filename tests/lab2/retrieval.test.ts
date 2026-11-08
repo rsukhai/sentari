@@ -5,7 +5,7 @@ import { buildBm25, searchBm25, tokenize } from '../../src/rag/bm25';
 import { citedIds, validateAnswer } from '../../src/rag/cite';
 import { fakeEmbedder } from '../../src/rag/embed';
 import { rrf } from '../../src/rag/rrf';
-import { bm25From, hybridSearch } from '../../src/rag/search';
+import { bm25From, docOfChunk, hybridSearch, rankOfDocs } from '../../src/rag/search';
 import type { IndexedChunk, IndexFile } from '../../src/rag/store';
 
 describe('bm25', () => {
@@ -68,6 +68,28 @@ describe('hybridSearch на мінікорпусі з підробленим е�
     expect(r.hits[0]?.rankVector).toBe(1);
     expect(r.hits[0]?.rankWords).toBe(1);
     expect(r.hits[0]?.cosine).toBeGreaterThan(0);
+  });
+});
+
+describe('docOfChunk', () => {
+  it('бере частину id до #', () => {
+    expect(docOfChunk('egr#0003')).toBe('egr');
+  });
+
+  it('без # повертає весь рядок', () => {
+    expect(docOfChunk('egr')).toBe('egr');
+  });
+});
+
+describe('rankOfDocs', () => {
+  const list = [{ id: 'maf#0000' }, { id: 'egr#0001' }, { id: 'dpf#0002' }];
+
+  it('знаходить ранг (з 1) першого фрагмента з потрібного документа', () => {
+    expect(rankOfDocs(list, ['egr'])).toBe(2);
+  });
+
+  it('повертає null, якщо жодного з документів немає в списку', () => {
+    expect(rankOfDocs(list, ['maf2'])).toBeNull();
   });
 });
 

@@ -33,6 +33,17 @@ export function bm25From(index: IndexFile): Bm25Index {
   return buildBm25(index.chunks.map((c) => ({ id: c.id, text: c.text })));
 }
 
+/** Документ з id фрагмента (до '#'). */
+export function docOfChunk(chunkId: string): string {
+  return chunkId.split('#')[0] ?? '';
+}
+
+/** Ранг (з 1) найкращого фрагмента з будь-якого з документів must_cite; null — немає в списку. */
+export function rankOfDocs(list: readonly { id: string }[], docs: readonly string[]): number | null {
+  const i = list.findIndex((r) => docs.includes(docOfChunk(r.id)));
+  return i < 0 ? null : i + 1;
+}
+
 export async function hybridSearch(
   index: IndexFile,
   words: Bm25Index,

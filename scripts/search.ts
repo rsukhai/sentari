@@ -10,20 +10,13 @@ import { readFileSync } from 'node:fs';
 
 import { renderCitation, toCitation } from '../src/rag/cite';
 import { ollamaEmbedder } from '../src/rag/embed';
-import { bm25From, hybridSearch, type SearchResult } from '../src/rag/search';
+import { bm25From, hybridSearch, rankOfDocs, type SearchResult } from '../src/rag/search';
 import { loadIndex } from '../src/rag/store';
 import type { Entry } from './validate-golden';
 
 const embedder = ollamaEmbedder();
 const index = loadIndex('data/index.json', embedder);
 const words = bm25From(index);
-const docOf = (chunkId: string) => chunkId.split('#')[0] ?? '';
-
-/** Ранг (з 1) найкращого фрагмента з будь-якого з документів must_cite; null — немає в списку. */
-function rankOf(list: readonly { id: string }[], docs: readonly string[]): number | null {
-  const i = list.findIndex((r) => docs.includes(docOf(r.id)));
-  return i < 0 ? null : i + 1;
-}
 
 function explain(r: SearchResult) {
   const col = (list: readonly { id: string; score: number }[], i: number, digits: number) => {
@@ -46,7 +39,7 @@ async function golden() {
     const show = (n: number | null) => (n === null ? '—' : String(n));
     const ranks = e.must_cite.length === 0
       ? '— | — | —'
-      : `${show(rankOf(r.vector, e.must_cite))} | ${show(rankOf(r.words, e.must_cite))} | ${show(rankOf(r.fused, e.must_cite))}`;
+      : `${show(rankOfDocs(r.vector, e.must_cite))} | ${show(rankOfDocs(r.words, e.must_cite))} | ${show(rankOfDocs(r.fused, e.must_cite))}`;
     console.log(`| ${e.id} | ${e.tags.join(', ')} | ${e.must_cite.join(', ') || '—'} | ${ranks} | ${(r.vector[0]?.score ?? 0).toFixed(4)} | ${r.words.length} |`);
   }
 }
