@@ -154,8 +154,8 @@ describe('черга', () => {
     expect(tasks.length).toBeGreaterThanOrEqual(6);
     expect(new Set(tasks.map((t) => t.id)).size).toBe(tasks.length);
     for (const t of tasks) {
-      expect(t.id).toMatch(/^t-\d{2}$/);
-      expect(t.input.length).toBeGreaterThan(20);
+      expect(t.id).toMatch(/^[te]-\d{2}$/); // t-NN — задачі кроку 00; e-NN — крайні випадки банку evals (крок 04)
+      expect(t.input.length).toBeGreaterThan(t.id.startsWith('e-') ? 5 : 20); // двозначний вхід («Виправ баг.») коротким і має бути
       expect(t.acceptance.length, `${t.id}: acceptance`).toBeGreaterThan(0);
       expect(t.acceptance.every((c) => c.trim() !== '')).toBe(true);
       expect(t.budget.max_turns).toBeGreaterThan(0);

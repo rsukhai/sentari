@@ -19,6 +19,15 @@ export interface Task {
   readonly criteria?: readonly { readonly id: string; readonly statement: string }[];
   /** Файли, початок яких верифікатор бачить як довідку (щоб звіряти твердження в diff з реальністю). */
   readonly context?: readonly string[];
+  // ---- поля evals (крок 04): необовʼязкові, щоб рядки кроку 00 лишались валідними ----
+  /** Еталонна мітка: один ключ на оцінювача; true — оцінювач має пройти. Для patch_contains — масив регулярних виразів. */
+  readonly label?: Readonly<Record<string, boolean | readonly string[]>>;
+  /** Звідки задача взялась: тека прогону, файл траси або правило, яке вона перевіряє. */
+  readonly source?: string;
+  /** regression — стоїть у брамі; new — ще ні; edge — рахується окремо. */
+  readonly bucket?: 'regression' | 'new' | 'edge';
+  /** Дата заморозки банку, РРРР-ММ-ДД. Змінився вхід або мітка — змінюється дата і базовий рівень. */
+  readonly frozen_at?: string;
 }
 
 export interface AgentResult {
