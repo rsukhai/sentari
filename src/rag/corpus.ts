@@ -35,6 +35,14 @@ export function wikiTitle(url: string): string {
 /** Файл документа в data/obd/ за його id. */
 export const docFile = (id: string) => `${id}.md`;
 
+/** id з YAML-шапки файлу (між рядками `---` на початку). `undefined`, якщо шапки чи поля немає. */
+export function frontmatterId(text: string): string | undefined {
+  const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  if (!match) return undefined;
+  const idLine = (match[1] ?? '').split(/\r?\n/).find((line) => /^id:\s*/.test(line));
+  return idLine?.replace(/^id:\s*/, '').trim();
+}
+
 /**
  * Критерій A4: усі документи зі специфікації лежать у колекції й не порожні.
  * `files` — імʼя файлу → вміст. Повертає перелік проблем; порожній = «зелено».
@@ -48,7 +56,13 @@ export function checkCorpus(docs: readonly DocRef[], files: ReadonlyMap<string, 
     ids.add(doc.id);
     const text = files.get(docFile(doc.id));
     if (text === undefined) problems.push(`${doc.id}: немає файлу ${docFile(doc.id)}`);
-    else if (text.trim().length < 500) problems.push(`${doc.id}: документ підозріло короткий`);
+    else {
+      if (text.trim().length < 500) problems.push(`${doc.id}: документ підозріло короткий`);
+      const fmId = frontmatterId(text);
+      if (fmId !== undefined && fmId !== doc.id) {
+        problems.push(`${doc.id}: id у шапці не збігається з імʼям файлу (${fmId})`);
+      }
+    }
   }
   for (const name of files.keys()) {
     if (!ids.has(name.replace(/\.md$/, ''))) problems.push(`${name}: файл не описаний у spec.md`);

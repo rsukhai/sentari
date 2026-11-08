@@ -47,4 +47,14 @@ describe('checkCorpus', () => {
   it('порожня специфікація — це проблема, а не «зелено»', () => {
     expect(checkCorpus([], new Map())).not.toEqual([]);
   });
+
+  it('ловить неспівпадіння id у шапці з імʼям файлу', () => {
+    const withBadId = `---\nid: afr\ntitle: x\n---\n\n${long}`;
+    const problems = checkCorpus(docs, new Map([['obd.md', withBadId], ['afr.md', long]])).join(' ');
+    expect(problems).toContain('id у шапці не збігається');
+  });
+
+  it('файл без шапки — перевірку id пропускає', () => {
+    expect(checkCorpus(docs, new Map([['obd.md', long], ['afr.md', long]]))).toEqual([]);
+  });
 });
