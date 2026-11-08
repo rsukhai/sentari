@@ -147,3 +147,6 @@ export function costTableRow(r: CostRow): string {
   ];
   return `| ${cells.join(' | ')} |`;
 }
+
+// НАВМИСНЕ ПАДІННЯ (Лаб. 3, крок 01): звернення до поля, якого немає в типі — ціль: брама types.
+export const intentionallyBroken = ({ inputTokens: 1 } as { inputTokens: number }).nonexistentField;
