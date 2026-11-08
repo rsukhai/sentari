@@ -3,3 +3,5 @@
 {"at":"2026-11-08T17:12:15.145Z","layer":"task","task_id":"s-03","action":"задачу позначено в run.json, рядок дописано в журнал; черга йде далі, якщо брейкер лишився закритим","run_dir":"docs/lab3/runs/s-03-1794157926408","limit":"max_turns","configured":2,"observed":3}
 {"at":"2026-11-08T17:12:15.145Z","layer":"breaker","task_id":"s-03","limit":"breaker_open","configured":"budget_or_turns ×3 підряд","observed":1,"action":"брейкер відкрито на 30 хв; наступні задачі не запускаються"}
 {"at":"2026-11-08T17:12:15.165Z","layer":"breaker","task_id":"s-04","limit":"breaker_open","configured":"budget_or_turns ×3 підряд","observed":null,"action":"черга зупинена, не запущено: s-04"}
+{"at":"2026-11-08T17:42:49.098Z","layer":"breaker","task_id":"s-05","limit":"breaker_half_open","configured":30,"observed":null,"action":"перепочинок минув; рівно одна пробна задача"}
+{"at":"2026-11-08T17:43:26.145Z","layer":"breaker","task_id":"s-05","limit":"breaker_closed","configured":null,"observed":null,"action":"пробна задача зелена; брейкер закрито"}
