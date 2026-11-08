@@ -19,7 +19,7 @@ const args = process.argv.slice(2);
 const flag = (name: string): string | null => (args.includes(name) ? (args[args.indexOf(name) + 1] ?? null) : null);
 const file = args.find((a, i) => !a.startsWith('--') && !(i > 0 && args[i - 1]?.startsWith('--'))) ?? 'docs/lab3/tasks.jsonl';
 const onlyId = flag('--id');
-const base = flag('--base') ?? 'main';
+const base = flag('--base') ?? 'origin/main';
 
 export function readTasks(path: string, only: string | null = null): Task[] {
   const tasks = readFileSync(path, 'utf8')
@@ -48,7 +48,23 @@ function freeBranch(id: string): string {
   }
 }
 
+/** Локальний `main` легко залишити позаду origin/main (так сталося в прогоні 1 задачі t-08) — таку базу не приймаємо. */
+export function assertFreshBase(ref: string, rev: (r: string) => string | null): void {
+  const origin = rev('origin/main');
+  const local = rev('main');
+  if (ref === 'main' && origin !== null && local !== null && origin !== local) {
+    throw new Error(`локальний main (${local.slice(0, 8)}) відрізняється від origin/main (${origin.slice(0, 8)}): використайте --base origin/main`);
+  }
+}
+
 function main(): void {
+  assertFreshBase(base, (r) => {
+    try {
+      return git(['rev-parse', '--verify', '-q', r]);
+    } catch {
+      return null;
+    }
+  });
   const tasks = readTasks(file, onlyId);
   if (tasks.length === 0) throw new Error(`у ${file} немає задач${onlyId ? ` з id ${onlyId}` : ''}`);
   const version = execFileSync('claude', ['--version'], { encoding: 'utf8' }).trim().split(' ')[0] ?? 'unknown';

@@ -164,3 +164,20 @@ describe('черга', () => {
     }
   });
 });
+
+describe('база прогону', () => {
+  it('локальний main, що відрізняється від origin/main, не приймається', async () => {
+    const { assertFreshBase } = await import('../../scripts/harness/run-queue');
+    const revs: Record<string, string> = { 'origin/main': '071ac814aaaa', main: '3456d6feaaaa' };
+    expect(() => assertFreshBase('main', (r) => revs[r] ?? null)).toThrow('--base origin/main');
+    expect(() => assertFreshBase('origin/main', (r) => revs[r] ?? null)).not.toThrow();
+    expect(() => assertFreshBase('main', (r) => ({ 'origin/main': 'x', main: 'x' })[r] ?? null)).not.toThrow();
+  });
+
+  it('приймання порівнює з HEAD дерева прогону, а не з гілкою main', () => {
+    const tasks = readTasks('docs/lab3/tasks.jsonl');
+    const cmds = tasks.flatMap((t) => t.acceptance);
+    expect(cmds.filter((c) => c.startsWith('git diff --quiet main')).length).toBe(0);
+    expect(cmds.some((c) => c.startsWith('git diff --quiet HEAD'))).toBe(true);
+  });
+});
