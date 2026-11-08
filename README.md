@@ -68,6 +68,17 @@ cp .env.example .env.local
 
 Повні критерії прийняття — у слайдах заняття 02 і в методичних вказівках.
 
+## Лаб. 2: колекція і пошук
+
+```bash
+npm run index
+npx tsx scripts/search.ts "<запит>" --explain
+npx tsx scripts/validate-golden.ts docs/lab2/golden/queries.jsonl
+npx tsx scripts/lab2/fetch-obd.ts check
+```
+
+`npm run index` будує індекс колекції для пошуку. `npx tsx scripts/search.ts "<запит>" --explain` виконує пошук за запитом і пояснює, чому знайдено саме ці результати. `npx tsx scripts/validate-golden.ts docs/lab2/golden/queries.jsonl` перевіряє схему й пороги самого еталонного набору запитів (відповідей пошуку вона не оцінює). `npx tsx scripts/lab2/fetch-obd.ts check` без мережі перевіряє, що всі документи колекції зі специфікації лежать у data/obd.
+
 ## Чому не найновіші версії
 
 Свідомі пониження. Кожне перевірено емпірично — з найновішими версіями репозиторій не збирається.
