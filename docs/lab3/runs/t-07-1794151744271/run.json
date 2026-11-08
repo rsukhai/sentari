@@ -1,0 +1,56 @@
+{
+  "task_id": "t-07",
+  "agent_path": "claude-code@2.1.269 model=sonnet (-p, dontAsk)",
+  "artifact_dir": "runs/t-07-1794151744271",
+  "started_at": "2026-11-08T15:29:04.271Z",
+  "ended_at": "2026-11-08T15:29:35.739Z",
+  "duration_s": 31.5,
+  "exit_status": "ok",
+  "exit_code": 0,
+  "acceptance": [
+    {
+      "cmd": "grep -q 'RangeError' src/rag/search.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "grep -q 'topK' tests/lab2/retrieval.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "npx vitest run tests/lab2/retrieval.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    }
+  ],
+  "acceptance_passed": true,
+  "session_id": "f68e428c-9f4b-4026-9157-96c772106aa2",
+  "input_tokens": 12,
+  "output_tokens": 1800,
+  "cache_creation_input_tokens": 49934,
+  "cache_read_input_tokens": 234994,
+  "cost_usd_estimate": 0.2658628,
+  "num_turns": 8,
+  "agent_subtype": "success",
+  "terminal_reason": "completed",
+  "trace_id": null,
+  "gates": {
+    "types": "pass",
+    "lint": "pass",
+    "tests": "pass",
+    "build": "pass"
+  },
+  "branch": "harness/t-07-r2",
+  "base_ref": "origin/lab3/01-gates",
+  "base_commit": "a429936fcb7a18924276b0ea7e16875ad7c18894",
+  "branch_commit": "7939c89eb7cdfc9508553860fe9befff2b7217e8",
+  "committed_changes": true,
+  "main_checkout_unchanged": true,
+  "ci_run_url": "https://github.com/rsukhai/sentari/actions/runs/42496262747"
+}
