@@ -45,7 +45,7 @@ export const acceptanceGreen: Grader = (c) => {
 
 /** Diff не торкається нічого поза переліком files задачі. */
 export const touchesOnlyListed: Grader = (c) => {
-  const allowed = new Set(c.task.files ?? []);
+  const allowed = new Set<string>(); // НАВМИСНА РЕГРЕСІЯ (крок 04): забули перелік files задачі
   const touched = touchedFiles(c.patch);
   const outside = touched.filter((p) => !allowed.has(p));
   return {
