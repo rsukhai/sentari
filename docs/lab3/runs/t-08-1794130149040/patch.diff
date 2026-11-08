@@ -1,0 +1,22 @@
+diff --git a/README.md b/README.md
+index 41063dea..ec7237aa 100644
+--- a/README.md
++++ b/README.md
+@@ -68,6 +68,17 @@ cp .env.example .env.local
+ 
+ Повні критерії прийняття — у слайдах заняття 02 і в методичних вказівках.
+ 
++## Лаб. 2: колекція і пошук
++
++```bash
++npm run index
++npx tsx scripts/search.ts "<запит>" --explain
++npx tsx scripts/validate-golden.ts docs/lab2/golden/queries.jsonl
++npx tsx scripts/lab2/fetch-obd.ts check
++```
++
++`npm run index` будує колекцію для пошуку з наявних даних. `npx tsx scripts/search.ts "<запит>" --explain` шукає за запитом і пояснює, чому знайдено саме ці результати. `npx tsx scripts/validate-golden.ts docs/lab2/golden/queries.jsonl` перевіряє пошук на еталонному наборі запитів. `npx tsx scripts/lab2/fetch-obd.ts check` перевіряє доступність джерела даних OBD.
++
+ ## Чому не найновіші версії
+ 
+ Свідомі пониження. Кожне перевірено емпірично — з найновішими версіями репозиторій не збирається.
