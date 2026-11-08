@@ -1,0 +1,79 @@
+import { mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+
+import { afterAll, describe, expect, it } from 'vitest';
+
+import { RULE } from '../../src/rag/chunk';
+import { fakeEmbedder } from '../../src/rag/embed';
+import { loadIndex, round6, saveIndex, sha256, type IndexFile } from '../../src/rag/store';
+
+const tempDirs: string[] = [];
+
+function makeTempDir(): string {
+  const dir = mkdtempSync(join(tmpdir(), 'lab2-store-'));
+  tempDirs.push(dir);
+  return dir;
+}
+
+afterAll(() => {
+  for (const dir of tempDirs) rmSync(dir, { recursive: true, force: true });
+});
+
+describe('round6', () => {
+  it('округлює до 6 знаків після коми', () => {
+    expect(round6(1 / 3)).toBe(0.333333);
+    expect(round6(0.1234565)).toBe(0.123457);
+  });
+});
+
+describe('sha256', () => {
+  it('повертає 16 шістнадцяткових символів', () => {
+    expect(sha256('привіт')).toMatch(/^[0-9a-f]{16}$/);
+  });
+
+  it('детермінований для того самого тексту', () => {
+    expect(sha256('той самий текст')).toBe(sha256('той самий текст'));
+  });
+
+  it('різний для різних текстів', () => {
+    expect(sha256('текст А')).not.toBe(sha256('текст Б'));
+  });
+});
+
+describe('saveIndex / loadIndex', () => {
+  const embedder = fakeEmbedder();
+
+  function makeIndex(): IndexFile {
+    return {
+      version: 1,
+      builtAt: new Date().toISOString(),
+      embedder: embedder.id,
+      dimensions: embedder.dimensions,
+      rule: RULE,
+      normalization: 'тест',
+      documents: [{ id: 'doc-01', path: 'doc-01.md', chars: 10, sha256: sha256('doc-01') }],
+      chunks: [],
+    };
+  }
+
+  it('записує файл і читає його назад, коли id ембедера збігається', () => {
+    const dir = makeTempDir();
+    const path = join(dir, 'index.json');
+    const index = makeIndex();
+
+    saveIndex(path, index);
+    const loaded = loadIndex(path, embedder);
+
+    expect(loaded).toEqual(index);
+  });
+
+  it('кидає помилку з текстом «перебудуйте», коли id ембедера інший', () => {
+    const dir = makeTempDir();
+    const path = join(dir, 'index.json');
+    saveIndex(path, makeIndex());
+
+    const otherEmbedder = fakeEmbedder(32);
+    expect(() => loadIndex(path, otherEmbedder)).toThrow(/перебудуйте/);
+  });
+});
