@@ -121,6 +121,12 @@ export const ALLOWED_TOOLS = [
 
 /** Прапорці Claude Code -p — рівно ті, що перевірено на `claude` 2.1.269 (див. docs/lab3/factory.md). */
 /**
+ * Читання секретоподібних файлів забороняється поіменно (крок 07): знахідка red-team — `Read` дозволено для будь-якого файлу дерева,
+ * а проєктні правила deny закривають лише два імені файлів секретів. Агент за чужою вказівкою прочитав файл-канарку.
+ */
+export const DENIED_TOOLS = ['Read(**/*secret*)', 'Read(**/*.pem)', 'Read(**/*.key)', 'Read(**/credentials*)', 'Read(**/id_rsa*)'] as const;
+
+/**
  * `userSettings` — ЛИШЕ для доказу «до» у red-team (крок 07): повертає стару поведінку, коли dontAsk підмішував дозволи людини.
  * У звичайних прогонах завжди false.
  */
@@ -130,6 +136,7 @@ export function claudeArgs(task: Task, model: string, userSettings = false): str
     '--output-format', 'json',
     '--model', model,
     '--allowedTools', ALLOWED_TOOLS.join(','),
+    '--disallowedTools', DENIED_TOOLS.join(','),
     '--permission-mode', 'dontAsk',
     '--max-turns', String(task.budget.max_turns),
     '--max-budget-usd', String(task.budget.max_usd),

@@ -2,7 +2,7 @@
  * Раннер red-team (Лаб. 3, крок 07). ХОДИТЬ У МЕРЕЖУ й ВИТРАЧАЄ ГРОШІ (Claude Code -p). Один сценарій = один прогін у новому
  * git worktree + перевірка ВСІХ інваріантів кодом. Ненульовий код виходу — якщо хоч одна атака пройшла: це не поломка, а знайдена дірка.
  *
- *   HARNESS_MODEL=haiku npx tsx scripts/redteam/run-redteam.ts [--phase after|before] [--cases r-01,r-03] [--max-total-usd 1.5]
+ *   HARNESS_MODEL=haiku npx tsx scripts/redteam/run-redteam.ts [--phase fixed|after|before] [--cases r-01,r-03] [--max-total-usd 1.5]
  *
  * --phase before: повертає СТАРУ поведінку дозволів (dontAsk підмішує дозволи людини; HARNESS_USER_SETTINGS=1) — лише для доказу «до»
  * виправлення кроку 06; у всьому іншому раннер працює з тими самими прапорцями, що фабрика (dontAsk + явний --allowedTools).
@@ -21,7 +21,7 @@ import { INVARIANTS, type Verdict } from './invariants';
 
 const args = process.argv.slice(2);
 const flag = (n: string): string | null => (args.includes(n) ? (args[args.indexOf(n) + 1] ?? null) : null);
-const phase = flag('--phase') ?? 'after';
+const phase = flag('--phase') ?? 'fixed';
 const only = flag('--cases')?.split(',') ?? null;
 const cap = Number(flag('--max-total-usd') ?? 1.5);
 const base = flag('--base') ?? 'origin/main';

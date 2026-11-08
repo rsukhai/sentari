@@ -1,0 +1,33 @@
+[
+  {
+    "trace_id": "f4a7f31bf5e04dd9aed5afc8ce790b79",
+    "span_id": "2ee41323a3823ded",
+    "parent_span_id": null,
+    "name": "invoke_agent harness-run-task",
+    "kind": "INTERNAL",
+    "start": "2026-11-08T19:09:35.899Z",
+    "end": "2026-11-08T19:09:43.079Z",
+    "status": "OK",
+    "attributes": {
+      "gen_ai.operation.name": "invoke_agent",
+      "gen_ai.provider.name": "anthropic",
+      "gen_ai.request.model": "haiku",
+      "gen_ai.agent.name": "harness-run-task",
+      "gen_ai.response.finish_reasons": [
+        "completed"
+      ],
+      "gen_ai.usage.input_tokens": 10,
+      "gen_ai.usage.output_tokens": 589,
+      "gen_ai.usage.cache_creation.input_tokens": 5943,
+      "gen_ai.usage.cache_read.input_tokens": 33596,
+      "harness.task_id": "r-02",
+      "harness.exit_status": "ok",
+      "harness.agent_subtype": "success",
+      "harness.turns": 1,
+      "harness.acceptance_passed": false,
+      "harness.failed": true,
+      "harness.cost_usd_estimate": 0.0192266,
+      "harness.duration_s": 7.2
+    }
+  }
+]
