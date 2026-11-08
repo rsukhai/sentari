@@ -1,0 +1,155 @@
+diff --git a/tests/lab2/store.test.ts b/tests/lab2/store.test.ts
+new file mode 100644
+index 00000000..8300c7bd
+--- /dev/null
++++ b/tests/lab2/store.test.ts
+@@ -0,0 +1,149 @@
++import { mkdtempSync, rmSync } from 'node:fs';
++import { tmpdir } from 'node:os';
++import { join } from 'node:path';
++import { describe, expect, it } from 'vitest';
++
++import { fakeEmbedder } from '../../src/rag/embed';
++import { loadIndex, round6, saveIndex, sha256, type IndexFile } from '../../src/rag/store';
++
++describe('round6', () => {
++  it('округлює до 6 знаків', () => {
++    expect(round6(0.123456789)).toBe(0.123457);
++    expect(round6(Math.PI)).toBe(3.141593);
++    expect(round6(1 / 3)).toBe(0.333333);
++  });
++
++  it('не впливає на числа з менше ніж 6 знаками', () => {
++    expect(round6(0.123)).toBe(0.123);
++    expect(round6(0.1)).toBe(0.1);
++  });
++
++  it('працює з від\'ємними числами', () => {
++    expect(round6(-0.123456789)).toBe(-0.123457);
++  });
++});
++
++describe('sha256', () => {
++  it('повертає рівно 16 шістнадцяткових символів', () => {
++    const result = sha256('hello');
++    expect(result).toMatch(/^[0-9a-f]{16}$/);
++    expect(result.length).toBe(16);
++  });
++
++  it('детермінований: той самий текст дає той самий результат', () => {
++    const text = 'stable text for hashing';
++    const hash1 = sha256(text);
++    const hash2 = sha256(text);
++    expect(hash1).toBe(hash2);
++  });
++
++  it('різний для різних текстів', () => {
++    const hash1 = sha256('text 1');
++    const hash2 = sha256('text 2');
++    expect(hash1).not.toBe(hash2);
++  });
++
++  it('чутливий до змін', () => {
++    const hash1 = sha256('hello');
++    const hash2 = sha256('hello ');
++    expect(hash1).not.toBe(hash2);
++  });
++
++  it('працює з кирилицею', () => {
++    const result = sha256('привіт');
++    expect(result).toMatch(/^[0-9a-f]{16}$/);
++  });
++});
++
++describe('saveIndex та loadIndex', () => {
++  it('saveIndex записує файл, а loadIndex читає його назад з тим самим ембедером', () => {
++    const embedder = fakeEmbedder(64);
++    const tmpDir = mkdtempSync(join(tmpdir(), 'store-test-'));
++
++    try {
++      const indexPath = join(tmpDir, 'test-index.json');
++      const index: IndexFile = {
++        version: 1,
++        builtAt: new Date().toISOString(),
++        embedder: embedder.id,
++        dimensions: embedder.dimensions,
++        rule: { minChars: 100, maxChars: 1000, maxOverlap: 100 },
++        normalization: 'test normalization',
++        documents: [
++          { id: 'doc-1', path: '/path/to/doc.md', chars: 1000, sha256: 'abcd1234' },
++        ],
++        chunks: [
++          {
++            id: 'chunk-1',
++            docId: 'doc-1',
++            heading: 'Test',
++            start: 0,
++            end: 100,
++            text: 'test text',
++            vector: new Array(64).fill(0.1),
++          },
++        ],
++      };
++
++      saveIndex(indexPath, index);
++      const loaded = loadIndex(indexPath, embedder);
++
++      expect(loaded).toEqual(index);
++      expect(loaded.embedder).toBe(embedder.id);
++    } finally {
++      rmSync(tmpDir, { recursive: true });
++    }
++  });
++
++  it('loadIndex кидає помилку з текстом «перебудуйте», коли id ембедера не збігається', () => {
++    const embedder1 = fakeEmbedder(64);
++    const embedder2 = fakeEmbedder(128);
++    const tmpDir = mkdtempSync(join(tmpdir(), 'store-test-'));
++
++    try {
++      const indexPath = join(tmpDir, 'test-index.json');
++      const index: IndexFile = {
++        version: 1,
++        builtAt: new Date().toISOString(),
++        embedder: embedder1.id,
++        dimensions: embedder1.dimensions,
++        rule: { minChars: 100, maxChars: 1000, maxOverlap: 100 },
++        normalization: 'test normalization',
++        documents: [],
++        chunks: [],
++      };
++
++      saveIndex(indexPath, index);
++
++      expect(() => loadIndex(indexPath, embedder2)).toThrow('перебудуйте');
++    } finally {
++      rmSync(tmpDir, { recursive: true });
++    }
++  });
++
++  it('loadIndex кидає помилку з текстом про npm run index', () => {
++    const embedder1 = fakeEmbedder(64);
++    const embedder2 = fakeEmbedder(128);
++    const tmpDir = mkdtempSync(join(tmpdir(), 'store-test-'));
++
++    try {
++      const indexPath = join(tmpDir, 'test-index.json');
++      const index: IndexFile = {
++        version: 1,
++        builtAt: new Date().toISOString(),
++        embedder: embedder1.id,
++        dimensions: embedder1.dimensions,
++        rule: { minChars: 100, maxChars: 1000, maxOverlap: 100 },
++        normalization: 'test normalization',
++        documents: [],
++        chunks: [],
++      };
++
++      saveIndex(indexPath, index);
++
++      expect(() => loadIndex(indexPath, embedder2)).toThrow('npm run index');
++    } finally {
++      rmSync(tmpDir, { recursive: true });
++    }
++  });
++});

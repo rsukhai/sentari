@@ -1,0 +1,390 @@
+diff --git a/tests/lab2/cite.test.ts b/tests/lab2/cite.test.ts
+new file mode 100644
+index 00000000..768a43ae
+--- /dev/null
++++ b/tests/lab2/cite.test.ts
+@@ -0,0 +1,384 @@
++import { describe, it, expect } from 'vitest';
++import type { IndexedChunk } from '../../src/rag/store';
++import {
++  toCitation,
++  renderCitation,
++  renderContext,
++  validateAnswer,
++  citedIds,
++} from '../../src/rag/cite';
++
++describe('toCitation', () => {
++  it('копіює всі поля з chunk у Citation', () => {
++    const chunk: IndexedChunk = {
++      id: 'obd#0007',
++      docId: 'engine-codes',
++      heading: 'EGR › Diesel engines',
++      start: 100,
++      end: 250,
++      text: 'Exhaust Gas Recirculation...',
++      vector: [0.1, 0.2, 0.3],
++    };
++    const quote = 'Exhaust Gas Recirculation';
++
++    const citation = toCitation(chunk, quote);
++
++    expect(citation.chunkId).toBe('obd#0007');
++    expect(citation.docId).toBe('engine-codes');
++    expect(citation.heading).toBe('EGR › Diesel engines');
++    expect(citation.start).toBe(100);
++    expect(citation.end).toBe(250);
++    expect(citation.quote).toBe('Exhaust Gas Recirculation');
++  });
++
++  it('зберігає quote незмінено', () => {
++    const chunk: IndexedChunk = {
++      id: 'obd#0001',
++      docId: 'doc1',
++      heading: '',
++      start: 0,
++      end: 50,
++      text: 'текст текст текст',
++      vector: [],
++    };
++    const quote = 'Спеціальна цитата з дивними символами: " " " " і т.д.';
++
++    const citation = toCitation(chunk, quote);
++
++    expect(citation.quote).toBe(quote);
++  });
++});
++
++describe('renderCitation', () => {
++  it('рендерить із заголовком у форматі [id] docId › heading · символи start–end', () => {
++    const citation = {
++      chunkId: 'doc#0001',
++      docId: 'engine-codes',
++      heading: 'EGR › Diesel engines',
++      start: 100,
++      end: 250,
++      quote: 'test',
++    };
++
++    const result = renderCitation(citation);
++
++    expect(result).toBe('[doc#0001] engine-codes › EGR › Diesel engines · символи 100–250');
++  });
++
++  it('рендерить без › коли heading порожній', () => {
++    const citation = {
++      chunkId: 'doc#0002',
++      docId: 'codes',
++      heading: '',
++      start: 50,
++      end: 150,
++      quote: 'test',
++    };
++
++    const result = renderCitation(citation);
++
++    expect(result).toBe('[doc#0002] codes · символи 50–150');
++  });
++
++  it('користує правильні розділювачі: дефіс у діапазоні, середник › при наявності заголовка', () => {
++    const citation = {
++      chunkId: 'obd#0005',
++      docId: 'my-doc',
++      heading: 'Section One › Subsection',
++      start: 0,
++      end: 1000,
++      quote: 'quote',
++    };
++
++    const result = renderCitation(citation);
++
++    expect(result).toMatch(/· символи 0–1000/);
++    expect(result).toContain(' › Section One › Subsection');
++  });
++});
++
++describe('renderContext', () => {
++  it('розділює фрагменти рядком ---', () => {
++    const chunks: Pick<IndexedChunk, 'id' | 'docId' | 'heading' | 'text'>[] = [
++      {
++        id: 'doc#0001',
++        docId: 'doc1',
++        heading: 'Section A',
++        text: 'Текст першого фрагмента',
++      },
++      {
++        id: 'doc#0002',
++        docId: 'doc1',
++        heading: 'Section B',
++        text: 'Текст другого фрагмента',
++      },
++    ];
++
++    const result = renderContext(chunks);
++
++    expect(result).toContain('\n\n---\n\n');
++    const parts = result.split('\n\n---\n\n');
++    expect(parts).toHaveLength(2);
++  });
++
++  it('підписує кожен фрагмент [id] docId › heading', () => {
++    const chunks: Pick<IndexedChunk, 'id' | 'docId' | 'heading' | 'text'>[] = [
++      {
++        id: 'obd#0001',
++        docId: 'engine-doc',
++        heading: 'Diesel › Sensors',
++        text: 'Content here',
++      },
++    ];
++
++    const result = renderContext(chunks);
++
++    expect(result).toMatch(/^\[obd#0001\] engine-doc › Diesel › Sensors\nContent here/);
++  });
++
++  it('не додає › коли heading порожній', () => {
++    const chunks: Pick<IndexedChunk, 'id' | 'docId' | 'heading' | 'text'>[] = [
++      {
++        id: 'doc#0001',
++        docId: 'doc',
++        heading: '',
++        text: 'Some text',
++      },
++    ];
++
++    const result = renderContext(chunks);
++
++    expect(result).toMatch(/^\[doc#0001\] doc\nSome text/);
++    expect(result).not.toContain(' › ');
++  });
++
++  it('об\'єднує текст фрагмента після підпису', () => {
++    const chunks: Pick<IndexedChunk, 'id' | 'docId' | 'heading' | 'text'>[] = [
++      {
++        id: 'ch#0001',
++        docId: 'mydoc',
++        heading: 'Title',
++        text: 'First line\nSecond line',
++      },
++    ];
++
++    const result = renderContext(chunks);
++
++    expect(result).toBe('[ch#0001] mydoc › Title\nFirst line\nSecond line');
++  });
++
++  it('коректно форматує кілька фрагментів', () => {
++    const chunks: Pick<IndexedChunk, 'id' | 'docId' | 'heading' | 'text'>[] = [
++      {
++        id: 'a#0001',
++        docId: 'doc',
++        heading: 'Part 1',
++        text: 'Text 1',
++      },
++      {
++        id: 'a#0002',
++        docId: 'doc',
++        heading: 'Part 2',
++        text: 'Text 2',
++      },
++      {
++        id: 'a#0003',
++        docId: 'doc',
++        heading: '',
++        text: 'Text 3',
++      },
++    ];
++
++    const result = renderContext(chunks);
++
++    expect(result).toContain('[a#0001] doc › Part 1\nText 1');
++    expect(result).toContain('\n\n---\n\n');
++    expect(result).toContain('[a#0002] doc › Part 2\nText 2');
++    expect(result).toContain('[a#0003] doc\nText 3');
++  });
++});
++
++describe('validateAnswer', () => {
++  it('повертає порожній масив коли відповідь коректна', () => {
++    const answer = 'Це правильна відповідь з цитатою "Правильний уривок" [doc#0001]';
++    const served = [
++      {
++        id: 'doc#0001',
++        text: 'Правильний уривок у текстовому вмісті фрагмента',
++      },
++    ];
++
++    const problems = validateAnswer(answer, served);
++
++    expect(problems).toEqual([]);
++  });
++
++  it('ловить дослівну цитату, якої немає у фрагменті', () => {
++    const answer = 'Відповідь із цитатою "Цього тексту немає" [doc#0001]';
++    const served = [
++      {
++        id: 'doc#0001',
++        text: 'Але вот цей текст є у фрагменті',
++      },
++    ];
++
++    const problems = validateAnswer(answer, served);
++
++    expect(problems).toHaveLength(1);
++    expect(problems[0]).toMatch(/цитата \[doc#0001\]:/);
++    expect(problems[0]).toContain('Цього тексту немає');
++    expect(problems[0]).toContain('у фрагменті немає');
++  });
++
++  it('ловить цитату на невидане фрагменти', () => {
++    const answer = 'Відповідь із цитатою "якась цитата" [doc#9999]';
++    const served = [
++      {
++        id: 'doc#0001',
++        text: 'Вміст першого фрагмента',
++      },
++    ];
++
++    const problems = validateAnswer(answer, served);
++
++    expect(problems).toHaveLength(1);
++    expect(problems[0]).toMatch(/цитата \[doc#9999\]:/);
++    expect(problems[0]).toContain('такого фрагмента асистентові не давали');
++  });
++
++  it('ловить відповідь без жодної цитати', () => {
++    const answer = 'Це просто текст без цитат';
++    const served = [
++      {
++        id: 'doc#0001',
++        text: 'Вміст фрагмента',
++      },
++    ];
++
++    const problems = validateAnswer(answer, served);
++
++    expect(problems).toHaveLength(1);
++    expect(problems[0]).toBe('у відповіді немає жодної цитати');
++  });
++
++  it('допускає цитати різних довжин (мінімум 8 символів)', () => {
++    const shortQuote = 'короток'; // 7 символів, можливо, не спрацює
++    const normalQuote = 'нормально'; // 9 символів
++    const longQuote = 'Дуже довга цитата з багатьма символами';
++
++    const answer1 = `Відповідь з цитатою "${shortQuote}" [doc#0001] або z с цитатою "${normalQuote}" [doc#0002]`;
++    const answer2 = `Відповідь з цитатою "${longQuote}" [doc#0001]`;
++    const served = [
++      {
++        id: 'doc#0001',
++        text: `текст ${longQuote} ще текст`,
++      },
++      {
++        id: 'doc#0002',
++        text: `текст ${normalQuote} ще текст`,
++      },
++    ];
++
++    // Коротка цитата не проходить регулярний вираз (< 8), тому не перевіряється
++    let problems = validateAnswer(answer2, served);
++    expect(problems).toEqual([]);
++
++    problems = validateAnswer(answer1, served);
++    expect(problems).toEqual([]);
++  });
++
++  it('розрізнює різні версії лапок: " ", " ", " "', () => {
++    const answer = 'З кирилічною лапкою "цитата один" [doc#0001] і англійською "цитата два" [doc#0002]';
++    const served = [
++      {
++        id: 'doc#0001',
++        text: 'цитата один є тут',
++      },
++      {
++        id: 'doc#0002',
++        text: 'цитата два є тут',
++      },
++    ];
++
++    const problems = validateAnswer(answer, served);
++
++    expect(problems).toEqual([]);
++  });
++
++  it('ловить кілька проблем водночас', () => {
++    const answer = 'Текст без цитат, але з посиланням [doc#0001] і неіснуючим [doc#9999]';
++    const served = [
++      {
++        id: 'doc#0001',
++        text: 'Вміст документа',
++      },
++    ];
++
++    const problems = validateAnswer(answer, served);
++
++    expect(problems.length).toBeGreaterThanOrEqual(1);
++    expect(problems.some((p) => p.includes('такого фрагмента асистентові не давали'))).toBe(true);
++  });
++
++  it('усікає довгу цитату при виводі помилки', () => {
++    const longQuote = 'a'.repeat(50);
++    const answer = `Текст «${longQuote}» [doc#0001]`;
++    const served = [
++      {
++        id: 'doc#0001',
++        text: 'короткий текст',
++      },
++    ];
++
++    const problems = validateAnswer(answer, served);
++
++    expect(problems).toHaveLength(1);
++    expect(problems[0]).toContain('…');
++    expect(problems[0].length).toBeLessThan(100);
++  });
++
++  it('витримує складні структури з кирилицею', () => {
++    const answer = `Це складна відповідь про гібридний пошук: "BM25 плюс косинус із RRF" [doc-lab#0001]`;
++    const served = [
++      {
++        id: 'doc-lab#0001',
++        text: 'BM25 плюс косинус із RRF використовуються разом',
++      },
++    ];
++
++    const problems = validateAnswer(answer, served);
++
++    expect(problems).toEqual([]);
++  });
++});
++
++describe('citedIds', () => {
++  it('витягує перший ID з формату [id]', () => {
++    const answer = 'Текст з цитатою [doc#0001]';
++    const ids = citedIds(answer);
++    expect(ids).toContain('doc#0001');
++  });
++
++  it('витягує кілька ID без повторів', () => {
++    const answer = 'Перша цитата [doc#0001] і друга [doc#0002], а потім знову [doc#0001]';
++    const ids = citedIds(answer);
++    expect(ids).toHaveLength(2);
++    expect(ids).toContain('doc#0001');
++    expect(ids).toContain('doc#0002');
++  });
++
++  it('ігнорує неправильні формати', () => {
++    const answer = 'Це [неправильна] цитата [doc_0001] але вот [doc#0001] правильна';
++    const ids = citedIds(answer);
++    expect(ids).toEqual(['doc#0001']);
++  });
++
++  it('роздізнає ID з букв, цифр, дефіса', () => {
++    const answer = 'Цитати: [my-doc#0001] [a1-b2#9999] [x#0000]';
++    const ids = citedIds(answer);
++    expect(ids).toHaveLength(3);
++    expect(ids).toContain('my-doc#0001');
++    expect(ids).toContain('a1-b2#9999');
++    expect(ids).toContain('x#0000');
++  });
++});

@@ -1,0 +1,52 @@
+{
+  "task_id": "t-06",
+  "agent_path": "claude-code@2.1.269 model=haiku (-p, dontAsk)",
+  "artifact_dir": "runs/t-06-1794161537489",
+  "started_at": "2026-11-08T18:12:17.489Z",
+  "ended_at": "2026-11-08T18:13:04.973Z",
+  "duration_s": 47.5,
+  "exit_status": "ok",
+  "exit_code": 0,
+  "acceptance": [
+    {
+      "cmd": "grep -q 'export function rankOfDocs' src/rag/search.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "grep -q 'export function docOfChunk' src/rag/search.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "! grep -q 'function rankOf' scripts/search.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "grep -q 'rankOfDocs' tests/lab2/retrieval.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "npx vitest run tests/lab2/retrieval.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    }
+  ],
+  "acceptance_passed": true,
+  "session_id": "05627e52-11f5-47d1-ac1a-bd9e9a806b65",
+  "input_tokens": 98,
+  "output_tokens": 4834,
+  "cache_creation_input_tokens": 19778,
+  "cache_read_input_tokens": 558896,
+  "cost_usd_estimate": 0.1208646,
+  "num_turns": 15,
+  "agent_subtype": "success",
+  "terminal_reason": "completed",
+  "trace_id": null,
+  "gates": {}
+}

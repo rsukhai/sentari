@@ -15,7 +15,7 @@ import { execFileSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, readFileSync, symlinkSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
-import { BREAKER_FILE, DEFAULT_BREAKER, decide, loadBreaker, record, saveBreaker } from '../../src/harness/breaker';
+import { DEFAULT_BREAKER, decide, loadBreaker, record, saveBreaker } from '../../src/harness/breaker';
 import { appendStopLog, looksLikeQuota, taskStopRow } from '../../src/harness/stop';
 import { assertFreshBase } from '../harness/run-queue';
 import { claudeRunner, HARNESS_MODEL, NOT_PART_OF_PATCH, runTask } from '../harness/run-task';
@@ -23,6 +23,8 @@ import { ATTEMPTS_DIR, attemptDir, loadBank } from './lib';
 
 const args = process.argv.slice(2);
 const flag = (n: string): string | null => (args.includes(n) ? (args[args.indexOf(n) + 1] ?? null) : null);
+/** Власний стан брейкера evals: черга фабрики й вимірювання не повинні відкривати брейкер одне одному. */
+const EVALS_BREAKER_FILE = flag('--breaker-file') ?? '.harness/evals-breaker.json';
 const K = Number(process.env.EVAL_K ?? 3);
 const K_EDGE = Number(process.env.EVAL_K_EDGE ?? 1);
 const cap = Number(flag('--max-total-usd') ?? process.env.EVAL_MAX_USD ?? 5);
@@ -56,14 +58,14 @@ function main(): void {
       const keep = attemptDir(task.id, attempt);
       if (existsSync(join(keep, 'run.json'))) continue; // уже оплачена
 
-      const state = loadBreaker(BREAKER_FILE, DEFAULT_BREAKER);
+      const state = loadBreaker(EVALS_BREAKER_FILE, DEFAULT_BREAKER);
       const d = decide(state, new Date(), DEFAULT_BREAKER);
       if (!d.allow) {
         appendStopLog({ at: new Date().toISOString(), layer: 'breaker', task_id: task.id, limit: 'breaker_open', configured: state.trip, observed: null, action: 'прогін evals зупинено брейкером' });
         console.log(`\nБРЕЙКЕР: ${d.why}. Прогін evals зупинено на ${task.id} спробі ${attempt}; решта спроб — після перепочинку.`);
         break outer;
       }
-      if (d.transition === 'half-open') saveBreaker(d.next, BREAKER_FILE);
+      if (d.transition === 'half-open') saveBreaker(d.next, EVALS_BREAKER_FILE);
       if (spent + task.budget.max_usd > cap) {
         appendStopLog({ at: new Date().toISOString(), layer: 'queue', task_id: task.id, limit: 'queue_spend_cap', configured: cap, observed: Math.round(spent * 1e4) / 1e4, action: 'прогін evals зупинено стелею витрат' });
         console.log(`\nСТЕЛЯ ВИТРАТ $${cap}: витрачено $${spent.toFixed(4)}, наступна спроба ${task.id}#${attempt} має стелю $${task.budget.max_usd}. Продовжити можна лише з вашої згоди.`);
@@ -83,11 +85,14 @@ function main(): void {
         }
         done += 1;
 
+        // У evals провал приймання — це ВИМІРЮВАННЯ (pass^k), а не аварія середовища: брейкер рахує лише те, що ламає сам прогін
+        // (таймаут, вичерпаний ліміт, збій агента, квота). Помилка на першому прогоні: «acceptance_failed ×3» відкрила брейкер
+        // посеред вимірювання — див. docs/lab3/stop.md, розділ «Інцидент на кроці 04».
         const quota = rec.exit_status !== 'ok' && looksLikeQuota(outputs(rec.artifact_dir));
-        const accepted = rec.exit_status === 'ok' && rec.acceptance_passed;
-        const key = quota ? 'quota' : rec.exit_status !== 'ok' ? rec.exit_status : 'acceptance_failed';
-        const rec2 = record(loadBreaker(BREAKER_FILE, DEFAULT_BREAKER), { ok: accepted, key, quota }, new Date(), DEFAULT_BREAKER);
-        saveBreaker(rec2.next, BREAKER_FILE);
+        const finished = rec.exit_status === 'ok';
+        const key = quota ? 'quota' : rec.exit_status;
+        const rec2 = record(loadBreaker(EVALS_BREAKER_FILE, DEFAULT_BREAKER), { ok: finished, key, quota }, new Date(), DEFAULT_BREAKER);
+        saveBreaker(rec2.next, EVALS_BREAKER_FILE);
         const stop = taskStopRow(rec, task, 'спробу evals позначено; прогін іде далі, якщо брейкер закритий');
         if (stop) appendStopLog({ ...stop, run_dir: keep });
         if (rec2.transition === 'open') {

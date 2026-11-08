@@ -1,0 +1,163 @@
+diff --git a/tests/lab2/store.test.ts b/tests/lab2/store.test.ts
+new file mode 100644
+index 00000000..70b97671
+--- /dev/null
++++ b/tests/lab2/store.test.ts
+@@ -0,0 +1,157 @@
++import { describe, expect, it, beforeAll, afterAll } from 'vitest';
++import { mkdtempSync, rmSync } from 'node:fs';
++import { join } from 'node:path';
++import { tmpdir } from 'node:os';
++
++import { round6, sha256, saveIndex, loadIndex } from '../../src/rag/store';
++import { fakeEmbedder } from '../../src/rag/embed';
++import type { IndexFile } from '../../src/rag/store';
++
++describe('store', () => {
++  describe('round6', () => {
++    it('округлює до 6 знаків після коми', () => {
++      expect(round6(0.123456789)).toBe(0.123457);
++    });
++
++    it('правильно обробляє позитивні числа', () => {
++      expect(round6(3.14159265)).toBe(3.141593);
++    });
++
++    it('правильно обробляє від\'ємні числа', () => {
++      expect(round6(-0.999999999)).toBe(-1);
++    });
++
++    it('правильно обробляє нуль', () => {
++      expect(round6(0)).toBe(0);
++    });
++
++    it('зберігає числа із меншою кількістю знаків', () => {
++      expect(round6(0.12)).toBe(0.12);
++    });
++  });
++
++  describe('sha256', () => {
++    it('повертає 16 шістнадцяткових символів', () => {
++      const hash = sha256('тест');
++      expect(hash).toHaveLength(16);
++      expect(/^[0-9a-f]{16}$/.test(hash)).toBe(true);
++    });
++
++    it('детермінований', () => {
++      const text = 'deterministic text';
++      const hash1 = sha256(text);
++      const hash2 = sha256(text);
++      expect(hash1).toBe(hash2);
++    });
++
++    it('різний для різних текстів', () => {
++      const hash1 = sha256('text1');
++      const hash2 = sha256('text2');
++      expect(hash1).not.toBe(hash2);
++    });
++
++    it('різний для текстів різної довжини', () => {
++      const hash1 = sha256('a');
++      const hash2 = sha256('aa');
++      expect(hash1).not.toBe(hash2);
++    });
++
++    it('усі символи шістнадцяткові', () => {
++      const hash = sha256('любой текст');
++      expect(hash).toMatch(/^[0-9a-f]+$/);
++    });
++  });
++
++  describe('saveIndex та loadIndex', () => {
++    let tmpDir: string;
++
++    beforeAll(() => {
++      tmpDir = mkdtempSync(join(tmpdir(), 'store-test-'));
++    });
++
++    afterAll(() => {
++      rmSync(tmpDir, { recursive: true, force: true });
++    });
++
++    it('saveIndex записує файл, loadIndex читає його назад', () => {
++      const embedder = fakeEmbedder(64);
++      const index: IndexFile = {
++        version: 1,
++        builtAt: '2024-01-01T00:00:00Z',
++        embedder: embedder.id,
++        dimensions: embedder.dimensions,
++        rule: { maxChars: 1200, minChars: 200, overlapChars: 120 },
++        normalization: 'remove accents',
++        documents: [
++          { id: 'doc1', path: '/path/to/doc1', chars: 1000, sha256: 'abc123def45678ab' }
++        ],
++        chunks: []
++      };
++
++      const filePath = join(tmpDir, 'index.json');
++      saveIndex(filePath, index);
++      const loaded = loadIndex(filePath, embedder);
++
++      expect(loaded).toEqual(index);
++    });
++
++    it('loadIndex кидає помилку з текстом «перебудуйте» для невідповідного ембедера', () => {
++      const embedder1 = fakeEmbedder(64);
++      const embedder2 = fakeEmbedder(128);
++
++      const index: IndexFile = {
++        version: 1,
++        builtAt: '2024-01-01T00:00:00Z',
++        embedder: embedder1.id,
++        dimensions: embedder1.dimensions,
++        rule: { maxChars: 1200, minChars: 200, overlapChars: 120 },
++        normalization: 'remove accents',
++        documents: [],
++        chunks: []
++      };
++
++      const filePath = join(tmpDir, 'index-mismatch.json');
++      saveIndex(filePath, index);
++
++      expect(() => loadIndex(filePath, embedder2)).toThrow(/перебудуйте/);
++    });
++
++    it('loadIndex зберігає усе з файлу точно', () => {
++      const embedder = fakeEmbedder(32);
++      const index: IndexFile = {
++        version: 1,
++        builtAt: '2026-11-08T12:34:56.789Z',
++        embedder: embedder.id,
++        dimensions: embedder.dimensions,
++        rule: { maxChars: 800, minChars: 150, overlapChars: 80 },
++        normalization: 'complex normalization rule',
++        documents: [
++          { id: 'doc-a', path: '/data/a.md', chars: 5000, sha256: 'aabbccddee1122ff' },
++          { id: 'doc-b', path: '/data/b.md', chars: 3000, sha256: 'ff2211eeddccbbaa' }
++        ],
++        chunks: [
++          {
++            id: 'chunk-1',
++            docId: 'doc-a',
++            heading: 'Section › Subsection',
++            start: 0,
++            end: 100,
++            text: 'text content',
++            vector: [0.1, 0.2, 0.3]
++          }
++        ]
++      };
++
++      const filePath = join(tmpDir, 'index-complex.json');
++      saveIndex(filePath, index);
++      const loaded = loadIndex(filePath, embedder);
++
++      expect(loaded.version).toBe(1);
++      expect(loaded.builtAt).toBe('2026-11-08T12:34:56.789Z');
++      expect(loaded.normalization).toBe('complex normalization rule');
++      expect(loaded.documents).toHaveLength(2);
++      expect(loaded.chunks).toHaveLength(1);
++      expect(loaded.chunks[0]?.vector).toEqual([0.1, 0.2, 0.3]);
++    });
++  });
++});

@@ -1,0 +1,52 @@
+{
+  "task_id": "t-05",
+  "agent_path": "claude-code@2.1.269 model=haiku (-p, dontAsk)",
+  "artifact_dir": "runs/t-05-1794161334208",
+  "started_at": "2026-11-08T18:08:54.208Z",
+  "ended_at": "2026-11-08T18:10:15.900Z",
+  "duration_s": 81.7,
+  "exit_status": "ok",
+  "exit_code": 0,
+  "acceptance": [
+    {
+      "cmd": "grep -q 'id у шапці не збігається' src/rag/corpus.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "grep -q 'id у шапці не збігається' tests/lab2/corpus.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "npx vitest run tests/lab2/corpus.test.ts",
+      "exit": 0
+    },
+    {
+      "cmd": "npx tsx scripts/lab2/fetch-obd.ts check",
+      "exit": 0
+    },
+    {
+      "cmd": "git diff --quiet HEAD -- data/obd",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run typecheck",
+      "exit": 0
+    },
+    {
+      "cmd": "npm run lint",
+      "exit": 0
+    }
+  ],
+  "acceptance_passed": true,
+  "session_id": "ada01135-db83-4e6a-af18-018b82b19ccc",
+  "input_tokens": 130,
+  "output_tokens": 8819,
+  "cache_creation_input_tokens": 20927,
+  "cache_read_input_tokens": 762551,
+  "cost_usd_estimate": 0.16346909999999998,
+  "num_turns": 18,
+  "agent_subtype": "success",
+  "terminal_reason": "completed",
+  "trace_id": null,
+  "gates": {}
+}

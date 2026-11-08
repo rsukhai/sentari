@@ -1,0 +1,149 @@
+diff --git a/tests/lab2/store.test.ts b/tests/lab2/store.test.ts
+new file mode 100644
+index 00000000..9f47531a
+--- /dev/null
++++ b/tests/lab2/store.test.ts
+@@ -0,0 +1,143 @@
++import { describe, expect, it, beforeEach, afterEach } from 'vitest';
++import { mkdtempSync, rmSync } from 'node:fs';
++import { join } from 'node:path';
++import { tmpdir } from 'node:os';
++
++import { round6, sha256, saveIndex, loadIndex, type IndexFile } from '../../src/rag/store';
++import { fakeEmbedder } from '../../src/rag/embed';
++
++describe('round6', () => {
++  it('округлює число до 6 знаків після коми', () => {
++    expect(round6(0.123456789)).toBe(0.123457);
++    expect(round6(0.1)).toBe(0.1);
++    expect(round6(0.9999999)).toBe(1);
++  });
++
++  it('обробляє від\'ємні числа', () => {
++    expect(round6(-0.123456789)).toBe(-0.123457);
++    expect(Math.abs(round6(-0.0000001))).toBe(0);
++  });
++
++  it('обробляє нуль', () => {
++    expect(round6(0)).toBe(0);
++  });
++});
++
++describe('sha256', () => {
++  it('повертає рядок із 16 шістнадцяткових символів', () => {
++    const hash = sha256('test');
++    expect(hash).toMatch(/^[0-9a-f]{16}$/);
++  });
++
++  it('детермінований: той самий вхід дає той самий вихід', () => {
++    const text = 'Тестовий текст для хешування';
++    const hash1 = sha256(text);
++    const hash2 = sha256(text);
++    expect(hash1).toBe(hash2);
++  });
++
++  it('різні тексти дають різні хеші', () => {
++    const hash1 = sha256('text1');
++    const hash2 = sha256('text2');
++    expect(hash1).not.toBe(hash2);
++  });
++
++  it('обробляє довгі тексти', () => {
++    const longText = 'a'.repeat(10000);
++    const hash = sha256(longText);
++    expect(hash).toMatch(/^[0-9a-f]{16}$/);
++  });
++
++  it('обробляє спеціальні символи', () => {
++    const hash = sha256('Привіт! 🚗 ОБД');
++    expect(hash).toMatch(/^[0-9a-f]{16}$/);
++  });
++});
++
++describe('saveIndex & loadIndex', () => {
++  let tempDir: string;
++
++  beforeEach(() => {
++    tempDir = mkdtempSync(join(tmpdir(), 'store-test-'));
++  });
++
++  afterEach(() => {
++    rmSync(tempDir, { recursive: true, force: true });
++  });
++
++  it('saveIndex записує файл, loadIndex читає його назад', () => {
++    const embedder = fakeEmbedder(64);
++    const indexFile: IndexFile = {
++      version: 1,
++      builtAt: '2026-11-08T10:00:00Z',
++      embedder: embedder.id,
++      dimensions: embedder.dimensions,
++      rule: { maxChars: 800, overlapChars: 200 },
++      normalization: 'lower, no html, no links',
++      documents: [
++        { id: 'doc1', path: 'doc1.md', chars: 1000, sha256: 'abc123' },
++      ],
++      chunks: [
++        {
++          id: 'chunk-1',
++          docId: 'doc1',
++          start: 0,
++          end: 100,
++          text: 'sample text',
++          heading: 'Sample',
++          vector: [0.1, 0.2, 0.3],
++        },
++      ],
++    };
++
++    const filePath = join(tempDir, 'index.jsonl');
++    saveIndex(filePath, indexFile);
++    const loaded = loadIndex(filePath, embedder);
++
++    expect(loaded).toEqual(indexFile);
++  });
++
++  it('loadIndex кидає помилку, коли embedder.id не збігається', () => {
++    const embedder1 = fakeEmbedder(64);
++    const embedder2 = fakeEmbedder(128);
++
++    const indexFile: IndexFile = {
++      version: 1,
++      builtAt: '2026-11-08T10:00:00Z',
++      embedder: embedder1.id,
++      dimensions: embedder1.dimensions,
++      rule: { maxChars: 800, overlapChars: 200 },
++      normalization: 'lower, no html, no links',
++      documents: [],
++      chunks: [],
++    };
++
++    const filePath = join(tempDir, 'index.jsonl');
++    saveIndex(filePath, indexFile);
++
++    expect(() => loadIndex(filePath, embedder2)).toThrow(/перебудуйте/);
++  });
++
++  it('loadIndex кидає помилку з правильним текстом про ембедер', () => {
++    const embedder1 = fakeEmbedder(64);
++    const embedder2 = fakeEmbedder(128);
++
++    const indexFile: IndexFile = {
++      version: 1,
++      builtAt: '2026-11-08T10:00:00Z',
++      embedder: embedder1.id,
++      dimensions: embedder1.dimensions,
++      rule: { maxChars: 800, overlapChars: 200 },
++      normalization: 'lower, no html, no links',
++      documents: [],
++      chunks: [],
++    };
++
++    const filePath = join(tempDir, 'index.jsonl');
++    saveIndex(filePath, indexFile);
++
++    expect(() => loadIndex(filePath, embedder2)).toThrow(
++      `індекс зібрано ембедером ${embedder1.id}, а шукаєте ви ${embedder2.id} — перебудуйте: npm run index`,
++    );
++  });
++});

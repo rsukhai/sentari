@@ -1,0 +1,54 @@
+diff --git a/scripts/validate-golden.ts b/scripts/validate-golden.ts
+index 5bb0a292..451e32b6 100644
+--- a/scripts/validate-golden.ts
++++ b/scripts/validate-golden.ts
+@@ -46,6 +46,7 @@ export function validateGolden(
+   const problems: string[] = [];
+   const entries: Entry[] = [];
+   const seen = new Set<string>();
++  const seenQueries = new Map<string, string>(); // нормалізована query -> id
+ 
+   // BOM і CRLF: файл міг бути створений у Windows-редакторі
+   const lines = text.replace(/^﻿/, '').split(/\r?\n/);
+@@ -70,6 +71,18 @@ export function validateGolden(
+     if (seen.has(entry.id)) problems.push(`рядок ${n}: id "${entry.id}" повторюється`);
+     seen.add(entry.id);
+ 
++    // Перевірка на дублювання запитів (регістронезалежно, без крайніх пробілів)
++    const normalizedQuery = entry.query.toLowerCase().trim();
++    if (seenQueries.has(normalizedQuery)) {
++      problems.push(`${entry.id}: query повторюється (перший раз у ${seenQueries.get(normalizedQuery)})`);
++    }
++    seenQueries.set(normalizedQuery, entry.id);
++
++    // Перевірка на повтор тегів всередину одного запису
++    if (new Set(entry.tags).size !== entry.tags.length) {
++      problems.push(`${entry.id}: тег повторюється`);
++    }
++
+     const unanswerable = entry.tags.includes('unanswerable');
+     if (unanswerable && entry.must_cite.length > 0) {
+       problems.push(`${entry.id}: unanswerable не може мати must_cite`);
+diff --git a/tests/validate-golden.test.ts b/tests/validate-golden.test.ts
+index 204e02dd..d71210f5 100644
+--- a/tests/validate-golden.test.ts
++++ b/tests/validate-golden.test.ts
+@@ -66,4 +66,18 @@ describe('validateGolden', () => {
+   it('переживає CRLF і BOM', () => {
+     expect(validateGolden(`﻿${line(ok)}\r\n\r\n`, LOOSE)).toEqual([]);
+   });
++
++  it('ловить дублювання запиту (регістронезалежно й без крайніх пробілів)', () => {
++    const duplicate = { ...ok, id: 'q-02' };
++    const problems = validateGolden(
++      `${line(ok)}\n${line({ ...duplicate, query: '  Що означає, коли горить Check Engine?  ' })}`,
++      LOOSE,
++    );
++    expect(problems.join(' ')).toContain('query повторюється');
++  });
++
++  it('ловить повтор тегів всередину одного запису', () => {
++    const repeated = { ...ok, id: 'q-02', tags: ['easy', 'easy'] };
++    expect(validateGolden(line(repeated), LOOSE).join(' ')).toContain('тег повторюється');
++  });
+ });

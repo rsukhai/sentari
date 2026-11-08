@@ -1,0 +1,114 @@
+diff --git a/scripts/search.ts b/scripts/search.ts
+index 70911a68..1d1323e8 100644
+--- a/scripts/search.ts
++++ b/scripts/search.ts
+@@ -10,20 +10,13 @@ import { readFileSync } from 'node:fs';
+ 
+ import { renderCitation, toCitation } from '../src/rag/cite';
+ import { ollamaEmbedder } from '../src/rag/embed';
+-import { bm25From, hybridSearch, type SearchResult } from '../src/rag/search';
++import { bm25From, docOfChunk, hybridSearch, rankOfDocs, type SearchResult } from '../src/rag/search';
+ import { loadIndex } from '../src/rag/store';
+ import type { Entry } from './validate-golden';
+ 
+ const embedder = ollamaEmbedder();
+ const index = loadIndex('data/index.json', embedder);
+ const words = bm25From(index);
+-const docOf = (chunkId: string) => chunkId.split('#')[0] ?? '';
+-
+-/** Ранг (з 1) найкращого фрагмента з будь-якого з документів must_cite; null — немає в списку. */
+-function rankOf(list: readonly { id: string }[], docs: readonly string[]): number | null {
+-  const i = list.findIndex((r) => docs.includes(docOf(r.id)));
+-  return i < 0 ? null : i + 1;
+-}
+ 
+ function explain(r: SearchResult) {
+   const col = (list: readonly { id: string; score: number }[], i: number, digits: number) => {
+@@ -46,7 +39,7 @@ async function golden() {
+     const show = (n: number | null) => (n === null ? '—' : String(n));
+     const ranks = e.must_cite.length === 0
+       ? '— | — | —'
+-      : `${show(rankOf(r.vector, e.must_cite))} | ${show(rankOf(r.words, e.must_cite))} | ${show(rankOf(r.fused, e.must_cite))}`;
++      : `${show(rankOfDocs(r.vector, e.must_cite))} | ${show(rankOfDocs(r.words, e.must_cite))} | ${show(rankOfDocs(r.fused, e.must_cite))}`;
+     console.log(`| ${e.id} | ${e.tags.join(', ')} | ${e.must_cite.join(', ') || '—'} | ${ranks} | ${(r.vector[0]?.score ?? 0).toFixed(4)} | ${r.words.length} |`);
+   }
+ }
+diff --git a/src/rag/search.ts b/src/rag/search.ts
+index 6f60ccf1..ab20a705 100644
+--- a/src/rag/search.ts
++++ b/src/rag/search.ts
+@@ -33,6 +33,17 @@ export function bm25From(index: IndexFile): Bm25Index {
+   return buildBm25(index.chunks.map((c) => ({ id: c.id, text: c.text })));
+ }
+ 
++/** Витягує ID документа з ID фрагмента. */
++export function docOfChunk(chunkId: string): string {
++  return chunkId.split('#')[0] ?? '';
++}
++
++/** Ранг (з 1) найкращого фрагмента з будь-якого з документів; null — немає в списку. */
++export function rankOfDocs(list: readonly { id: string }[], docs: readonly string[]): number | null {
++  const i = list.findIndex((r) => docs.includes(docOfChunk(r.id)));
++  return i < 0 ? null : i + 1;
++}
++
+ export async function hybridSearch(
+   index: IndexFile,
+   words: Bm25Index,
+diff --git a/tests/lab2/retrieval.test.ts b/tests/lab2/retrieval.test.ts
+index 62216a7a..4b333d70 100644
+--- a/tests/lab2/retrieval.test.ts
++++ b/tests/lab2/retrieval.test.ts
+@@ -5,7 +5,7 @@ import { buildBm25, searchBm25, tokenize } from '../../src/rag/bm25';
+ import { citedIds, validateAnswer } from '../../src/rag/cite';
+ import { fakeEmbedder } from '../../src/rag/embed';
+ import { rrf } from '../../src/rag/rrf';
+-import { bm25From, hybridSearch } from '../../src/rag/search';
++import { bm25From, docOfChunk, hybridSearch, rankOfDocs } from '../../src/rag/search';
+ import type { IndexedChunk, IndexFile } from '../../src/rag/store';
+ 
+ describe('bm25', () => {
+@@ -108,3 +108,43 @@ describe('правило відмови', () => {
+     expect(isRefusal('The timing belt lasts 100,000 km.')).toBe(false);
+   });
+ });
++
++describe('docOfChunk', () => {
++  it('витягує ID документа з ID фрагмента', () => {
++    expect(docOfChunk('egr#0000')).toBe('egr');
++    expect(docOfChunk('maf#0123')).toBe('maf');
++  });
++
++  it('повертає порожній рядок для некоректного ID', () => {
++    expect(docOfChunk('')).toBe('');
++    expect(docOfChunk('#0000')).toBe('');
++  });
++});
++
++describe('rankOfDocs', () => {
++  const list = [
++    { id: 'egr#0000', score: 0.9 },
++    { id: 'maf#0001', score: 0.8 },
++    { id: 'dpf#0002', score: 0.7 },
++  ] as const;
++
++  it('повертає ранг першого фрагмента з документів must_cite', () => {
++    expect(rankOfDocs(list, ['egr'])).toBe(1);
++    expect(rankOfDocs(list, ['maf'])).toBe(2);
++    expect(rankOfDocs(list, ['dpf'])).toBe(3);
++  });
++
++  it('повертає ранг першого збігу у списку документів', () => {
++    expect(rankOfDocs(list, ['maf', 'egr'])).toBe(1); // egr першим у списку
++    expect(rankOfDocs(list, ['dpf', 'maf'])).toBe(2); // maf раніше за dpf
++  });
++
++  it('повертає null, якщо жодного з документів немає', () => {
++    expect(rankOfDocs(list, ['unknown'])).toBe(null);
++    expect(rankOfDocs(list, ['unknown', 'other'])).toBe(null);
++  });
++
++  it('порожній список must_cite повертає null', () => {
++    expect(rankOfDocs(list, [])).toBe(null);
++  });
++});

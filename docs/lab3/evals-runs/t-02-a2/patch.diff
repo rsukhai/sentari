@@ -1,0 +1,186 @@
+diff --git a/tests/lab2/answer.test.ts b/tests/lab2/answer.test.ts
+new file mode 100644
+index 00000000..6a24d8aa
+--- /dev/null
++++ b/tests/lab2/answer.test.ts
+@@ -0,0 +1,180 @@
++import { describe, expect, it } from 'vitest';
++
++import {
++  answerPrompt,
++  ANSWER_SYSTEM,
++  isRefusal,
++  REFUSAL,
++  REFUSAL_COSINE,
++  refusedByRetrieval,
++} from '../../src/rag/answer';
++import { renderContext } from '../../src/rag/cite';
++import type { IndexedChunk } from '../../src/rag/store';
++
++describe('refusedByRetrieval', () => {
++  it('косинус рівно REFUSAL_COSINE не є відмовою', () => {
++    expect(refusedByRetrieval([{ cosine: REFUSAL_COSINE }])).toBe(false);
++  });
++
++  it('косинус нижче REFUSAL_COSINE є відмовою', () => {
++    expect(refusedByRetrieval([{ cosine: REFUSAL_COSINE - 0.001 }])).toBe(true);
++  });
++
++  it('порожній список є відмовою', () => {
++    expect(refusedByRetrieval([])).toBe(true);
++  });
++
++  it('найвищий косинус серед декількох визначає результат', () => {
++    expect(refusedByRetrieval([{ cosine: 0.5 }, { cosine: REFUSAL_COSINE + 0.01 }])).toBe(false);
++    expect(refusedByRetrieval([{ cosine: 0.5 }, { cosine: REFUSAL_COSINE - 0.01 }])).toBe(true);
++  });
++});
++
++describe('isRefusal', () => {
++  it('розпізнає дослівну фразу REFUSAL всередину довшого тексту', () => {
++    expect(isRefusal(`Sorry. ${REFUSAL}`)).toBe(true);
++    expect(isRefusal(`Begin. ${REFUSAL} End.`)).toBe(true);
++  });
++
++  it('не спрацьовує на звичайну відповідь', () => {
++    expect(isRefusal('The timing belt lasts 100,000 km.')).toBe(false);
++    expect(isRefusal('I cannot help with this.')).toBe(false);
++    expect(isRefusal('')).toBe(false);
++  });
++
++  it('розрізнює правильну фразу від частин', () => {
++    expect(isRefusal(REFUSAL)).toBe(true);
++    expect(isRefusal('The documents contain the answer')).toBe(false);
++    expect(isRefusal('The collection does not contain anything')).toBe(false);
++  });
++});
++
++describe('answerPrompt', () => {
++  const chunks: IndexedChunk[] = [
++    {
++      id: 'egr#0001',
++      docId: 'egr',
++      heading: 'Cleaning',
++      text: 'The EGR valve can be cleaned with carburetor cleaner.',
++      vector: [],
++      start: 0,
++      end: 50,
++    },
++    {
++      id: 'maf#0002',
++      docId: 'maf',
++      heading: '',
++      text: 'Use a dedicated MAF sensor cleaner.',
++      vector: [],
++      start: 50,
++      end: 90,
++    },
++  ];
++
++  const hits = chunks.map((chunk) => ({ chunk }));
++
++  it('містить текст питання в кінці', () => {
++    const query = 'How to clean the EGR valve?';
++    const prompt = answerPrompt(query, hits);
++    expect(prompt).toContain(`Question: ${query}`);
++    expect(prompt.endsWith(`Question: ${query}`)).toBe(true);
++  });
++
++  it('містить id кожного фрагмента', () => {
++    const prompt = answerPrompt('test query', hits);
++    expect(prompt).toContain('[egr#0001]');
++    expect(prompt).toContain('[maf#0002]');
++  });
++
++  it('починається з «Fragments:» і містить розділювач перед питанням', () => {
++    const prompt = answerPrompt('test', hits);
++    expect(prompt).toMatch(/^Fragments:/);
++    expect(prompt).toContain('---');
++    expect(prompt).toContain('Question:');
++  });
++});
++
++describe('renderContext', () => {
++  const chunks: IndexedChunk[] = [
++    {
++      id: 'egr#0001',
++      docId: 'egr',
++      heading: 'Cleaning',
++      text: 'The EGR valve can be cleaned.',
++      vector: [],
++      start: 0,
++      end: 30,
++    },
++    {
++      id: 'maf#0002',
++      docId: 'maf',
++      heading: '',
++      text: 'Use a dedicated MAF cleaner.',
++      vector: [],
++      start: 30,
++      end: 60,
++    },
++    {
++      id: 'dpf#0003',
++      docId: 'dpf',
++      heading: 'Regeneration',
++      text: 'Drive at 80-100 km/h for 30 minutes.',
++      vector: [],
++      start: 60,
++      end: 100,
++    },
++  ];
++
++  it('містить id кожного переданого фрагмента', () => {
++    const context = renderContext(chunks);
++    expect(context).toContain('[egr#0001]');
++    expect(context).toContain('[maf#0002]');
++    expect(context).toContain('[dpf#0003]');
++  });
++
++  it('включає заголовок коли він не порожній', () => {
++    const context = renderContext(chunks);
++    expect(context).toContain('egr › Cleaning');
++    expect(context).toContain('dpf › Regeneration');
++  });
++
++  it('не включає заголовок коли він порожній', () => {
++    const context = renderContext(chunks);
++    expect(context).toContain('[maf#0002] maf\n');
++    expect(context).not.toContain('maf › ');
++  });
++
++  it('розділяє фрагменти рядком ---', () => {
++    const context = renderContext(chunks);
++    const parts = context.split('\n\n---\n\n');
++    expect(parts).toHaveLength(3);
++  });
++
++  it('містить текст кожного фрагмента', () => {
++    const context = renderContext(chunks);
++    expect(context).toContain('The EGR valve can be cleaned.');
++    expect(context).toContain('Use a dedicated MAF cleaner.');
++    expect(context).toContain('Drive at 80-100 km/h for 30 minutes.');
++  });
++
++  it('порожній список повертає порожню строку', () => {
++    expect(renderContext([])).toBe('');
++  });
++
++  it('один фрагмент без розділювача', () => {
++    const context = renderContext(chunks.slice(0, 1));
++    expect(context).not.toContain('---');
++  });
++});
++
++describe('ANSWER_SYSTEM', () => {
++  it('містить фразу REFUSAL', () => {
++    expect(ANSWER_SYSTEM).toContain(REFUSAL);
++  });
++
++  it('це multi-line рядок з інструкціями', () => {
++    expect(ANSWER_SYSTEM).toContain('You are an assistant for car drivers');
++    expect(ANSWER_SYSTEM).toContain('cite the fragment');
++    expect(ANSWER_SYSTEM).toContain('Answer briefly');
++  });
++});

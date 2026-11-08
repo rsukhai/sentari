@@ -1,0 +1,130 @@
+diff --git a/tests/lab2/answer.test.ts b/tests/lab2/answer.test.ts
+new file mode 100644
+index 00000000..cd271149
+--- /dev/null
++++ b/tests/lab2/answer.test.ts
+@@ -0,0 +1,124 @@
++import { describe, it, expect } from 'vitest';
++import { refusedByRetrieval, isRefusal, answerPrompt, REFUSAL, REFUSAL_COSINE, ANSWER_SYSTEM } from '../../src/rag/answer';
++import type { IndexedChunk } from '../../src/rag/store';
++
++describe('answer', () => {
++  describe('refusedByRetrieval', () => {
++    it('не відмова, коли косинус рівно REFUSAL_COSINE', () => {
++      const hits = [{ cosine: REFUSAL_COSINE }];
++      expect(refusedByRetrieval(hits)).toBe(false);
++    });
++
++    it('відмова, коли косинус менший за REFUSAL_COSINE', () => {
++      const hits = [{ cosine: REFUSAL_COSINE - 0.01 }];
++      expect(refusedByRetrieval(hits)).toBe(true);
++    });
++
++    it('відмова при порожному списку', () => {
++      const hits: readonly Pick<{ cosine: number }, 'cosine'>[] = [];
++      expect(refusedByRetrieval(hits)).toBe(true);
++    });
++
++    it('не відмова, коли найкращий косинус >= REFUSAL_COSINE', () => {
++      const hits = [{ cosine: 0.5 }, { cosine: REFUSAL_COSINE + 0.05 }, { cosine: 0.6 }];
++      expect(refusedByRetrieval(hits)).toBe(false);
++    });
++  });
++
++  describe('isRefusal', () => {
++    it('розпізнає дослівну фразу REFUSAL', () => {
++      expect(isRefusal(REFUSAL)).toBe(true);
++    });
++
++    it('розпізнає REFUSAL всередину довшого тексту', () => {
++      const answerWithRefusal = `На жаль, ${REFUSAL} Спробуйте іншим запитанням.`;
++      expect(isRefusal(answerWithRefusal)).toBe(true);
++    });
++
++    it('не спрацьовує на звичайну відповідь', () => {
++      expect(isRefusal('Це звичайна відповідь про двигун.')).toBe(false);
++    });
++
++    it('не спрацьовує на схожу фразу', () => {
++      expect(isRefusal('The documents do not contain the answer')).toBe(false);
++    });
++  });
++
++  describe('answerPrompt', () => {
++    it('містить текст питання', () => {
++      const query = 'What is the fuel consumption?';
++      const hits: Array<Pick<{ chunk: IndexedChunk }, 'chunk'>> = [];
++      const prompt = answerPrompt(query, hits);
++      expect(prompt).toContain(query);
++    });
++
++    it('закінчується рядком «Question: »', () => {
++      const query = 'What is the fuel consumption?';
++      const hits: Array<Pick<{ chunk: IndexedChunk }, 'chunk'>> = [];
++      const prompt = answerPrompt(query, hits);
++      expect(prompt).toMatch(/Question: What is the fuel consumption\?\s*$/);
++    });
++
++    it('містить id кожного переданого фрагмента', () => {
++      const query = 'Test query';
++      const hits: Array<Pick<{ chunk: IndexedChunk }, 'chunk'>> = [
++        {
++          chunk: {
++            id: 'egr#0001',
++            docId: 'doc1',
++            heading: 'Section 1',
++            text: 'First fragment content',
++            vector: new Float32Array([0, 1, 0]),
++            start: 0,
++            end: 20,
++          },
++        },
++        {
++          chunk: {
++            id: 'egr#0002',
++            docId: 'doc2',
++            heading: 'Section 2',
++            text: 'Second fragment content',
++            vector: new Float32Array([1, 0, 0]),
++            start: 20,
++            end: 40,
++          },
++        },
++      ];
++      const prompt = answerPrompt(query, hits);
++      expect(prompt).toContain('[egr#0001]');
++      expect(prompt).toContain('[egr#0002]');
++    });
++
++    it('містить текст кожного фрагмента', () => {
++      const query = 'Test query';
++      const hits: Array<Pick<{ chunk: IndexedChunk }, 'chunk'>> = [
++        {
++          chunk: {
++            id: 'egr#0001',
++            docId: 'doc1',
++            heading: 'Section 1',
++            text: 'First fragment content',
++            vector: new Float32Array([0, 1, 0]),
++            start: 0,
++            end: 20,
++          },
++        },
++      ];
++      const prompt = answerPrompt(query, hits);
++      expect(prompt).toContain('First fragment content');
++    });
++  });
++
++  describe('ANSWER_SYSTEM', () => {
++    it('містить фразу REFUSAL', () => {
++      expect(ANSWER_SYSTEM).toContain(REFUSAL);
++    });
++
++    it('є валідною системною інструкцією', () => {
++      expect(ANSWER_SYSTEM).toBeTypeOf('string');
++      expect(ANSWER_SYSTEM.length).toBeGreaterThan(0);
++      expect(ANSWER_SYSTEM).toContain('fragment');
++    });
++  });
++});

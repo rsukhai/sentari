@@ -1,0 +1,161 @@
+diff --git a/tests/lab2/answer.test.ts b/tests/lab2/answer.test.ts
+new file mode 100644
+index 00000000..9ca4a4c0
+--- /dev/null
++++ b/tests/lab2/answer.test.ts
+@@ -0,0 +1,155 @@
++import { describe, expect, it } from 'vitest';
++
++import {
++  REFUSAL,
++  REFUSAL_COSINE,
++  answerPrompt,
++  isRefusal,
++  refusedByRetrieval,
++} from '../../src/rag/answer';
++import type { Hit } from '../../src/rag/search';
++import type { Chunk } from '../../src/rag/chunk';
++
++describe('refusedByRetrieval', () => {
++  it('повертає false коли косинус рівно REFUSAL_COSINE', () => {
++    const hits = [{ cosine: REFUSAL_COSINE }] as Pick<Hit, 'cosine'>[];
++    expect(refusedByRetrieval(hits)).toBe(false);
++  });
++
++  it('повертає true коли косинус трохи нижчий за REFUSAL_COSINE', () => {
++    const hits = [{ cosine: REFUSAL_COSINE - 0.001 }] as Pick<Hit, 'cosine'>[];
++    expect(refusedByRetrieval(hits)).toBe(true);
++  });
++
++  it('повертає true для порожнього списку', () => {
++    expect(refusedByRetrieval([])).toBe(true);
++  });
++
++  it('повертає false коли є хоча б один фрагмент з косинусом >= REFUSAL_COSINE', () => {
++    const hits = [
++      { cosine: 0.5 },
++      { cosine: REFUSAL_COSINE + 0.01 },
++      { cosine: 0.6 },
++    ] as Pick<Hit, 'cosine'>[];
++    expect(refusedByRetrieval(hits)).toBe(false);
++  });
++
++  it('вибирає максимальний косинус серед усіх фрагментів', () => {
++    const hits = [
++      { cosine: 0.5 },
++      { cosine: 0.6 },
++      { cosine: REFUSAL_COSINE - 0.01 },
++    ] as Pick<Hit, 'cosine'>[];
++    expect(refusedByRetrieval(hits)).toBe(true);
++  });
++});
++
++describe('isRefusal', () => {
++  it('розпізнає дослівну фразу REFUSAL всередину довшого тексту', () => {
++    const answer = `The user asked about oil. ${REFUSAL} That is the answer.`;
++    expect(isRefusal(answer)).toBe(true);
++  });
++
++  it('розпізнає REFUSAL на початку тексту', () => {
++    const answer = `${REFUSAL}`;
++    expect(isRefusal(answer)).toBe(true);
++  });
++
++  it('розпізнає REFUSAL з додатковими символами', () => {
++    const answer = `Some context. "${REFUSAL}" That's what the model said.`;
++    expect(isRefusal(answer)).toBe(true);
++  });
++
++  it('не спрацьовує на звичайну відповідь без REFUSAL', () => {
++    const answer =
++      'The EGR system helps reduce emissions. It works by recirculating exhaust gases.';
++    expect(isRefusal(answer)).toBe(false);
++  });
++
++  it('не спрацьовує на часткове збігання', () => {
++    const answer =
++      'The documents in the collection contain some information about this question.';
++    expect(isRefusal(answer)).toBe(false);
++  });
++
++  it('чутливо до регістру: не розпізнає REFUSAL у іншому регістру', () => {
++    const answer = 'the documents in the collection do not contain the answer to this question.';
++    expect(isRefusal(answer)).toBe(false);
++  });
++});
++
++describe('answerPrompt', () => {
++  it('містить текст питання', () => {
++    const query = 'What is EGR system?';
++    const chunks = [] as Pick<Hit, 'chunk'>[];
++    const prompt = answerPrompt(query, chunks);
++    expect(prompt).toContain(query);
++  });
++
++  it('містить фрагменти з їхніми id', () => {
++    const chunk1: Chunk = {
++      id: 'egr#0001',
++      docId: 'egr',
++      heading: 'Definition',
++      start: 0,
++      end: 100,
++      text: 'EGR stands for Exhaust Gas Recirculation.',
++    };
++    const chunk2: Chunk = {
++      id: 'egr#0002',
++      docId: 'egr',
++      heading: 'Function',
++      start: 100,
++      end: 200,
++      text: 'It reduces emissions by recirculating exhaust gases.',
++    };
++    const hits = [
++      { chunk: chunk1 } as Pick<Hit, 'chunk'>,
++      { chunk: chunk2 } as Pick<Hit, 'chunk'>,
++    ];
++    const prompt = answerPrompt('test', hits);
++    expect(prompt).toContain('[egr#0001]');
++    expect(prompt).toContain('[egr#0002]');
++    expect(prompt).toContain('EGR stands for Exhaust Gas Recirculation.');
++    expect(prompt).toContain('It reduces emissions by recirculating exhaust gases.');
++  });
++
++  it('закінчується рядком «Question: » перед запитанням', () => {
++    const query = 'What is EGR system?';
++    const chunks = [] as Pick<Hit, 'chunk'>[];
++    const prompt = answerPrompt(query, chunks);
++    expect(prompt).toContain('Question: ' + query);
++    expect(prompt.includes('Question: ') || prompt.includes('Question:\n')).toBe(true);
++  });
++
++  it('містить header про фрагменти', () => {
++    const chunks = [] as Pick<Hit, 'chunk'>[];
++    const prompt = answerPrompt('test', chunks);
++    expect(prompt).toContain('Fragments:');
++  });
++
++  it('розділяє фрагменти трьома дефісами', () => {
++    const chunk1: Chunk = {
++      id: 'egr#0001',
++      docId: 'egr',
++      heading: '',
++      start: 0,
++      end: 50,
++      text: 'First fragment',
++    };
++    const chunk2: Chunk = {
++      id: 'egr#0002',
++      docId: 'egr',
++      heading: '',
++      start: 50,
++      end: 100,
++      text: 'Second fragment',
++    };
++    const hits = [
++      { chunk: chunk1 } as Pick<Hit, 'chunk'>,
++      { chunk: chunk2 } as Pick<Hit, 'chunk'>,
++    ];
++    const prompt = answerPrompt('test', hits);
++    expect(prompt).toContain('---');
++  });
++});

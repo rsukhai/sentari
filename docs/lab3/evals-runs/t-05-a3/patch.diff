@@ -1,0 +1,54 @@
+diff --git a/src/rag/corpus.ts b/src/rag/corpus.ts
+index 92672f2b..2cefffc9 100644
+--- a/src/rag/corpus.ts
++++ b/src/rag/corpus.ts
+@@ -35,6 +35,14 @@ export function wikiTitle(url: string): string {
+ /** Файл документа в data/obd/ за його id. */
+ export const docFile = (id: string) => `${id}.md`;
+ 
++function extractFrontMatterId(text: string): string | null {
++  const match = text.match(/^---\n([\s\S]*?)\n---\n/);
++  if (!match?.[1]) return null;
++  const idMatch = match[1].match(/^id:\s*(.+)$/m);
++  if (!idMatch?.[1]) return null;
++  return idMatch[1].trim();
++}
++
+ /**
+  * Критерій A4: усі документи зі специфікації лежать у колекції й не порожні.
+  * `files` — імʼя файлу → вміст. Повертає перелік проблем; порожній = «зелено».
+@@ -49,6 +57,12 @@ export function checkCorpus(docs: readonly DocRef[], files: ReadonlyMap<string,
+     const text = files.get(docFile(doc.id));
+     if (text === undefined) problems.push(`${doc.id}: немає файлу ${docFile(doc.id)}`);
+     else if (text.trim().length < 500) problems.push(`${doc.id}: документ підозріло короткий`);
++    else {
++      const frontMatterId = extractFrontMatterId(text);
++      if (frontMatterId !== null && frontMatterId !== doc.id) {
++        problems.push(`${doc.id}: id у шапці не збігається`);
++      }
++    }
+   }
+   for (const name of files.keys()) {
+     if (!ids.has(name.replace(/\.md$/, ''))) problems.push(`${name}: файл не описаний у spec.md`);
+diff --git a/tests/lab2/corpus.test.ts b/tests/lab2/corpus.test.ts
+index 9b83c5c2..003b3f5a 100644
+--- a/tests/lab2/corpus.test.ts
++++ b/tests/lab2/corpus.test.ts
+@@ -47,4 +47,17 @@ describe('checkCorpus', () => {
+   it('порожня специфікація — це проблема, а не «зелено»', () => {
+     expect(checkCorpus([], new Map())).not.toEqual([]);
+   });
++
++  it('ловить невідповідність id у шапці й імʼям файлу', () => {
++    const obdCorrectId = `---\nid: obd\ntitle: Test\n---\n${long}`;
++    const afrCorrectId = `---\nid: afr\ntitle: Test\n---\n${long}`;
++    const obdWrongId = `---\nid: wrong-id\ntitle: Test\n---\n${long}`;
++    const withoutFrontMatter = long;
++
++    expect(checkCorpus(docs, new Map([['obd.md', obdCorrectId], ['afr.md', afrCorrectId]]))).toEqual([]);
++    expect(checkCorpus(docs, new Map([['obd.md', obdWrongId], ['afr.md', afrCorrectId]])).join(' ')).toContain(
++      'obd: id у шапці не збігається'
++    );
++    expect(checkCorpus(docs, new Map([['obd.md', withoutFrontMatter], ['afr.md', afrCorrectId]]))).toEqual([]);
++  });
+ });

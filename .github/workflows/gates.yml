@@ -119,6 +119,40 @@ jobs:
             .next/BUILD_ID
           if-no-files-found: ignore
 
+  evals:
+    name: evals
+    # регресійна брама (крок 04): перегрейд збережених спроб замороженого банку + порівняння з базовим рівнем поіменно.
+    # needs: tests — неявний success(): на червоних тестах не стартує. Агента тут НЕ запускають (платно, ключа в CI немає):
+    # спроби роблять локально run-evals.ts, а CI ловить регресії оцінювачів, міток і банку — межа записана в evals.md.
+    needs: tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      verdict: ${{ steps.g.outputs.verdict }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - id: g
+        timeout-minutes: 5
+        shell: bash
+        run: |
+          # ненульовий код брами (регресія) не глушимо: ні `|| true`, ні continue-on-error; pipefail пропускає його крізь tee
+          npx tsx scripts/evals/regrade.ts 2>&1 | tee evals.log
+          npx tsx scripts/evals/gate.ts 2>&1 | tee -a evals.log
+          echo "verdict=pass" >> "$GITHUB_OUTPUT"
+      - if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: gate-evals
+          path: |
+            evals.log
+            docs/lab3/evals.jsonl
+          if-no-files-found: ignore
+
   verify:
     name: verify
     # остання брама (крок 02): модель іншої родини, ніж виконавець (Claude Code → OpenAI), читає критерії задачі.

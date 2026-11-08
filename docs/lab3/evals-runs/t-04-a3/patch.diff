@@ -1,0 +1,50 @@
+diff --git a/scripts/validate-golden.ts b/scripts/validate-golden.ts
+index 5bb0a292..74e9cb67 100644
+--- a/scripts/validate-golden.ts
++++ b/scripts/validate-golden.ts
+@@ -46,6 +46,7 @@ export function validateGolden(
+   const problems: string[] = [];
+   const entries: Entry[] = [];
+   const seen = new Set<string>();
++  const seenQueries = new Map<string, string>();
+ 
+   // BOM і CRLF: файл міг бути створений у Windows-редакторі
+   const lines = text.replace(/^﻿/, '').split(/\r?\n/);
+@@ -70,6 +71,17 @@ export function validateGolden(
+     if (seen.has(entry.id)) problems.push(`рядок ${n}: id "${entry.id}" повторюється`);
+     seen.add(entry.id);
+ 
++    const normalizedQuery = entry.query.toLowerCase().trim();
++    if (seenQueries.has(normalizedQuery)) {
++      problems.push(`query повторюється: "${entry.id}" та "${seenQueries.get(normalizedQuery)}"`);
++    }
++    seenQueries.set(normalizedQuery, entry.id);
++
++    const uniqueTags = new Set(entry.tags);
++    if (uniqueTags.size !== entry.tags.length) {
++      problems.push(`${entry.id}: тег повторюється`);
++    }
++
+     const unanswerable = entry.tags.includes('unanswerable');
+     if (unanswerable && entry.must_cite.length > 0) {
+       problems.push(`${entry.id}: unanswerable не може мати must_cite`);
+diff --git a/tests/validate-golden.test.ts b/tests/validate-golden.test.ts
+index 204e02dd..fd47e5a4 100644
+--- a/tests/validate-golden.test.ts
++++ b/tests/validate-golden.test.ts
+@@ -66,4 +66,15 @@ describe('validateGolden', () => {
+   it('переживає CRLF і BOM', () => {
+     expect(validateGolden(`﻿${line(ok)}\r\n\r\n`, LOOSE)).toEqual([]);
+   });
++
++  it('ловить повтор query без урахування регістру й крайніх пробілів', () => {
++    const q1 = { ...ok, id: 'q-01' };
++    const q2 = { ...ok, id: 'q-02', query: '  Що означає, коли горить Check Engine?  ' };
++    expect(validateGolden(`${line(q1)}\n${line(q2)}`, LOOSE).join(' ')).toContain('query повторюється');
++  });
++
++  it('ловить повтор тегу усередині одного запису', () => {
++    const entry = { ...ok, tags: ['easy', 'easy'] };
++    expect(validateGolden(line(entry), LOOSE).join(' ')).toContain('тег повторюється');
++  });
+ });
