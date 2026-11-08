@@ -12,7 +12,7 @@
 
 | Брама | Стан | Доказ |
 |---|---|---|
-| CI на `main` зелений | так | [прогін після злиття кроків 04–05](https://github.com/rsukhai/sentari/actions/runs/41333807034) *(останній прогін на `main` після злиття кроків 06–10 — рядок «Фінальний стан» нижче)* |
+| CI на `main` зелений | так | [прогін після злиття кроків 04–05](https://github.com/rsukhai/sentari/actions/runs/41333807034) *(після злиття кроків 06–10 — [прогін 42511999008](https://github.com/rsukhai/sentari/actions/runs/42511999008), рядок «Фінальний стан» нижче)* |
 | `docs/lab1/` не змінено | так | `git diff lab1-submission..HEAD --stat -- docs/lab1` → порожньо |
 | Репозиторій публічний | перевіряє власник у приватному вікні | https://github.com/rsukhai/sentari |
 | Журнал автономності ≥ 4 сесій | так | [`autonomy-log.md`](autonomy-log.md) — сесії від 2026-10-31, 2026-11-01 і 2026-11-07, кожна з датою, інструментом і моделлю, режимом, втручаннями й доказами; записи додавались по ходу роботи (історія комітів файлу) |
@@ -35,7 +35,7 @@
 | 09 Підключення | [`mcp-integration.md`](mcp-integration.md), [`.mcp.json`](../../.mcp.json), [`scripts/mcp-demo.ts`](../../scripts/mcp-demo.ts) | [`09ab8d30`](https://github.com/rsukhai/sentari/commit/09ab8d30de86e8e46b6ab108cca614589854bfe6) | [CI гілки](https://github.com/rsukhai/sentari/actions/runs/41341417169); транскрипт агента [`traces/claude-code-mcp.jsonl`](traces/claude-code-mcp.jsonl), застосунок [`traces/app-mcp.txt`](traces/app-mcp.txt), журнал сервера з `source=claude-code` і `source=sentari-app` — [`traces/mcp-calls.jsonl`](traces/mcp-calls.jsonl) |
 | 10 Пакет | цей файл, [`autonomy-log.md`](autonomy-log.md) | — | — |
 
-**Фінальний стан `main`:** рядок CI-прогону на `main` після злиття кроків 06–10 додається коммітом сюди одразу після злиття *(див. історію цього файлу)*.
+**Фінальний стан `main`:** кроки 06–10 злито в `main` через [PR #8](https://github.com/rsukhai/sentari/pull/8) (merge-коміт [`d94876e3`](https://github.com/rsukhai/sentari/commit/d94876e3)); CI на `main` після злиття — [зелений прогін](https://github.com/rsukhai/sentari/actions/runs/42511999008). Верифікатор у цьому PR був червоний на A3, і злиття — свідоме рішення власника (див. розділ «Верифікатор» вище).
 
 ## Верифікатор: що він зупинив і чого не зупинив
 
