@@ -30,13 +30,27 @@
 
 ## 2. Обовʼязкові перевірки
 
-**Стан: НЕ ввімкнено.** Станом на 2026-11-08 `main` не має ні набору правил, ні класичного захисту гілки (`gh api repos/rsukhai/sentari/rulesets` → `[]`). Тож ланцюг поки що рекомендація, а не брама: червону гілку технічно можна злити.
+**Стан: ввімкнено 2026-11-08** (після злиття `lab3/07-redteam` у `main`, PR #11, і після дозволу власника репозиторію). До цього моменту `main` не мав набору правил (`gh api repos/rsukhai/sentari/rulesets` → `[]`), тож усі PR кроків 00–08 зливались без примусових перевірок: ланцюг був рекомендацією, а не брамою.
 
-Причина відкладення: імена перевірок `types`, `lint`, `tests`, `build` зʼявляються в PR лише тоді, коли `gates.yml` лежить у базі PR. Поки `main` його не має, обовʼязкова перевірка вічно «очікується» і блокує навіть злиття Лаб. 2. Правило вмикається після злиття `lab3/01-gates` у `main`.
+Чому не раніше: імена перевірок зʼявляються в PR лише тоді, коли `gates.yml` лежить у базі PR. Поки `main` його не мав, обовʼязкова перевірка вічно «очікувалась» і блокувала б навіть злиття Лаб. 2.
 
-Що буде застосовано (потребує окремого дозволу власника репозиторію): набір правил на `main`, правило «Require status checks to pass before merging» з чотирма контекстами `types`, `lint`, `tests`, `build`, «Require branches to be up to date» залишено типовим (увімкнено).
+Набір правил `main-required-gates` (id 26812519, `enforcement: active`, ціль `refs/heads/main`):
+- `required_status_checks`: `types`, `lint`, `tests`, `build`, `evals`;
+- `non_fast_forward` (заборона force-push) і `deletion` (заборона видалення гілки).
 
-<!-- ПІСЛЯ УВІМКНЕННЯ: вставити сюди вивід `gh api repos/rsukhai/sentari/rulesets/<id>` (текстовий доказ замість скріншота) -->
+Відхилення від початкового плану, чесно: `strict_required_status_checks_policy: false`, тобто «гілка має бути оновленою» **не вимагається** (раніше я планував залишити типове значення). `verify` до переліку не входить: job працює лише на `harness/t-*` і на PR у `main` скипається. Звʼязок брами `evals` з агентом описано в [`evals.md`](evals.md).
+
+Текстовий доказ (вивід `gh api repos/rsukhai/sentari/rulesets/26812519`, поля скорочено до суттєвих):
+
+```json
+{"id":26812519,"name":"main-required-gates","target":"branch","enforcement":"active",
+ "conditions":{"ref_name":{"include":["refs/heads/main"],"exclude":[]}},
+ "rules":[{"type":"deletion"},{"type":"non_fast_forward"},
+  {"type":"required_status_checks","parameters":{"strict_required_status_checks_policy":false,
+   "required_status_checks":[{"context":"types"},{"context":"lint"},{"context":"tests"},{"context":"build"},{"context":"evals"}]}}]}
+```
+
+**Не доведено:** жодного заблокованого злиття цим набором я ще не бачив. Правило створено після злиття кроків 00–08, тож перший реальний PR під ним — це PR із цією правкою; його результат слід дописати сюди.
 
 ## 3. Навмисне падіння
 
